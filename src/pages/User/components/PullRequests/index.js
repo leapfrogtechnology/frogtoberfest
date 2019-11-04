@@ -7,7 +7,7 @@ import IssuesLink from './IssuesLink';
 import MeLinkInfo from './MeLinkInfo';
 import ErrorText from './ErrorText';
 import UserInfo from './UserInfo';
-import { fetchInfoFromGitHub } from '../../../../utils/utils';
+import { fetchInfoFromGitHub, isPullRequestMerged } from '../../../../utils/utils';
 import { TOTAL_PR_COUNT, TOTAL_OTHER_PR_COUNT, GITHUB_ORG_NAME, LF_CAREER_URL } from '../../../../config';
 
 /**
@@ -186,13 +186,31 @@ class PullRequests extends Component {
     this.props.setUserContributionCount(validData.items.length, otherReposCount);
 
     this.setState({
-      data: validData,
+      data: this.updateMergedStatus(validData),
       userDetail,
       loading: false,
       otherReposCount,
       error: null,
       isOrgMember: true
     });
+  };
+
+  /**
+   * Loops through all valid PRs and change PR's state to 'merged' if PR is merged.
+   *
+   * @param {Object} validData
+   * @returns {Object}
+   */
+  updateMergedStatus = validData => {
+    validData.items.map(async (data, i) => {
+      const isMerged = await isPullRequestMerged(data);
+
+      if (isMerged) {
+        validData.items[i].state = 'merged';
+      }
+    });
+
+    return validData;
   };
 
   /**
