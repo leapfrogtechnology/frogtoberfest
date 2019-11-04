@@ -8,7 +8,7 @@ import MeLinkInfo from './MeLinkInfo';
 import ErrorText from './ErrorText';
 import UserInfo from './UserInfo';
 import { fetchInfoFromGitHub } from '../../../../utils/utils';
-import { GITHUB_TOKEN, TOTAL_PR_COUNT, TOTAL_OTHER_PR_COUNT, GITHUB_ORG_NAME, LF_CAREER_URL } from '../../../../config';
+import { TOTAL_PR_COUNT, TOTAL_OTHER_PR_COUNT, GITHUB_ORG_NAME, LF_CAREER_URL } from '../../../../config';
 
 /**
  * Returns an object containing user info.
@@ -22,7 +22,7 @@ export async function fetchUserInfo(username) {
     `https://api.github.com/search/users?q=user:${username}`,
     `https://api.github.com/orgs/${GITHUB_ORG_NAME}/members/${username}`
   ];
-  const results = apiUrls.map(url => fetchInfoFromGitHub(url, GITHUB_TOKEN));
+  const results = apiUrls.map(url => fetchInfoFromGitHub(url));
   let [data, userDetail, membershipStatus] = await Promise.all(results);
 
   [data, userDetail, membershipStatus] = [await data.json(), await userDetail.json(), membershipStatus.ok];

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MergeStatus from './MergeStatus';
 import PullRequestInfo from './PullRequestInfo';
-import { GITHUB_TOKEN } from '../../../../../config';
-import { fetchInfoFromGitHub } from '../../../../../utils/utils';
+import { isPullRequestMerged } from '../../../../../utils/utils';
 
 const ISSUE_STATUS = {
   ALL: 'all',
@@ -22,25 +21,29 @@ class PullRequest extends Component {
    * Life cycle event for componentDidMount.
    */
   componentDidMount = async () => {
+    if (this.props.pullRequest.state === ISSUE_STATUS.OPEN) return;
+
+    const PRMerged = await isPullRequestMerged(this.extractPullRequestInfo());
+
+    this.setState({
+      isMerged: PRMerged
+    });
+  };
+
+  /**
+   * Extracts all needed information to call PR merged api.
+   * 
+   * @returns {Object}
+   */
+  extractPullRequestInfo = () => {
     const { pullRequest } = this.props;
-    const pullNumber = pullRequest.number;
     const splittedPRUrlArray = pullRequest.html_url.split('/');
+    const pullNumber = pullRequest.number;
     const owner = splittedPRUrlArray[3];
     const repo = splittedPRUrlArray[4];
-    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/pulls/${pullNumber}/merge`;
 
-    try {
-      const merged = await fetchInfoFromGitHub(apiUrl, GITHUB_TOKEN);
-
-      this.setState({
-        isMerged: merged.ok
-      });
-    } catch (e) {
-      this.setState({
-        isMerged: false
-      });
-    }
-  };
+    return { pullNumber, owner, repo };
+  }
 
   /**
    * Life cycle event for render.
@@ -70,7 +73,7 @@ PullRequest.propTypes = {
     }).isRequired,
     html_url: PropTypes.string.isRequired // eslint-disable-line camelcase
   }).isRequired,
-  split: PropTypes.func.isRequired
+  split: PropTypes.func
 };
 
 export default PullRequest;
