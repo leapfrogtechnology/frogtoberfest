@@ -17,14 +17,14 @@ const UserInfo = ({ username, userImage, pullRequestCount, otherReposCount }) =>
           style={pullRequestCount >= TOTAL_PR_COUNT ? completeMark : incompleteMark}
         >
           <PullRequestCount pullRequestCount={pullRequestCount} pullRequestAmount={TOTAL_PR_COUNT} />
-          <ResultMessage message="Total PR'S" />
+          <ResultMessage message="Total PRs" />
         </div>
         <div
           className="flex flex-wrap justify-center content-center flex-col"
           style={otherReposCount >= TOTAL_OTHER_PR_COUNT ? completeMark : incompleteMark}
         >
           <PullRequestCount pullRequestCount={otherReposCount} pullRequestAmount={TOTAL_OTHER_PR_COUNT} />
-          <ResultMessage message="Other Repo PR'S" />
+          <ResultMessage message="Other Repo PRs" />
         </div>
       </div>
       <div className="flex flex-wrap justify-center content-center flex-col">
