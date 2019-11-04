@@ -1,4 +1,4 @@
-import { GITHUB_TOKEN } from "../config";
+import { GITHUB_TOKEN } from '../config';
 
 /**
  * Returns formatted date eg July 28, 1993.
@@ -33,9 +33,9 @@ export function fetchInfoFromGitHub(url) {
 
 /**
  * Fetch and return response whether PR with given PRInfo is merged or not.
- * 
- * @param {Object} PRInfo 
- * @returns {Boolean} mergedStatus
+ *
+ * @param {Object} PRInfo
+ * @returns {Boolean} MergedStatus.
  */
 export async function isPullRequestMerged(PRInfo) {
   const { pullNumber, owner, repo } = PRInfo;

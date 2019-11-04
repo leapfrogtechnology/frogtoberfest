@@ -21,7 +21,9 @@ class PullRequest extends Component {
    * Life cycle event for componentDidMount.
    */
   componentDidMount = async () => {
-    if (this.props.pullRequest.state === ISSUE_STATUS.OPEN) return;
+    if (this.props.pullRequest.state === ISSUE_STATUS.OPEN) {
+      return;
+    }
 
     const PRMerged = await isPullRequestMerged(this.extractPullRequestInfo());
 
@@ -32,7 +34,7 @@ class PullRequest extends Component {
 
   /**
    * Extracts all needed information to call PR merged api.
-   * 
+   *
    * @returns {Object}
    */
   extractPullRequestInfo = () => {
@@ -43,7 +45,7 @@ class PullRequest extends Component {
     const repo = splittedPRUrlArray[4];
 
     return { pullNumber, owner, repo };
-  }
+  };
 
   /**
    * Life cycle event for render.
