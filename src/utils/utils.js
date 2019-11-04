@@ -31,10 +31,16 @@ export function fetchInfoFromGitHub(url) {
   return response;
 }
 
+/**
+ * Fetch and return response whether PR with given PRInfo is merged or not.
+ * 
+ * @param {Object} PRInfo 
+ * @returns {Boolean} mergedStatus
+ */
 export async function isPullRequestMerged(PRInfo) {
   const { pullNumber, owner, repo } = PRInfo;
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/pulls/${pullNumber}/merge`;
-  const merged = await fetchInfoFromGitHub(apiUrl);
+  const mergedStatus = (await fetchInfoFromGitHub(apiUrl)).ok;
 
-  return merged.ok;
+  return mergedStatus;
 }
