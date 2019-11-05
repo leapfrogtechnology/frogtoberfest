@@ -257,7 +257,7 @@ class PullRequests extends Component {
         <div className="rounded mx-auto shadow overflow-hidden w-5/6 lg:w-1/2 mb-4">
           {data.items.length > 0 &&
             data.items.map((pullRequest, i) => (
-              <PullRequest pullRequest={pullRequest} merged={isPullRequestMerged(pullRequest)} key={i} />
+              <PullRequest pullRequest={pullRequest} isMerged={isPullRequestMerged(pullRequest)} key={i} />
             ))}
         </div>
         {!isComplete && <IssuesLink />}
