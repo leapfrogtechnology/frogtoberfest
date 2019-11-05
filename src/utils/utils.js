@@ -38,7 +38,7 @@ export function fetchInfoFromGitHub(url) {
  * @returns {Boolean} MergedStatus.
  */
 export async function isPullRequestMerged(pullRequest) {
-  const { pullNumber, owner, repo } = extractPullRequestInfo(pullRequest);
+  const { pullNumber, owner, repo } = extractPullRequestInfo(pullRequest.html_url);
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/pulls/${pullNumber}/merge`;
   const mergedStatus = (await fetchInfoFromGitHub(apiUrl)).ok;
 
@@ -48,12 +48,12 @@ export async function isPullRequestMerged(pullRequest) {
 /**
  * Extracts all needed information to call PR merged api.
  *
- * @param {Object} pullRequest
+ * @param {Object} url
  * @returns {Object}
  */
-export function extractPullRequestInfo(pullRequest) {
-  const splittedPRUrlArray = pullRequest.html_url.split('/');
-  const pullNumber = pullRequest.number;
+export function extractPullRequestInfo(url) {
+  const splittedPRUrlArray = url.split('/');
+  const pullNumber = splittedPRUrlArray[6];
   const owner = splittedPRUrlArray[3];
   const repo = splittedPRUrlArray[4];
 

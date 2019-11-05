@@ -5,16 +5,21 @@ import PullRequestInfo from './PullRequestInfo';
 
 const ISSUE_STATUS = {
   ALL: 'all',
-  OPEN: 'open',
-  MERGED: 'merged'
+  OPEN: 'open'
 };
 
-const PullRequest = ({ pullRequest }) => (
-  <div className={`bg-white leading-normal p-4 flex border-b border-grey break-words`}>
-    <MergeStatus open={pullRequest.state === ISSUE_STATUS.OPEN} merged={pullRequest.state === ISSUE_STATUS.MERGED} />
-    <PullRequestInfo pullRequest={pullRequest} />
-  </div>
-);
+const PullRequest = ({ pullRequest }) => {
+  const isOpen = pullRequest.state === ISSUE_STATUS.OPEN;
+  const isMerged = pullRequest.isMerged;
+
+  
+  return (
+    <div className={`bg-white leading-normal p-4 flex border-b border-grey break-words`}>
+      <MergeStatus open={isOpen} merged={isMerged} />
+      <PullRequestInfo pullRequest={pullRequest} />
+    </div>
+  );
+};
 
 // TODO: Convert to camelCase and enable camelcase rule.
 PullRequest.propTypes = {
@@ -23,6 +28,7 @@ PullRequest.propTypes = {
     title: PropTypes.string.isRequired,
     created_at: PropTypes.string.isRequired, // eslint-disable-line camelcase
     state: PropTypes.string.isRequired,
+    isMerged: PropTypes.bool.isRequired,
     user: PropTypes.shape({
       login: PropTypes.string.isRequired,
       url: PropTypes.string.isRequired

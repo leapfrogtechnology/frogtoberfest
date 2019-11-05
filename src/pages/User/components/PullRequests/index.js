@@ -206,7 +206,7 @@ class PullRequests extends Component {
       const isMerged = await isPullRequestMerged(data);
 
       if (isMerged) {
-        validData.items[i].state = 'merged';
+        validData.items[i].isMerged = true;
       }
     });
 
