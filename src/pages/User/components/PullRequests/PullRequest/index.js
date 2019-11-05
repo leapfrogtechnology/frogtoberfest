@@ -9,9 +9,9 @@ const ISSUE_STATUS = {
   MERGED: 'merged'
 };
 
-const PullRequest = ({ pullRequest }) => (
+const PullRequest = ({ pullRequest, merged }) => (
   <div className={`bg-white leading-normal p-4 flex border-b border-grey break-words`}>
-    <MergeStatus open={pullRequest.state === ISSUE_STATUS.OPEN} merged={pullRequest.state === ISSUE_STATUS.MERGED} />
+    <MergeStatus open={pullRequest.state === ISSUE_STATUS.OPEN} merged={merged} />
     <PullRequestInfo pullRequest={pullRequest} />
   </div>
 );
@@ -27,7 +27,8 @@ PullRequest.propTypes = {
       login: PropTypes.string.isRequired,
       url: PropTypes.string.isRequired
     }).isRequired
-  }).isRequired
+  }).isRequired,
+  merged: PropTypes.bool.isRequired
 };
 
 export default PullRequest;

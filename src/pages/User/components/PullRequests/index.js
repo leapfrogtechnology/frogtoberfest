@@ -186,31 +186,13 @@ class PullRequests extends Component {
     this.props.setUserContributionCount(validData.items.length, otherReposCount);
 
     this.setState({
-      data: this.updateMergedStatus(validData),
+      data: validData,
       userDetail,
       loading: false,
       otherReposCount,
       error: null,
       isOrgMember: true
     });
-  };
-
-  /**
-   * Loops through all valid PRs and change PR's state to 'merged' if PR is merged.
-   *
-   * @param {Object} validData
-   * @returns {Object}
-   */
-  updateMergedStatus = validData => {
-    validData.items.map(async (data, i) => {
-      const isMerged = await isPullRequestMerged(data);
-
-      if (isMerged) {
-        validData.items[i].state = 'merged';
-      }
-    });
-
-    return validData;
   };
 
   /**
@@ -274,7 +256,9 @@ class PullRequests extends Component {
         </div>
         <div className="rounded mx-auto shadow overflow-hidden w-5/6 lg:w-1/2 mb-4">
           {data.items.length > 0 &&
-            data.items.map((pullRequest, i) => <PullRequest pullRequest={pullRequest} key={i} />)}
+            data.items.map((pullRequest, i) => (
+              <PullRequest pullRequest={pullRequest} merged={isPullRequestMerged(pullRequest)} key={i} />
+            ))}
         </div>
         {!isComplete && <IssuesLink />}
         <MeLinkInfo username={username} />
