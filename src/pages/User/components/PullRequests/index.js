@@ -186,7 +186,7 @@ class PullRequests extends Component {
     this.props.setUserContributionCount(validData.items.length, otherReposCount);
 
     this.setState({
-      data: this.updateMergedStatus(validData),
+      data: validData,
       userDetail,
       loading: false,
       otherReposCount,
@@ -202,16 +202,11 @@ class PullRequests extends Component {
    * @returns {Object}
    */
   updateMergedStatus = validData => {
-    validData.items.map(async (data, i) => {
-      validData.items[i].isMerged = false;
-      const isMerged = await isPullRequestMerged(data);
-
-      if (isMerged) {
-        validData.items[i].isMerged = true;
-      }
+    const promises = validData.map(data => {
+      return isPullRequestMerged(data).then(isMerged => ({ ...data, isMerged }));
     });
 
-    return validData;
+    return Promise.all(promises);
   };
 
   /**
@@ -227,8 +222,9 @@ class PullRequests extends Component {
 
       return isPullRequestValid;
     });
+    const updatedValidPRWithMergedStatus = this.updateMergedStatus(validPullRequests);
 
-    return { ...data, total_count: validPullRequests.length, items: validPullRequests }; // eslint-disable-line camelcase
+    return { ...data, total_count: updatedValidPRWithMergedStatus.length, items: updatedValidPRWithMergedStatus }; // eslint-disable-line camelcase
   }
 
   /**

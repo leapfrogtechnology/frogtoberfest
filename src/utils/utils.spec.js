@@ -1,4 +1,4 @@
-import { formatDate } from './utils';
+import { formatDate, extractPullRequestInfo } from './utils';
 
 describe('formatDate', () => {
   const expectedDateString = 'October 26, 2019';
@@ -43,5 +43,24 @@ describe('formatDate', () => {
     const date = 'October Invalid';
 
     expect(formatDate(date)).toEqual('Invalid Date');
+  });
+});
+
+describe('extractPullRequestInfo', () => {
+  const expectedPullRequestInfo = { pullNumber: '45', owner: 'leapfrogtechnology', repo: 'frogtoberfest' };
+  const url = 'https://github.com/leapfrogtechnology/frogtoberfest/pull/45';
+
+  it('should return PullRequestInfo for a given url in "https://github.com/leapfrogtechnology/frogtoberfest/pull/45" format.', () => {
+    expect(extractPullRequestInfo(url)).toEqual(expectedPullRequestInfo);
+  });
+
+  it('Should return PullNumber with a numeric value.', () => {
+    expect(!isNaN(extractPullRequestInfo(url).pullNumber)).toEqual(true);
+  });
+
+  it('should not extract the invalid url.', () => {
+    const url = 'www.leapfrogtechnology.com';
+
+    expect(extractPullRequestInfo(url)).not.toEqual(expectedPullRequestInfo);
   });
 });

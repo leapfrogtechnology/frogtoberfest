@@ -10,7 +10,7 @@ const ISSUE_STATUS = {
 
 const PullRequest = ({ pullRequest }) => {
   const isOpen = pullRequest.state === ISSUE_STATUS.OPEN;
-  const isMerged = pullRequest.isMerged;
+  const { isMerged } = pullRequest;
 
   return (
     <div className={`bg-white leading-normal p-4 flex border-b border-grey break-words`}>
