@@ -12,11 +12,11 @@
     "frogtoberfest"
   ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "npm run build:css && react-scripts start",
+    "build": "npm run build:css && react-scripts build",
     "eject": "react-scripts eject",
-    "tailwind-gen": "node ./node_modules/tailwindcss/lib/cli.js build ./tailwind-gen.css -c ./tailwind.js -o ./src/tailwind.css",
+    "build:css": "npx tailwindcss build src/stylesheets/tailwind.css -o src/stylesheets/main.css",
+    "test": "react-scripts test --env=jsdom",
     "eslint": "eslint src",
     "eslint:fix": "eslint --fix src",
     "lint": "yarn prettier && yarn eslint",
@@ -32,13 +32,14 @@
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
+    "autoprefixer": "^10.0.1",
     "babel-eslint": "10.0.3",
     "eslint": "6.5.1",
     "eslint-config-leapfrog": "^2.0.1",
     "eslint-plugin-react": "^7.16.0",
     "prettier": "^1.14.3",
     "react-scripts": "^3.2.0",
-    "tailwindcss": "^0.6.6"
+    "tailwindcss": "^1.8.13"
   },
   "engines": {
     "node": ">=8.0.0"
