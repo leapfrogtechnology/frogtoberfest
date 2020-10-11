@@ -14,7 +14,7 @@ const UsernameInput = ({ value, onChange }) => (
     autoCorrect="off"
     autoComplete="off"
     style={{ outline: 'none' }}
-    className="bn br--left leading-tight rounded-l p-2 flex-auto border-2 border-blue-lighter focus:border-blue-light border-r-0 text-grey-darkest"
+    className="bn br--left leading-tight rounded-l p-2 flex-auto border-2 border-blue-lighter focus:border-blue-light border-r-0 text-gray-900"
   />
 );
 

@@ -23,7 +23,7 @@ const SiteDetails = () => (
         <ul className="p-0">
           {checklistItems.map((item, index) => (
             <li className="flex leading-tight items-center mb-3" key={index}>
-              <div className="rounded-full fill-current text-green">
+              <div className="rounded-full fill-current text-green-500">
                 <svg
                   className="w-6 h-6 align-middle"
                   viewBox="0 0 24 24"
@@ -37,7 +37,7 @@ const SiteDetails = () => (
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
               </div>
-              <span className="text-grey-darker text-m ml-2">{item}</span>
+              <span className="text-gray-600 text-m ml-2">{item}</span>
             </li>
           ))}
         </ul>
