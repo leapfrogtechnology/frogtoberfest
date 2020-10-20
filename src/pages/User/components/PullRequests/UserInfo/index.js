@@ -35,7 +35,7 @@ const incompleteMark = {
 };
 
 const completeMark = {
-  color: 'green'
+  color: '#68d391'
 };
 
 UserInfo.propTypes = {

@@ -5,8 +5,8 @@ const UsernameInput = ({ value, onChange }) => (
   <input
     type="text"
     name="username"
-    aria-label="GitHub username"
-    placeholder="GitHub username"
+    aria-label="Search GitHub username"
+    placeholder="Search a github username"
     value={value}
     onChange={onChange}
     spellCheck="false"
@@ -14,7 +14,7 @@ const UsernameInput = ({ value, onChange }) => (
     autoCorrect="off"
     autoComplete="off"
     style={{ outline: 'none' }}
-    className="bn br--left leading-tight rounded-l p-2 flex-auto border-2 border-blue-lighter focus:border-blue-light border-r-0 text-gray-900"
+    className="p-3 flex-auto border-2 focus:border-green-500 text-black"
   />
 );
 

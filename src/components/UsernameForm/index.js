@@ -91,7 +91,6 @@ class UsernameForm extends Component {
     return (
       <div className="pb-8 pt-4 sm:pt-10">
         {isComplete ? <CompletionMessage /> : <TimeMessage />}
-
         <form
           className="flex mx-auto w-3/4 sm:w-1/2"
           style={{ boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)' }}

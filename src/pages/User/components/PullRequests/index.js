@@ -122,13 +122,13 @@ class PullRequests extends Component {
    */
   getNotAMemberMessage = () => {
     return (
-      <>
+      <span className="text-red-600">
         You are not a member of Leapfrog Technology. However, you can join our{' '}
-        <a href={LF_CAREER_URL} target="_blank" rel="noopener noreferrer">
+        <a className="underline" href={LF_CAREER_URL} target="_blank" rel="noopener noreferrer">
           awesome team
         </a>
         . 😉
-      </>
+      </span>
     );
   };
 
@@ -245,7 +245,6 @@ class PullRequests extends Component {
     return (
       <Fragment>
         <div className="text-center text-white">
-          <ShareButtons username={username} pullRequestCount={data.items.length} />
           <div className="flex flex-wrap justify-center content-center flex-col pb-4">
             <MotivationalMessage pullRequestCount={data.items.length} otherReposCount={this.state.otherReposCount} />
           </div>
@@ -260,6 +259,7 @@ class PullRequests extends Component {
           {data.items.length > 0 &&
             data.items.map((pullRequest, i) => <PullRequest pullRequest={pullRequest} key={i} />)}
         </div>
+        <ShareButtons username={username} pullRequestCount={data.items.length} />
         {!isComplete && <IssuesLink />}
         <MeLinkInfo username={username} />
       </Fragment>
