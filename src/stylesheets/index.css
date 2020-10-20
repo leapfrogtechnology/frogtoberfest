@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'squealerregular';
+  src: url('../fonts/squealer-webfont.eot');
+  src: url('../fonts/squealer-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/squealer-webfont.woff2') format('woff2'), url('../fonts/squealer-webfont.woff') format('woff'),
+    url('../fonts/squealer-webfont.ttf') format('truetype'),
+    url('../fonts/squealer-webfont.svg#squealerregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Inter', 'Arial', sans-serif;
+  background-image: url(../assets/images/Frogtoberfest_bg.png);
+  background-size: cover;
+  background-attachment: fixed;
+}

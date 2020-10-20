@@ -1,10 +1,8 @@
 .GithubCorner {
-  display: inline-block;
   position: fixed;
   left: auto;
   top: 0;
   right: 0;
-  bottom: auto;
 }
 
 .GithubCorner:hover .octo-arm {

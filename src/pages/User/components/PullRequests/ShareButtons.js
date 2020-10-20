@@ -25,7 +25,7 @@ const ShareButtons = ({ username, pullRequestCount }) => (
       <a
         target="_blank"
         rel="noopener noreferrer"
-        className="fb-xfbml-parse-ignore bg-blue-dark text-white rounded px-2 py-1 pointer text-white no-underline text-sm"
+        className="fb-xfbml-parse-ignore bg-blue-dark text-white rounded pt-4 pb-5 pointer text-white no-underline text-sm"
         href={`https://www.facebook.com/sharer/sharer.php?u=${HOSTNAME}/user/${username}`}
       >
         <i className="fab fa-facebook fa-lg" /> Share

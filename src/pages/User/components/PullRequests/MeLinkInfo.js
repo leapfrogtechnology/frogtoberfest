@@ -26,7 +26,7 @@ class MeLinkInfo extends Component {
       </button>
     );
     let infoStr = (
-      <p className="text-grey-dark mx-auto text-center my-4">
+      <p className="text-gray-800 mx-auto text-center my-4">
         In the future, you can find your PRs by visiting{' '}
         <a href={`${HOSTNAME}/me`} className="link text-orange underline-hover saveUser" id="melink">
           {HOSTNAME}
