@@ -24,19 +24,19 @@ const SiteDetails = () => (
               <path
                 d="M2.66666 10C2.66666 10 3.33332 9.33337 5.33332 9.33337C7.33332 9.33337 8.66666 10.6667 10.6667 10.6667C12.6667 10.6667 13.3333 10 13.3333 10V2.00004C13.3333 2.00004 12.6667 2.66671 10.6667 2.66671C8.66666 2.66671 7.33332 1.33337 5.33332 1.33337C3.33332 1.33337 2.66666 2.00004 2.66666 2.00004V10Z"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M2.66666 14.6667V10"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
-            Rules for participation
+            {checklistItems.length} simple rules for participation:
           </p>
         </div>
         <ul className="p-0">
