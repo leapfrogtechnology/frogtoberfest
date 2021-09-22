@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { HOSTNAME } from 'config';
-import frogtoberfestLogo from 'assets/images/frogtoberfest_logo.png';
+import frogtoberfestLogo from 'assets/images/frogtoberfest_logo_2021.svg';
 import lfOpensourceLogo from 'assets/images/leapfrog_opensource.png';
 
 const SiteTitle = () => (
@@ -11,7 +11,7 @@ const SiteTitle = () => (
         <img alt="Leapfrog Open Source" src={lfOpensourceLogo} />
       </div>
       <a className="block cursor-pointer no-underline mt-20" href={HOSTNAME} title="Frogtoberfest">
-        <img className="m-auto" alt="Frogtoberfest Artwork" src={frogtoberfestLogo} />
+        <img className="mx-auto" alt="Frogtoberfest Artwork" src={frogtoberfestLogo} />
         <h5 className="text-lg text-white font-normal pt-10">
           Frogtoberfest is inspired from Hacktoberfest a month long <br />
           opensource contribution challenge for Leapfroggers.

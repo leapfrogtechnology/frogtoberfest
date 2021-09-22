@@ -3,8 +3,8 @@ import { getYear } from 'utils/date';
 
 const CompletionMessage = () => {
   return (
-    <div className="text-center text-green-500 pb-2">
-      <p className="text-xl">You have successfully completed Frogtoberfest {getYear()}!</p>
+    <div className="text-left text-sm pb-3 flex mx-auto w-3/4 sm:w-1/2 text-green-500">
+      <p className="text-base">Great work! you have successfully completed Frogtoberfest {getYear()}!</p>
     </div>
   );
 };

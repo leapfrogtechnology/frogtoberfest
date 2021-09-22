@@ -31,7 +31,7 @@ function getMessage(pullRequestCount, otherReposCount) {
   const currentMonth = new Date().getMonth();
 
   if (currentMonth < MONTH_OCTOBER) {
-    return "Last year's result.";
+    return "Last year's result";
   }
 
   if (currentMonth > MONTH_OCTOBER) {

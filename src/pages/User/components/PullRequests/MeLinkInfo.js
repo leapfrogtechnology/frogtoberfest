@@ -40,19 +40,18 @@ class MeLinkInfo extends Component {
     if (savedUsername === this.props.username) {
       storeUsernameBtn = null;
       infoStr = (
-        <p className="text-mid-grey mx-auto text-center my-4">
-          Username {this.props.username} saved! You can visit{' '}
-          <a href={`${HOSTNAME}/me`} className="link saveUser" id="melink">
+        <p className="text-gray-400 mx-auto text-center my-4 text-sm">
+          Username {this.props.username} is saved locally! You can visit &nbsp;
+          <a href={`${HOSTNAME}/me`} className="link saveUser underline" id="melink">
             {HOSTNAME}
             /me
-          </a>{' '}
-          now!
+          </a>
         </p>
       );
     }
 
     return (
-      <div className="rounded mx-auto mt-8 overflow-hidden w-5/6 lg:w-1/2 mt-4">
+      <div className="rounded mx-auto mt-8 overflow-hidden w-5/6 lg:w-1/2">
         {storeUsernameBtn}
         {infoStr}
       </div>

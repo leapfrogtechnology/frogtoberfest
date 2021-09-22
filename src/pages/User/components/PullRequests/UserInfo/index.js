@@ -7,8 +7,8 @@ import ResultMessage from './ResultMessage';
 import UserImage from './UserImage';
 
 const UserInfo = ({ username, userImage, pullRequestCount, otherReposCount }) => (
-  <div className="pb-2 flex flex-wrap justify-center content-center rounded mx-auto overflow-hidden w-5/6 lg:w-1/2">
-    <div className="mx-4">{userImage && <UserImage userImage={userImage} username={username} />}</div>
+  <div className="pb-8 flex flex-wrap justify-start content-left rounded mx-auto overflow-hidden w-5/6 lg:w-1/2">
+    <div>{userImage && <UserImage userImage={userImage} username={username} />}</div>
     <div className="flex flex-col  flex-wrap justify-center content-center">
       <div className="flex flex-wrap justify-center content-center">
         <div

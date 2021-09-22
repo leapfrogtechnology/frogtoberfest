@@ -122,13 +122,18 @@ class PullRequests extends Component {
    */
   getNotAMemberMessage = () => {
     return (
-      <span className="text-red-600">
-        You are not a member of Leapfrog Technology. However, you can join our{' '}
-        <a className="underline" href={LF_CAREER_URL} target="_blank" rel="noopener noreferrer">
-          awesome team
-        </a>
-        . 😉
-      </span>
+      <>
+        <span className="text-white mb-3 block text-2xl mt-5">
+          Oops! the username isn't a member of Leapfrog Technology.
+        </span>
+        <span className="text-gray-400">
+          However, you can &nbsp;
+          <a className="underline" href={LF_CAREER_URL} target="_blank" rel="noopener noreferrer">
+            join our awesome team
+          </a>
+          &nbsp; 🐸
+        </span>
+      </>
     );
   };
 
@@ -245,7 +250,7 @@ class PullRequests extends Component {
     return (
       <Fragment>
         <div className="text-center text-white">
-          <div className="flex flex-wrap justify-center content-center flex-col pb-4">
+          <div className="flex flex-wrap justify-center content-center flex-col">
             <MotivationalMessage pullRequestCount={data.items.length} otherReposCount={this.state.otherReposCount} />
           </div>
           <UserInfo
