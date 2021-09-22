@@ -4,11 +4,11 @@
 
 ## CI Status
 
-[![CircleCI](https://circleci.com/gh/leapfrogtechnology/frogtoberfest/tree/master.svg?style=svg)](https://circleci.com/gh/leapfrogtechnology/frogtoberfest/tree/master)
+[![frogtoberfest Actions Status](https://github.com/leapfrogtechnology/frogtoberfest/workflows/master/badge.svg)](https://github.com/leapfrogtechnology/frogtoberfest/actions)
 
 ## Requirements
 
-- Node v8+
+- Node v12.x+
 
 ## Running the App
 
