@@ -3,8 +3,14 @@ const getTimeMessage = () => {
   const currentMonth = today.getMonth();
   const daysLeft = 31 - today.getDate();
 
-  if (currentMonth !== 9) {
-    return "It's not even October yet!";
+  if (currentMonth < 9) {
+    const currentYear = today.getFullYear();
+
+    return `Stay tuned for frogtoberfest ${currentYear} !!`;
+  }
+
+  if (currentMonth > 9) {
+    return `Thank you for your participation. Stay tuned for Next Year !!`;
   }
 
   if (daysLeft === 0) {

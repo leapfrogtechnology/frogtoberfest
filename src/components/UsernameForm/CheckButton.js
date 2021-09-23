@@ -4,7 +4,7 @@ const CheckButton = () => (
   <button
     type="submit"
     style={{ outline: 'none' }}
-    className="bn flex align-center font-medium items-center bg-blue-light px-4 pointer text-white hover:bg-blue hover:bg-green-600 bg-green-500"
+    className="flex align-center font-medium items-center bg-blue-light px-4 pointer text-white hover:bg-blue hover:bg-green-600 bg-green-500"
   >
     <svg className="mr-2" width="21" height="22" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0)">

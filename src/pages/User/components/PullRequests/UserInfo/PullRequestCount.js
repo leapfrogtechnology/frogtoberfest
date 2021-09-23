@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const PullRequestCount = ({ pullRequestCount, pullRequestAmount }) => (
-  <span className="block rounded text-5xl font-medium white w-64">
+  <span className="block rounded text-5xl font-medium text-green-400 w-64">
     {pullRequestCount} / {pullRequestAmount}
   </span>
 );

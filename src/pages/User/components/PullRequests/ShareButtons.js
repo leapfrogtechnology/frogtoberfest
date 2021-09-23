@@ -5,8 +5,8 @@ import facebookLogo from 'assets/images/facebook_logo.svg';
 import twitterLogo from 'assets/images/twitter_logo.svg';
 
 const ShareButtons = ({ username, pullRequestCount }) => (
-  <div className="w-5/6 lg:w-1/2 mx-auto text-center py-4 block">
-    <span class="text-white text-center">Share result</span>
+  <div className="w-5/6 lg:w-1/2 mx-auto text-center py-6 block">
+    <span class="text-white text-center text-lg font-bold">Share your result</span>
     <div className="flex justify-center pt-4">
       <div id="twitter-share">
         <a

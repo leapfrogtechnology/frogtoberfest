@@ -12,8 +12,8 @@ const MotivationalMessage = ({ pullRequestCount, otherReposCount }) => {
   }
 
   return (
-    <div class="w-5/6 lg:w-1/2 text-left">
-      <p className="text-sm text-white font-bold uppercase py-6">{message}</p>
+    <div className="w-5/6 lg:w-1/2 text-left">
+      <p className="text-sm text-white font-bold uppercase pb-6">{message}</p>
     </div>
   );
 };

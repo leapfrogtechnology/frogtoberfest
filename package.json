@@ -19,10 +19,11 @@
     "test": "react-scripts test --env=jsdom",
     "eslint": "eslint src",
     "eslint:fix": "eslint --fix src",
+    "tailwind-gen": "node ./node_modules/tailwindcss/lib/cli.js build ./tailwind-gen.css -c ./tailwind.js -o ./src/tailwind.css",
     "lint": "yarn prettier && yarn eslint",
     "lint:fix": "yarn prettier:fix && yarn eslint:fix",
-    "prettier": "prettier \"{src,api}/**/*.js\"",
-    "prettier:fix": "prettier --write \"{src,api}/**/*.js\""
+    "prettier": "prettier --list-different \"{src,api,public}/**/*.{js,jsx,html,css,md,yml,yml,json}\" --loglevel warn",
+    "prettier:fix": "prettier --write \"{src,api,public}/**/*.{js,jsx,html,css,md,yml,yml,json}\" --loglevel warn"
   },
   "dependencies": {
     "prop-types": "^15.6.2",

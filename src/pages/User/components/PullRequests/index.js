@@ -85,13 +85,14 @@ class PullRequests extends Component {
       const username = this.props.username;
       const userInfo = await fetchUserInfo(username);
 
-      !userInfo.membershipStatus ? this.showNotAMemberMessage() : this.displayPullRequests(userInfo);
+      this.displayPullRequests(userInfo);
     } catch (error) {
       this.setState({
         error,
         loading: false,
         data: null,
-        userDetail: null
+        userDetail: null,
+        isOrgMember: true
       });
     }
   };
@@ -112,7 +113,21 @@ class PullRequests extends Component {
       return <> data.errors.message</>;
     }
 
-    return <> Couldn&apos;t find any data or we hit an error, try again?</>;
+    return (
+      <div className="flex text-center flex-col text-lg mt-6">
+        User information can not be found.
+        <small className="pt-3 flex text-center mx-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="#ffffff">
+            <path
+              fill-rule="evenodd"
+              d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          Please try again.
+        </small>{' '}
+      </div>
+    );
   };
 
   /**
@@ -233,14 +248,16 @@ class PullRequests extends Component {
    */
   render = () => {
     const username = this.props.username;
-    const { loading, data, error, userDetail } = this.state;
+    const { loading, data, error, userDetail, isOrgMember } = this.state;
 
     if (loading) {
       return <LoadingIcon />;
     }
-    if (!this.state.isOrgMember) {
+
+    if (!isOrgMember) {
       return <ErrorText errorMessage={this.getNotAMemberMessage()} />;
     }
+
     if (error || data.errors || data.message) {
       return <ErrorText errorMessage={this.getErrorMessage()} />;
     }
@@ -249,20 +266,22 @@ class PullRequests extends Component {
 
     return (
       <Fragment>
-        <div className="text-center text-white">
-          <div className="flex flex-wrap justify-center content-center flex-col">
-            <MotivationalMessage pullRequestCount={data.items.length} otherReposCount={this.state.otherReposCount} />
+        <div className="border-b py-4 border-gray-900">
+          <div className="text-center text-white">
+            <div className="flex flex-wrap justify-center content-center flex-col">
+              <MotivationalMessage pullRequestCount={data.items.length} otherReposCount={this.state.otherReposCount} />
+            </div>
+            <UserInfo
+              username={username}
+              userImage={userDetail.items[0].avatar_url}
+              pullRequestCount={data.items.length}
+              otherReposCount={this.state.otherReposCount}
+            />
           </div>
-          <UserInfo
-            username={username}
-            userImage={userDetail.items[0].avatar_url}
-            pullRequestCount={data.items.length}
-            otherReposCount={this.state.otherReposCount}
-          />
-        </div>
-        <div className="rounded mx-auto shadow overflow-hidden w-5/6 lg:w-1/2 mb-4">
-          {data.items.length > 0 &&
-            data.items.map((pullRequest, i) => <PullRequest pullRequest={pullRequest} key={i} />)}
+          <div className="rounded mx-auto shadow overflow-hidden w-5/6 lg:w-1/2 mb-4">
+            {data.items.length > 0 &&
+              data.items.map((pullRequest, i) => <PullRequest pullRequest={pullRequest} key={i} />)}
+          </div>
         </div>
         <ShareButtons username={username} pullRequestCount={data.items.length} />
         {!isComplete && <IssuesLink />}
