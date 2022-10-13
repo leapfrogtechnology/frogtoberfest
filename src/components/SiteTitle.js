@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { HOSTNAME } from 'config';
-import frogtoberfestLogo from 'assets/images/frogtoberfest2021-logo.png';
+import frogtoberfestLogo from 'assets/images/frogtoberfest2022-logo.png';
 import leapfrogOpenSourceLogo from 'assets/images/leapfrog-opensource-logo.png';
 
 const SiteTitle = () => (
