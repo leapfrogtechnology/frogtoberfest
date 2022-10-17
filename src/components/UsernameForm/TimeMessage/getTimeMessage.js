@@ -1,7 +1,9 @@
+import { EXTENDED_DAYS } from 'config';
+
 const getTimeMessage = () => {
   const today = new Date();
   const currentMonth = today.getMonth();
-  const daysLeft = 31 - today.getDate();
+  const daysLeft = 31 - today.getDate() + EXTENDED_DAYS;
 
   if (currentMonth < 9) {
     const currentYear = today.getFullYear();
