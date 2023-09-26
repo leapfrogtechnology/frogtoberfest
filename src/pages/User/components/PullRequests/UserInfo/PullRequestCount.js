@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const PullRequestCount = ({ pullRequestCount, pullRequestAmount }) => (
   <span className="block rounded white  font-figtree fs-32 text-primary">
-    {pullRequestCount} / {pullRequestAmount}
+    {pullRequestCount}/{pullRequestAmount}
   </span>
 );
 

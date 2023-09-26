@@ -8,15 +8,15 @@ const ShareButtons = ({ username, pullRequestCount }) => (
       <a
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-blue text-white rounded px-2 py-1 pointer text-white no-underline text-sm"
+        className=" rounded px-2 py-1 pointer no-underline text-sm btn btn-twitter text-white"
         href={`https://twitter.com/intent/tweet?text=My progress on frogtoberfest ${pullRequestCount} / ${TOTAL_PR_COUNT}&url=${HOSTNAME}/user/${username}&hashtags=frogtoberfest, frogtoberfest`}
         data-size="large"
       >
-        <i className="fab fa-twitter fa-lg" /> Tweet
+        <i className="fab fa-twitter fa-lg mr-1 text-white" /> Twitter
       </a>
     </div>
     <div
-      className="p-2"
+      className="p-2" d-block
       id="fb-share"
       data-href={`${HOSTNAME}/username/${username}`}
       data-layout="button"
@@ -25,10 +25,10 @@ const ShareButtons = ({ username, pullRequestCount }) => (
       <a
         target="_blank"
         rel="noopener noreferrer"
-        className="fb-xfbml-parse-ignore bg-blue-dark text-white rounded px-2 py-1 pointer text-white no-underline text-sm"
+        className="fb-xfbml-parse-ignore rounded px-2 py-1 pointer no-underline text-sm btn btn-facebook text-white"
         href={`https://www.facebook.com/sharer/sharer.php?u=${HOSTNAME}/user/${username}`}
       >
-        <i className="fab fa-facebook fa-lg" /> Share
+        <i className="fab fa-facebook fa-lg text-white mr-1" /> Facebook
       </a>
     </div>
   </div>

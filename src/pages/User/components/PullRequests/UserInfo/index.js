@@ -8,14 +8,14 @@ import UserImage from './UserImage';
 import MotivationalMessage from './MotivationalMessage';
 
 const UserInfo = ({ username, userImage, pullRequestCount, otherReposCount }) => (
-  <div className="pb-2 flex flex-column flex-wrap justify-center content-center rounded mx-auto overflow-hidden w-5/6 lg:w-1/2 gitaccount gitaccount__profile">
+  <div className="pb-2 flex flex-column flex-wrap justify-center content-center item-center rounded mx-auto overflow-hidden w-5/6 lg:w-1/2 gitaccount gitaccount__profile">
     <div className="mx-4">{userImage && <UserImage userImage={userImage} username={username} />}</div>
     <div className="flex flex-wrap justify-center content-center flex-col pb-4">
             <MotivationalMessage pullRequestCount={pullRequestCount} otherReposCount={otherReposCount} />
           </div>
       <div className="flex flex-wrap justify-center content-center gap-y-10">
         <div
-          className="flex flex-wrap justify-center content-center flex-col"
+          className="flex flex-wrap justify-center content-center flex-col mr-10"
           style={pullRequestCount >= TOTAL_PR_COUNT ? completeMark : incompleteMark}
         >
           <PullRequestCount pullRequestCount={pullRequestCount} pullRequestAmount={TOTAL_PR_COUNT} />
