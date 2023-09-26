@@ -20,6 +20,7 @@ import Img6 from 'assets/images/img-6.png';
 import Img7 from 'assets/images/img-7.png';
 import Img8 from 'assets/images/img-8.png';
 import Img9 from 'assets/images/img-9.png';
+import SiteHeader from 'components/SiteHeader';
 
 const Home = () => {
   const lastDate = new Date('2023-10-01');
@@ -126,41 +127,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      <header className='header pt-6x pt-md-12x'>
-        <div className="container">
-          <div className="d-flex align-items-center justify-content-between">
-
-            <div className="logo">
-              <figure>
-                <img src={Logo} alt="" />
-              </figure>
-            </div>
-            <nav className='nav p-6x pt-10x p-md-0x'>
-              <ul className='d-flex flex-column flex-md-row gap-x-md-12x gap-y-6x'>
-                <li className='nav__item'><Link className='nav__link' to="/participation">Participation</Link></li>
-                <li className='nav__item'><Link className='nav__link' to="/leaderboard">Leaderboard</Link></li>
-                {/* <li className='nav__item'><a className='nav__link' href="/">Events</a></li> */}
-                <li className='nav__item'><a className='nav__link' href="#swag">SWAG</a></li>
-                <li className='nav__item'><a className='nav__link' href="#faq">FAQs</a></li>
-              </ul>
-
-              <button className="menu-close d-md-none">
-                <span className="bar"></span>
-                <span className="bar"></span>
-              </button>
-            </nav>
-
-            <button className="menu-toggle">
-              <span className="bar"></span>
-              <span className="bar"></span>
-              <span className="bar"></span>
-            </button>
-
-
-          </div>
-        </div>
-      </header>
-
+      <SiteHeader></SiteHeader>
       <main>
         <section className="banner pt-10x text-center text-lg-left">
           <div className="container">
@@ -173,7 +140,7 @@ const Home = () => {
                   LeapNetwork</p>
 
                 <div className="d-flex gap-6x mt-6x m-lg-0x banner__buttons">
-                  <button className='btn btn-primary'><Link className='text-black' to="/participation">Participate</Link></button>
+                  <button className='btn btn-primary'><a className='text-black' href="#participation">Participate</a></button>
                   <button className='btn btn-link'><Link className='text-white' to="/leaderboard">Leaderboard</Link></button>
                 </div>
               </div>
