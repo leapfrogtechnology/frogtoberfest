@@ -1,0 +1,32 @@
+.number {
+	font-family: $font-antonio;
+
+	border-radius: 2px;
+	border: 1px solid #fae0d4;
+	color: getColor('white.base');
+	background: linear-gradient(
+		180deg,
+		getColor('white.base') 0%,
+		rgba(getColor('white.base'), 0.1) 100%
+	);
+	backdrop-filter: blur(17.875px);
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: normal;
+	font-size: rem(48);
+	width: 44px;
+	height: 70px;
+	@include mq('md') {
+		width: 55px;
+		height: 88px;
+		font-size: rem(60);
+	}
+}
+
+.time-label {
+	font-size: rem(14);
+	text-transform: capitalize;
+	margin-top: getSpacing('2x');
+}

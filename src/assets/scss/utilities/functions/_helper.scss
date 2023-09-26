@@ -1,0 +1,75 @@
+// ---------------------------------------------------------
+// getColor
+// function specifically to get the color from color Map
+// dot notation as the key argument
+//
+// Required arguments:
+// `$key` String
+//
+// Optional arguments:
+// `$map` Map
+//
+//
+// Example of use:
+// $colorMap: (
+//   "blue": (
+//     "base": #000,
+//   ),
+//   "orange": (
+//     "light": #fff,
+//   )
+// );
+// getColor('blue.base');
+// Output: #000
+//
+// Dependencies:
+// deep-map-check, deep-map-get, str-explode
+//
+// @return color
+// ---------------------------------------------------------
+
+@function getColor($key: '', $map: $colorMap) {
+	$color: get($key, $map);
+
+	@return $color;
+}
+
+// ---------------------------------------------------------
+// getFontWeight
+// function specifically to get the font weight from fontWeight Map
+// dot notation as the key argument
+//
+// Required arguments:
+// `$key` String
+//
+// Optional arguments:
+// `$map` Map
+//
+// getFontWeight('thin');
+// Output: 300
+//
+// Dependencies:
+// deep-map-check, deep-map-get, str-explode
+//
+// @return color
+// ---------------------------------------------------------
+
+@function getFontSize($key: '', $map: $fontSize) {
+	$size: get('#{$key}.font-size', $map);
+
+	@return $size;
+}
+
+@function getSpacing($key: '', $map: $spacing) {
+	$space: get($key, $map);
+
+	@return $space;
+}
+
+@function getSpacingName($space) {
+	@if $space < 0 {
+		@return 'neg#{$space}x';
+	} @else {
+		@return '#{$space}x';
+	}
+}

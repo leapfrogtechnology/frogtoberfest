@@ -1,0 +1,11 @@
+.social-icons {
+	list-style: none;
+
+	a {
+		color: getColor('white.base');
+
+		&:hover {
+			color: getColor('primary.base');
+		}
+	}
+}

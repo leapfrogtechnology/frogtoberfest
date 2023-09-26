@@ -1,0 +1,35 @@
+// Base Color
+$white: #ffffff !default;
+$black: #000000 !default;
+
+$primary: #fdcd13 !default;
+
+$colorMap: (
+	'white': (
+		'base': $white,
+	),
+	'black': (
+		'base': $black,
+	),
+	'primary': (
+		'base': $primary,
+		'light': #544406,
+	),
+
+	'grey': (
+		'dark': #08050b,
+		'base': #201d19,
+		'light': #2b2722,
+	),
+
+	'text': (
+		'dark': #332904,
+		'base': #d7d7d7,
+		'input': #989898,
+	),
+);
+
+// @@ This color map is used for Buttons and Backgrounds
+$theme-colors: (
+	'primary': $primary,
+);

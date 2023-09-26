@@ -1,0 +1,48 @@
+.accordion {
+	@include mq('lg') {
+		max-width: 10 00px;
+	}
+	.accordion-content {
+		overflow: hidden;
+		header {
+			padding-top: getSpacing('6x');
+			padding-bottom: getSpacing('4x');
+			border-top: 1px solid getColor('primary.base');
+			cursor: pointer;
+		}
+
+		&.is-open {
+			padding-bottom: 10px;
+
+			.icon {
+				color: getColor('primary.base');
+				border-color: getColor('primary.base');
+			}
+		}
+
+		&-title {
+			font-size: rem(24);
+			font-weight: 500;
+			font-family: $font-inter;
+		}
+
+		&-description {
+			height: 0;
+			font-size: 1rem;
+			transition: height 0.4s ease;
+		}
+	}
+
+	.icon {
+		font-size: rem(14);
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		border-radius: 50%;
+		border: 2px solid #737373;
+		color: #737373;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}

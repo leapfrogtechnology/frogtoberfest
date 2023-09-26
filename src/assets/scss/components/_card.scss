@@ -1,0 +1,13 @@
+.card {
+	display: flex;
+	gap: getSpacing('6x');
+	background: getColor('grey.light');
+	padding: getSpacing('6x');
+	border-radius: 8px;
+	line-height: normal;
+	height: 100%;
+
+	@include mq('md') {
+		display: block;
+	}
+}

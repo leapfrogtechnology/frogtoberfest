@@ -1,0 +1,37 @@
+.btn {
+	padding: getSpacing('4x');
+	border: none;
+	font-size: rem(20);
+	cursor: pointer;
+	outline: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+
+	border-radius: 4px;
+	background-color: transparent;
+	position: relative;
+	transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+	font-family: $font-inter;
+
+	&.btn-link {
+		background: transparent;
+		color: getColor('white.base');
+		&:hover {
+			background: getColor('grey.light');
+			color: getColor('white.base');
+		}
+	}
+
+	@each $theme-color, $color in $theme-colors {
+		&-#{$theme-color} {
+			background-color: $color;
+			color: getColor('text.dark');
+
+			&:hover {
+				background: darken($color, 10%);
+			}
+		}
+	}
+}

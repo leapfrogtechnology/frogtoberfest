@@ -1,0 +1,31 @@
+.banner {
+	padding-bottom: 85px;
+	@include mq('md') {
+		padding-bottom: 193px;
+	}
+	h1 {
+		span {
+			font-family: 'Merriweather';
+			text-shadow: 1px -3px 0px #bf9b0c;
+			font-size: 100px;
+			font-style: italic;
+			font-weight: 400;
+			line-height: 120%;
+			@include mq('md') {
+				font-size: rem(200);
+			}
+		}
+	}
+
+	@include e('sub-title') {
+		max-width: 500px;
+	}
+
+	@include e('buttons') {
+		justify-content: center;
+
+		@include mq('lg') {
+			justify-content: start;
+		}
+	}
+}

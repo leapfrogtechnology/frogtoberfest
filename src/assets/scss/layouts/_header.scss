@@ -1,0 +1,29 @@
+.header {
+	&.sticky {
+		position: sticky;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 99;
+		background: getColor('grey.base');
+		padding: 12px !important;
+		animation: slideIn 0.6s ease-in-out forwards;
+	}
+}
+
+.logo {
+	max-width: 175px;
+	@include mq('md') {
+		max-width: fit-content;
+	}
+}
+
+@keyframes slideIn {
+	0% {
+		transform: translateY(-100px);
+	}
+
+	100% {
+		transform: translateY(0);
+	}
+}

@@ -1,0 +1,72 @@
+@mixin createClasses($maps...) {
+	@each $map in $maps {
+		$propertyName: map-get($map, 'name');
+		$prefix: map-get($map, 'prefix');
+		$responsive: map-get($map, 'responsive');
+
+		@each $value, $key in map-get($map, 'values') {
+			@if ($prefix) {
+				.#{$prefix}-#{$value} {
+					#{$propertyName}: #{$key};
+				}
+			}
+			@if ($prefix == 'wrap') {
+				.#{$propertyName}-#{$value} {
+					flex-wrap: #{$value};
+				}
+			} @else {
+				.#{$propertyName}-#{$value} {
+					#{$propertyName}: #{$key};
+				}
+			}
+
+			@if ($responsive) {
+				@each $breakpoint, $breakpointVal in $grid-breakpoints {
+					@if $breakpoint != 'xs' {
+						@include mq($breakpoint) {
+							@if ($prefix) {
+								.#{$prefix}-#{$breakpoint}-#{$value} {
+									#{$propertyName}: #{$key};
+								}
+							}
+							@if ($prefix == 'wrap') {
+								.#{$propertyName}-#{$value} {
+									flex-wrap: #{$value};
+								}
+							} @else {
+								.#{$propertyName}-#{$breakpoint}-#{$value} {
+									#{$propertyName}: #{$key};
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@include createClasses(
+	$align-content,
+	$align-items,
+	$align-self,
+	$border-radius,
+	$box-shadow,
+	$direction,
+	$display,
+	$grow,
+	$height,
+	$justify-content,
+	$order,
+	$text-alignment,
+	$width,
+	$wrap,
+	$font-weight,
+	$text-decoration,
+	$text-transform,
+	$font-style,
+	$max-width,
+	$text-size,
+	$line-height,
+	$white-space
+);

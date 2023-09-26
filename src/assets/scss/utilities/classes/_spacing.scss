@@ -1,0 +1,134 @@
+@each $breakpointName, $breakpointVal in $grid-breakpoints {
+	@if $breakpointName != 'xs' {
+		@include mq($breakpointVal) {
+			@each $prop, $abbrev in (margin: m, padding: p) {
+				@each $size, $length in $spacing {
+					.#{$abbrev}-#{$breakpointName}-#{$size} {
+						#{$prop}: $length !important;
+					}
+					.#{$abbrev}t-#{$breakpointName}-#{$size},
+					.#{$abbrev}y-#{$breakpointName}-#{$size} {
+						#{$prop}-top: $length !important;
+					}
+					.#{$abbrev}r-#{$breakpointName}-#{$size},
+					.#{$abbrev}x-#{$breakpointName}-#{$size} {
+						#{$prop}-right: $length !important;
+					}
+					.#{$abbrev}b-#{$breakpointName}-#{$size},
+					.#{$abbrev}y-#{$breakpointName}-#{$size} {
+						#{$prop}-bottom: $length !important;
+					}
+					.#{$abbrev}l-#{$breakpointName}-#{$size},
+					.#{$abbrev}x-#{$breakpointName}-#{$size} {
+						#{$prop}-left: $length !important;
+					}
+
+					.gutter-#{$breakpointName}-#{$size},
+					.gutter-x-#{$breakpointName}-#{$size} {
+						--gutter-x: #{$length};
+					}
+
+					.gutter-#{$breakpointName}-#{$size},
+					.gutter-y-#{$breakpointName}-#{$size} {
+						--gutter-y: #{$length};
+					}
+
+					.gap-#{$breakpointName}-#{$size},
+					.gap-x-#{$breakpointName}-#{$size} {
+						gap: #{$length};
+					}
+
+					.gap-#{$breakpointName}-#{$size},
+					.gap-y-#{$breakpointName}-#{$size} {
+						gap: #{$length};
+					}
+				}
+			}
+			// Some special margin utils
+			.m-#{$breakpointName}-auto {
+				margin: auto !important;
+			}
+			.mt-#{$breakpointName}-auto,
+			.my-#{$breakpointName}-auto {
+				margin-top: auto !important;
+			}
+			.mr-#{$breakpointName}-auto,
+			.mx-#{$breakpointName}-auto {
+				margin-right: auto !important;
+			}
+			.mb-#{$breakpointName}-auto,
+			.my-#{$breakpointName}-auto {
+				margin-bottom: auto !important;
+			}
+			.ml-#{$breakpointName}-auto,
+			.mx-#{$breakpointName}-auto {
+				margin-left: auto !important;
+			}
+		}
+	} @else {
+		@each $prop, $abbrev in (margin: m, padding: p) {
+			@each $size, $length in $spacing {
+				.#{$abbrev}-#{$size} {
+					#{$prop}: $length !important;
+				}
+				.#{$abbrev}t-#{$size},
+				.#{$abbrev}y-#{$size} {
+					#{$prop}-top: $length !important;
+				}
+				.#{$abbrev}r-#{$size},
+				.#{$abbrev}x-#{$size} {
+					#{$prop}-right: $length !important;
+				}
+				.#{$abbrev}b-#{$size},
+				.#{$abbrev}y-#{$size} {
+					#{$prop}-bottom: $length !important;
+				}
+				.#{$abbrev}l-#{$size},
+				.#{$abbrev}x-#{$size} {
+					#{$prop}-left: $length !important;
+				}
+
+				.gutter-#{$size},
+				.gutter-x-#{$size} {
+					--gutter-x: #{$length};
+				}
+
+				.gutter-#{$size},
+				.gutter-y-#{$size} {
+					--gutter-y: #{$length};
+				}
+
+				.gap-#{$size},
+				.gap-x-#{$size} {
+					gap: #{$length};
+				}
+
+				.gap-#{$size},
+				.gap-y-#{$size} {
+					gap: #{$length};
+				}
+			}
+
+			// Some special margin utils
+			.m-auto {
+				margin: auto !important;
+			}
+			.mt-auto,
+			.my-auto {
+				margin-top: auto !important;
+			}
+			.mr-auto,
+			.mx-auto {
+				margin-right: auto !important;
+			}
+			.mb-auto,
+			.my-auto {
+				margin-bottom: auto !important;
+			}
+			.ml-auto,
+			.mx-auto {
+				margin-left: auto !important;
+			}
+		}
+	}
+}

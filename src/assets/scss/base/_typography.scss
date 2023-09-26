@@ -1,0 +1,47 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: $font-antonio;
+	line-height: 1;
+	color: getColor('primary.base');
+}
+
+h1 {
+	@include getFontSize('h1');
+}
+
+h2 {
+	@include getFontSize('h2');
+	text-transform: uppercase;
+}
+
+h3 {
+	@include getFontSize('h3');
+}
+
+h4 {
+	@include getFontSize('h4');
+}
+
+h5 {
+	@include getFontSize('h5');
+}
+
+h6 {
+	@include getFontSize('h6');
+}
+
+.font-figtree {
+	font-family: $font-figtree;
+}
+
+.font-inter {
+	font-family: $font-inter;
+}
+
+.font-antonio {
+	font-family: $font-antonio;
+}

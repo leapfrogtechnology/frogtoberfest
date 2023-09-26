@@ -1,0 +1,34 @@
+/* =====================================
+
+This mixin will extract  font size from $fontSize map (Map found at /variables/typography.scss)
+
+$fontSize -> header -> {key}
+{ $enableLineHeight } boolean to toggle lineheight
+
+@@Usage
+h1{
+	@include getFontSize("h1")
+}
+Note: make sure key exists in the map 
+=========================================*/
+
+@mixin getFontSize($name, $fs-breakpoints: $grid-breakpoints) {
+	@each $key, $val in $font-sizes {
+		@if $name==$key {
+			@each $nestKey, $nestVal in $val {
+				@if $nestKey == 'xs' {
+					font-size: $nestVal;
+				} @else if ($generate-responsive-classes == true) {
+					@if map-has-key($fs-breakpoints, $nestKey) {
+						$nestKey: map-get($fs-breakpoints, $nestKey);
+						@include mq($nestKey) {
+							font-size: $nestVal;
+						}
+					} @else {
+						@error "The name of Variable '#{$nestKey}' and breakpoint property for Typography is not matched";
+					}
+				}
+			}
+		}
+	}
+}

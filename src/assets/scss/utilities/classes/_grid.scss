@@ -1,0 +1,163 @@
+// ==========================================================================
+// Grid
+// Generates grid
+// ==========================================================================
+
+// Common properties for container class
+%common-container {
+	padding-right: calc($gutter-width / 2);
+	padding-left: calc($gutter-width / 2);
+	margin-right: auto;
+	margin-left: auto;
+}
+
+// // Container mixin
+// // $container-name - class name of container
+@mixin make-container($container-name: $grid-container-fluid) {
+	.#{$container-name} {
+		width: 100%;
+		@extend %common-container;
+	}
+}
+
+// Container mixin - for defining container widths in each breakpoints
+// $breakpoints    - map with respective breakpoint names and values
+// $max-width      - map with respective breakpoint names and values for container maxwidths
+// Make changes to $container-max-widths map to make changes in container width
+
+@mixin make-container-fixed-width(
+	$breakpoints: $grid-breakpoints,
+	$max-width: $container-max-widths,
+	$container-name: $grid-container
+) {
+	@each $size-name, $container-width in $max-width {
+		@include mq($size-name) {
+			.#{$container-name} {
+				width: 100%;
+				max-width: map-get($max-width, $size-name);
+			}
+		}
+	}
+	.#{$container-name} {
+		@extend %common-container;
+	}
+}
+
+@mixin make-row($row-name: $row-name, $gutter: $gutter-width) {
+	.#{$row-name} {
+		--gutter-x: #{$gutter};
+		--gutter-y: 0;
+		display: flex;
+		flex-wrap: wrap;
+		margin-right: calc(-0.5 * var(--gutter-x));
+		margin-left: calc(-0.5 * var(--gutter-x));
+		margin-top: calc(-1 * var(--gutter-y));
+
+		> * {
+			@include make-col-ready();
+		}
+	}
+}
+
+@mixin make-col-ready() {
+	flex-shrink: 0;
+	// width: 100%;
+	max-width: 100%; // Prevent `.col-auto`, `.col` (& responsive variants) from breaking out the grid
+	padding-right: calc(var(--gutter-x) * 0.5);
+	padding-left: calc(var(--gutter-x) * 0.5);
+	margin-top: var(--gutter-y);
+}
+
+@mixin make-col($size: false, $columns: $grid-columns) {
+	@if $size {
+		flex: 0 0 auto;
+		width: percentage(calc($size / $columns));
+	} @else {
+		flex: 1 1 0;
+		max-width: 100%;
+	}
+}
+
+@mixin make-col-auto() {
+	flex: 0 0 auto;
+	width: auto;
+}
+
+@mixin make-col-offset($size, $columns: $grid-columns) {
+	$num: calc($size / $columns);
+	margin-left: if($num == 0, 0, percentage($num));
+}
+
+@mixin row-cols($count) {
+	> * {
+		flex: 0 0 auto;
+		width: calc(100% / $count);
+	}
+}
+
+@mixin make-grid-columns(
+	$columns: $grid-count,
+	$gutter: $gutter-width,
+	$breakpoints: $grid-breakpoints
+) {
+	@each $breakpointName, $breakpointVal in $breakpoints {
+		@if $breakpointName == 'xs' {
+			.col {
+				flex: 1 0 0%;
+			}
+		} @else {
+			@include mq($breakpointName) {
+				.col-#{$breakpointName} {
+					flex: 1 0 0%;
+				}
+			}
+		}
+		@if $breakpointName == 'xs' {
+			.col-auto {
+				@include make-col-auto();
+			}
+		} @else {
+			.col-#{$breakpointName}-auto {
+				@include make-col-auto();
+			}
+		}
+
+		@if $columns > 0 {
+			@for $i from 1 through $columns {
+				@if $breakpointName == 'xs' {
+					.col-#{$i} {
+						@include make-col($i, $columns);
+					}
+				} @else {
+					@include mq($breakpointName) {
+						.col-#{$breakpointName}-#{$i} {
+							@include make-col($i, $columns);
+						}
+					}
+				}
+			}
+
+			// `$columns - 1` because offsetting by the width of an entire row isn't possible
+			@for $i from 0 through ($columns - 1) {
+				@if not($i == 0) {
+					// Avoid emitting useless .offset-0
+					@if $breakpointName == 'xs' {
+						.offset-#{$i} {
+							@include make-col-offset($i, $columns);
+						}
+					} @else {
+						.offset-#{$breakpointName}-#{$i} {
+							@include make-col-offset($i, $columns);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@include make-container($grid-container-fluid);
+@include make-container;
+@include make-container-fixed-width;
+@include make-grid-columns;
+@include make-row;

@@ -1,0 +1,60 @@
+@mixin transition(
+	$property: all,
+	$duration: 0.2s,
+	$timing: $ease--smooth-fade,
+	$delay: ''
+) {
+	transition: $property $duration $timing unquote($delay);
+}
+
+@mixin centralize($direction: 'horizontal') {
+	position: absolute;
+	@if $direction == 'horizontal' {
+		transform: translateX(-50%);
+		left: 50%;
+	} @else if $direction == 'vertical' {
+		transform: translateY(-50%);
+		top: 50%;
+	} @else {
+		@error ('$direction should not be any other than "horizontal" or "vertical"');
+	}
+}
+
+//
+@mixin display-flex($dir: 'row', $align: null, $justify: null) {
+	display: flex;
+	flex-direction: $dir;
+	@if ($align) {
+		align-items: $align;
+	}
+	@if ($justify) {
+		justify-content: $justify;
+	}
+}
+
+//mixins for input placeholder
+@mixin placeholder {
+	&::-webkit-input-placeholder {
+		@content;
+	}
+	&:-moz-placeholder {
+		@content;
+	}
+	&::-moz-placeholder {
+		@content;
+	}
+	&:-ms-input-placeholder {
+		@content;
+	}
+	&::placeholder {
+		@content;
+	}
+}
+
+//performs truncation on any text that overflows its
+//containing element and adds an ellipsis (…) to the end.
+@mixin text-shorten {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

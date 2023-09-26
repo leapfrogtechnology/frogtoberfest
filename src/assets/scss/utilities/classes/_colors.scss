@@ -1,0 +1,13 @@
+@if ($generate-color-classes) {
+	@each $name, $color in $colorMap {
+		@each $colorKey, $colorValue in $color {
+			.color-#{$name}--#{$colorKey} {
+				color: $colorValue;
+			}
+
+			.bg-#{$name}--#{$colorKey} {
+				background-color: $colorValue;
+			}
+		}
+	}
+}

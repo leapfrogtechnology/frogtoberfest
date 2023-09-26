@@ -1,0 +1,23 @@
+// Custom font url
+$font-url--google: 'https://fonts.googleapis.com/css2?family=Antonio:wght@300;400;500;600&family=Figtree:wght@300;400;500;600&family=Inter:wght@300;400;600&family=Merriweather:ital@1&display=swap' !default;
+
+// Font Declaration
+$font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+	Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+
+$font-figtree: 'Figtree', $font-sans;
+$font-inter: 'Inter';
+$font-antonio: 'Antonio';
+
+$font-sizes: (
+	h1: (
+		xs: rem(40),
+		md: rem(80),
+	),
+	h2: (
+		xs: rem(48),
+	),
+	h3: (
+		xs: rem(32),
+	),
+);

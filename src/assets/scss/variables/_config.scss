@@ -1,0 +1,22 @@
+// ==========================================================================
+// Config
+// Define variables, maps and fonts at this partial.
+// ==========================================================================
+
+// Base font size
+
+$base__header__line: 1.25 !default;
+$base__body__line: 1.5 !default;
+$base__font-size: 16 !default; //don't add unit here. Unit will added from the function.
+
+//Default Spacing Unit
+$defaultSpacing: rem(4);
+
+// ==========================================================================
+// Features
+// Set true to enable features
+// ==========================================================================
+
+// Utility Classes
+$generate-color-classes: true;
+$generate-responsive-classes: true;

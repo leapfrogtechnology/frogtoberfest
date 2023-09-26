@@ -1,0 +1,80 @@
+// ==========================================================================
+// Base
+// A Base rule is applied to HTML element using an element selector, a
+// descendent selector, or a child selector, along with any pseudo-classes.
+// We cannot reference any element defined here by their respective class or ID name.
+// This defines the default styling for how that element should look.
+// Changes in style other than default should be overwritten using other partials.
+// ==========================================================================
+
+// Reset CSS
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+// Base Code
+html,
+body {
+	font-size: 100%;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	font-family: $font-figtree;
+	font-size: rem(20);
+	text-rendering: optimizeLegibility;
+	line-height: $base__body__line;
+	background: getColor('grey.dark');
+	color: getColor('white.base');
+}
+
+a {
+	outline: none;
+	color: getColor('primary.base');
+	text-decoration: none;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	vertical-align: top;
+
+	&.img-full {
+		width: 100%;
+	}
+}
+
+ul {
+	li {
+		margin-bottom: getSpacing('2x');
+	}
+	&.has-bullet {
+		list-style: none;
+		li {
+			position: relative;
+			padding-left: 20px;
+
+			&:before {
+				content: '';
+				background: getColor('primary.base');
+				border-radius: 50%;
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				margin-right: 20px;
+
+				position: absolute;
+				left: 0;
+				top: 10px;
+			}
+		}
+	}
+}
+
+.hide-sm {
+	@include mq('md') {
+		display: none !important;
+	}
+}

@@ -1,0 +1,12 @@
+$spacing: ();
+$spaceFrom: -4;
+$spaceTill: 50;
+
+@for $i from $spaceFrom through $spaceTill {
+	$spacing: map-merge(
+		$spacing,
+		(
+			getSpacingName($i): $defaultSpacing * $i,
+		)
+	);
+}

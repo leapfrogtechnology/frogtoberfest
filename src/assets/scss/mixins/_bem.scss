@@ -1,0 +1,18 @@
+//BEM(Block Element Modifier) Naming Convention
+// For Element
+// $element  - Just the element name for the parent block (doesn't require the parent Block name)
+// @usage    - `.Nav {@include e(item){...}}`
+@mixin e($element) {
+  &__#{$element} {
+    @content;
+  }
+}
+
+// For Modifier
+// $modifier  - Just the modifier name for the parent block or element
+// @usage     - `.Nav {@include e(item) {@include m(active) {...}}}`
+@mixin m($modifier) {
+  &--#{$modifier} {
+    @content;
+  }
+}
