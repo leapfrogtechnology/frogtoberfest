@@ -247,7 +247,7 @@ class PullRequests extends Component {
 
     return (
       <Fragment>
-        <div className='flex justify-center content-center '>
+        <div className='flex justify-center content-center mt-8'>
 
         <div className="text-center text-white ">
           <UserInfo
