@@ -247,24 +247,24 @@ class PullRequests extends Component {
 
     return (
       <Fragment>
-        <div className="text-center text-white">
-          <ShareButtons username={username} pullRequestCount={data.items.length} />
-          <div className="flex flex-wrap justify-center content-center flex-col pb-4">
-            <MotivationalMessage pullRequestCount={data.items.length} otherReposCount={this.state.otherReposCount} />
-          </div>
+        <div className='flex justify-center content-center '>
+
+        <div className="text-center text-white ">
           <UserInfo
             username={username}
             userImage={userDetail.items[0].avatar_url}
             pullRequestCount={data.items.length}
             otherReposCount={this.state.otherReposCount}
-          />
+            />
+          <ShareButtons username={username} pullRequestCount={data.items.length} />
         </div>
-        <div className="rounded mx-auto shadow overflow-hidden w-5/6 lg:w-1/2 mb-4">
+        <div className="rounded  shadow overflow-hidden  mb-4 ml-10">
           {data.items.length > 0 &&
             data.items.map((pullRequest, i) => <PullRequest pullRequest={pullRequest} key={i} />)}
         </div>
-        {!isComplete && <IssuesLink />}
-        <MeLinkInfo username={username} />
+        </div>
+        {/* {!isComplete && <IssuesLink />} */}
+        {/* <MeLinkInfo username={username} /> */}
       </Fragment>
     );
   };

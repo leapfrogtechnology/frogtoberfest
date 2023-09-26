@@ -12,10 +12,10 @@ const checklistItems = [
  */
 const SiteDetails = () => (
   <div className="md:py-4 mb-6">
-    <div className="rounded mx-auto shadow w-3/4 sm:w-1/2">
+    <div className="rounded mx-auto shadow w-3/4 sm:w-1/2 card">
       <div className="px-6 py-4">
         <div className="font-bold mb-4">
-          <p className="mb-4 leading-normal text-lg mb-1">
+          <p className="mb-4 leading-normal text-lg mb-1 card__title">
             Frogtoberfest is a spin-off of Hacktoberfest; a month-long Open Source contribution challenge for open
             source enthusiast.
           </p>
@@ -23,21 +23,9 @@ const SiteDetails = () => (
         <ul className="p-0">
           {checklistItems.map((item, index) => (
             <li className="flex leading-tight items-center mb-3" key={index}>
-              <div className="rounded-full fill-current text-green">
-                <svg
-                  className="w-6 h-6 align-middle"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
+              <div className="circle">
               </div>
-              <span className="text-grey-darker text-m ml-2">{item}</span>
+              <span className="text-grey-darker text-m ml-2 card__text">{item}</span>
             </li>
           ))}
         </ul>

@@ -90,7 +90,7 @@ class UsernameForm extends Component {
 
     return (
       <div className="pb-8 pt-4 sm:pt-10 text-white">
-        {isComplete ? <CompletionMessage /> : <TimeMessage />}
+        {/* {isComplete ? <CompletionMessage /> : <TimeMessage />} */}
 
         <form
           className="flex mx-auto w-3/4 sm:w-1/2"

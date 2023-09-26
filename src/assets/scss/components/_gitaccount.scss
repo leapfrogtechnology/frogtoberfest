@@ -1,0 +1,9 @@
+.gitaccount{
+    @include e(profile){
+        width:252px;
+    }
+
+    @include e(commit){
+        background-color: getColor('grey.20');
+    }
+}

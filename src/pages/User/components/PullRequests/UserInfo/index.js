@@ -5,12 +5,15 @@ import { TOTAL_PR_COUNT, TOTAL_OTHER_PR_COUNT } from 'config';
 import PullRequestCount from './PullRequestCount';
 import ResultMessage from './ResultMessage';
 import UserImage from './UserImage';
+import MotivationalMessage from './MotivationalMessage';
 
 const UserInfo = ({ username, userImage, pullRequestCount, otherReposCount }) => (
-  <div className="pb-2 flex flex-wrap justify-center content-center rounded mx-auto overflow-hidden w-5/6 lg:w-1/2">
+  <div className="pb-2 flex flex-column flex-wrap justify-center content-center rounded mx-auto overflow-hidden w-5/6 lg:w-1/2 gitaccount gitaccount__profile">
     <div className="mx-4">{userImage && <UserImage userImage={userImage} username={username} />}</div>
-    <div className="flex flex-col  flex-wrap justify-center content-center">
-      <div className="flex flex-wrap justify-center content-center">
+    <div className="flex flex-wrap justify-center content-center flex-col pb-4">
+            <MotivationalMessage pullRequestCount={pullRequestCount} otherReposCount={otherReposCount} />
+          </div>
+      <div className="flex flex-wrap justify-center content-center gap-y-10">
         <div
           className="flex flex-wrap justify-center content-center flex-col"
           style={pullRequestCount >= TOTAL_PR_COUNT ? completeMark : incompleteMark}
@@ -27,7 +30,6 @@ const UserInfo = ({ username, userImage, pullRequestCount, otherReposCount }) =>
         </div>
       </div>
     </div>
-  </div>
 );
 
 const incompleteMark = {

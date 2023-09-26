@@ -20,7 +20,7 @@ const SiteHeader = () => {
                         <nav className='nav p-6x pt-10x p-md-0x'>
                             <ul className='d-flex flex-column flex-md-row gap-x-md-12x gap-y-6x'>
                                 <li className='nav__item'><a className='nav__link' href="#participation">Participation</a></li>
-                                <li className='nav__item'><Link className='nav__link' to="/leaderboard">Leaderboard</Link></li>
+                                {/* <li className='nav__item'><Link className='nav__link' to="/leaderboard">Leaderboard</Link></li> */}
                                 <li className='nav__item'><Link className='nav__link' to="/checker">Checker</Link></li>
                                 <li className='nav__item'><a className='nav__link' href="#swag">SWAG</a></li>
                                 <li className='nav__item'><a className='nav__link' href="#faq">FAQs</a></li>

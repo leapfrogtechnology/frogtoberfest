@@ -5,8 +5,8 @@ import { formatDate } from 'utils/date';
 
 const PullRequestInfo = ({ pullRequest }) => (
   <div>
-    <div className="text-grey-darker">
-      <a className="text-grey-darker font-semibold link no-underline hover:underline" href={pullRequest.user.html_url}>
+    <div className="text-white-darker">
+      <a className="text-white font-semibold link no-underline hover:underline" href={pullRequest.user.html_url}>
         {pullRequest.user.login}
       </a>{' '}
       submitted a pull request{' '}
@@ -19,7 +19,7 @@ const PullRequestInfo = ({ pullRequest }) => (
         {pullRequest.repository_url.split('repos/')[1]}#{pullRequest.number}
       </a>
     </div>
-    <div className="text-grey-dark">
+    <div className="text-white font-light text-sm">
       {pullRequest.title} on {formatDate(pullRequest.created_at)}
     </div>
   </div>

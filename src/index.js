@@ -2,6 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './tailwind.css';
-import './index.css';
+import './assets/scss/style.scss';
 
 ReactDOM.render(<App />, document.querySelector('#root'));

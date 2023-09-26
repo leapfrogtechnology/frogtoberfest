@@ -45,3 +45,18 @@ h6 {
 .font-antonio {
 	font-family: $font-antonio;
 }
+
+.text-primary{
+	color:getColor('yellow.30');
+}
+
+.fs-32{
+	font-size:32px;
+	line-height: 35.2px;
+}
+
+.fs-12{
+	font-size: 12px;
+	line-height: 13.2px;
+	font-weight: 400;
+}

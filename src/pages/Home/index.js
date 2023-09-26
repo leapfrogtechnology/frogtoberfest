@@ -1,10 +1,8 @@
-import React, { Fragment, useEffect } from 'react';
+import React,{ Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 import 'assets/css/style.css';
 
-import Logo from 'assets/images/logo.svg';
-import Img1 from 'assets/images/img-1.png';
 import Icon1 from 'assets/images/icon-1.svg';
 import Icon2 from 'assets/images/icon-2.svg';
 import Icon3 from 'assets/images/icon-3.svg';
@@ -12,6 +10,7 @@ import Icon4 from 'assets/images/icon-4.svg';
 import Icon5 from 'assets/images/icon-5.svg';
 import Icon6 from 'assets/images/icon-6.svg';
 import Icon7 from 'assets/images/icon-7.svg';
+import Img1 from 'assets/images/img-1.png';
 import Img2 from 'assets/images/img-2.png';
 import Img3 from 'assets/images/img-3.png';
 import Img4 from 'assets/images/img-4.png';
@@ -20,6 +19,7 @@ import Img6 from 'assets/images/img-6.png';
 import Img7 from 'assets/images/img-7.png';
 import Img8 from 'assets/images/img-8.png';
 import Img9 from 'assets/images/img-9.png';
+import Logo from 'assets/images/logo.svg';
 import SiteHeader from 'components/SiteHeader';
 
 const Home = () => {
@@ -141,7 +141,7 @@ const Home = () => {
 
                 <div className="d-flex gap-6x mt-6x m-lg-0x banner__buttons">
                   <button className='btn btn-primary'><a className='text-black' href="#participation">Participate</a></button>
-                  <button className='btn btn-link'><Link className='text-white' to="/leaderboard">Leaderboard</Link></button>
+                  {/* <button className='btn btn-link'><Link className='text-white' to="/leaderboard">Leaderboard</Link></button> */}
                 </div>
               </div>
 
@@ -459,11 +459,11 @@ const Home = () => {
                 <div className="">
                   <p className='mb-4x fw-300'>Follow us at our socials</p>
                   <ul className='social-icons d-flex gap-6x'>
-                    <li><a href="/">
+                    <li><a href="https://www.facebook.com/lftechnology?mibextid=LQQJ4d" target='_blank'>
                       <i className="fa-brands fa-facebook"></i>
                     </a></li>
-                    <li><a href="/"> <i className="fa-brands fa-twitter"></i></a></li>
-                    <li><a href="/"> <i className="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="https://x.com/lftechnology?s=21" target='_blank'> <i className="fa-brands fa-twitter"></i></a></li>
+                    <li><a href="https://instagram.com/lftechnology?igshid=MzRlODBiNWFlZA==" target='_blank'> <i className="fa-brands fa-instagram"></i></a></li>
                   </ul>
                 </div>
 

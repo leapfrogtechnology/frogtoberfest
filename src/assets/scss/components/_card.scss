@@ -1,11 +1,20 @@
 .card {
 	display: flex;
 	gap: getSpacing('6x');
-	background: getColor('grey.light');
+	background: getColor('yellow.20');
 	padding: getSpacing('6x');
 	border-radius: 8px;
 	line-height: normal;
 	height: 100%;
+
+	@include e(title){
+		color:getColor('black.base');
+	}
+
+	@include e(text){
+		color:getColor('black.base');
+		font-weight: 300;
+	}
 
 	@include mq('md') {
 		display: block;

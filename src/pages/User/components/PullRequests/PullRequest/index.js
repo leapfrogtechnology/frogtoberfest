@@ -10,7 +10,7 @@ const ISSUE_STATUS = {
 };
 
 const PullRequest = ({ pullRequest }) => (
-  <div className={`bg-white leading-normal p-4 flex border-b border-grey break-words`}>
+  <div className={`bg-white leading-normal p-4 flex  break-words gitaccount__commit`}>
     <MergeStatus open={pullRequest.state === ISSUE_STATUS.OPEN} merged={pullRequest.state === ISSUE_STATUS.CLOSED} />
     <PullRequestInfo pullRequest={pullRequest} />
   </div>
