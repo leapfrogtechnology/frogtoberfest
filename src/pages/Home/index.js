@@ -1,30 +1,30 @@
 import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-import "assets/css/style.css"
+import 'assets/css/style.css';
 
-import Logo from "assets/images/logo.svg"
-import Img1 from "assets/images/img-1.png"
-import Icon1 from "assets/images/icon-1.svg"
-import Icon2 from "assets/images/icon-2.svg"
-import Icon3 from "assets/images/icon-3.svg"
-import Icon4 from "assets/images/icon-4.svg"
-import Icon5 from "assets/images/icon-5.svg"
-import Icon6 from "assets/images/icon-6.svg"
-import Icon7 from "assets/images/icon-7.svg"
-import Img2 from "assets/images/img-2.png"
-import Img3 from "assets/images/img-3.png"
-import Img4 from "assets/images/img-4.png"
-import Img5 from "assets/images/img-5.png"
-import Img6 from "assets/images/img-6.png"
-import Img7 from "assets/images/img-7.png"
-import Img8 from "assets/images/img-8.png"
-import Img9 from "assets/images/img-9.png"
+import Logo from 'assets/images/logo.svg';
+import Img1 from 'assets/images/img-1.png';
+import Icon1 from 'assets/images/icon-1.svg';
+import Icon2 from 'assets/images/icon-2.svg';
+import Icon3 from 'assets/images/icon-3.svg';
+import Icon4 from 'assets/images/icon-4.svg';
+import Icon5 from 'assets/images/icon-5.svg';
+import Icon6 from 'assets/images/icon-6.svg';
+import Icon7 from 'assets/images/icon-7.svg';
+import Img2 from 'assets/images/img-2.png';
+import Img3 from 'assets/images/img-3.png';
+import Img4 from 'assets/images/img-4.png';
+import Img5 from 'assets/images/img-5.png';
+import Img6 from 'assets/images/img-6.png';
+import Img7 from 'assets/images/img-7.png';
+import Img8 from 'assets/images/img-8.png';
+import Img9 from 'assets/images/img-9.png';
 
 const Home = () => {
-  let lastDate = new Date('2023-10-01');
-  let todayDate = new Date();
-  let dif = Math.abs(lastDate - todayDate) / 1000;
+  const lastDate = new Date('2023-10-01');
+  const todayDate = new Date();
+  const dif = Math.abs(lastDate - todayDate) / 1000;
 
   const countDownClock = (number = 100, format = 'seconds') => {
     const d = document;
@@ -35,6 +35,7 @@ const Home = () => {
     const minute1Element = d.querySelector('#minute-1');
     const minute2Element = d.querySelector('#minute-2');
     let countdown;
+
     convertFormat(format);
 
     function convertFormat(format) {
@@ -56,6 +57,7 @@ const Home = () => {
 
       // For first render
       const secondsLeft = Math.round((then - Date.now()) / 1000);
+
       displayTimeLeft(secondsLeft);
 
       countdown = setInterval(() => {
@@ -63,6 +65,7 @@ const Home = () => {
 
         if (secondsLeft <= 0) {
           clearInterval(countdown);
+
           return;
         }
 
@@ -88,11 +91,13 @@ const Home = () => {
     const accordionContent = document.querySelectorAll('.accordion-content');
 
     accordionContent.forEach((item, index) => {
-      let header = item.querySelector('header');
+      const header = item.querySelector('header');
+
       header.addEventListener('click', () => {
         item.classList.toggle('is-open');
 
-        let description = item.querySelector('.accordion-content-description');
+        const description = item.querySelector('.accordion-content-description');
+
         if (item.classList.contains('is-open')) {
           description.style.height = `${description.scrollHeight}px`;
           item.querySelector('i').classList.replace('fa-plus', 'fa-minus');
@@ -108,7 +113,8 @@ const Home = () => {
       accordionContent.forEach((item2, index2) => {
         if (index != index2) {
           item2.classList.remove('is-open');
-          let descrip = item2.querySelector('.accordion-content-description');
+          const descrip = item2.querySelector('.accordion-content-description');
+
           descrip.style.height = '0px';
           item2.querySelector('i').classList.replace('fa-minus', 'fa-plus');
         }
@@ -116,7 +122,7 @@ const Home = () => {
     }
 
     countDownClock(dif, 'seconds');
-  }, [])
+  }, []);
 
   return (
     <Fragment>
@@ -278,7 +284,7 @@ const Home = () => {
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card">
                   <img className='mb-md-6x' src={Icon7} alt="" />
-                  <p>PRs should not be labeled as ‘invalid.’</p>
+                  <p>PRs should not be labeled as ‘invalid.&apos;</p>
                 </div>
               </div>
             </div>
@@ -295,7 +301,7 @@ const Home = () => {
                   <div className="col-12 col-md-6">
                     <div
                       className="bg-grey--light p-10x radius-base h-100 d-flex align-items-center justify-content-center flex-column">
-                      <div className="font-antonio text-huge lh-normal">100+</div>
+                      <div className="font-antonio text-huge lh-normal">200+</div>
                       <p className='text-lg white-space-nowrap'>Participants</p>
                     </div>
                   </div>
@@ -304,29 +310,22 @@ const Home = () => {
                       <div className="col-6">
                         <div
                           className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
-                          <div className="text-xl font-antonio">500+</div>
+                          <div className="text-xl font-antonio">632</div>
                           <div className="white-space-nowrap">Total PR</div>
                         </div>
                       </div>
                       <div className="col-6">
                         <div
                           className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
-                          <div className="text-xl font-antonio">200+</div>
+                          <div className="text-xl font-antonio">500+</div>
                           <div className="white-space-nowrap">Merge PR</div>
                         </div>
                       </div>
                       <div className="col-6">
                         <div
                           className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
-                          <div className="text-xl font-antonio">100+</div>
-                          <div className="white-space-nowrap">Goodies</div>
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div
-                          className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
                           <div className="text-xl font-antonio">71</div>
-                          <div className="white-space-nowrap">Participants</div>
+                          <div className="white-space-nowrap">Goodies</div>
                         </div>
                       </div>
                     </div>
@@ -344,12 +343,12 @@ const Home = () => {
         <section className='py-16x py-md-34x'>
           <div className="container">
             <h2 className='mb-8x'>Leaps & Bonds</h2>
-            <p className='mb-14x text-lg max-w-985 lh-120'>Whether it’s your first time or the umpteenth, join the conversation
+            <p className='mb-14x text-lg max-w-985 lh-120'>Whether it&apos;s your first time or the umpteenth, join the conversation
               as we
               discuss all
               things
               open-source.
-              We’re bringing in professionals who will share their experiences and tips on contributing to Frogtoberfest.
+              We&apos;re bringing in professionals who will share their experiences and tips on contributing to Frogtoberfest.
             </p>
 
             <div className="row flex-wrap gutter-8x">
@@ -384,14 +383,14 @@ const Home = () => {
           <div className="container">
             <div className="max-w-665 mb-8x">
               <h2 className='mb-8x'>SWAG for you</h2>
-              <p className='text-lg mb-6x'>Frogtoberfest SWAG is waiting for you! Like every Frog-tober, we’re hopping back
+              <p className='text-lg mb-6x'>Frogtoberfest SWAG is waiting for you! Like every Frog-tober, we&apos;re hopping back
                 with
                 exclusive merch and
                 ribbiting perks for all your contributions</p>
               <ul className='has-bullet'>
                 <li>Top 15 contributors receive exclusive Frogtoberfest SWAG.</li>
                 <li>All eligible participants receive a digital certificate of participation.</li>
-                <li>Get featured on Leapfrog's social media and newsletters</li>
+                <li>Get featured on Leapfrog&apos;s social media and newsletters</li>
               </ul>
             </div>
 
@@ -431,60 +430,34 @@ const Home = () => {
               <div className="accordion-content">
                 <header className='d-flex gap-5x'>
                   <span className="accordion-content-title">
-                    What kind of projects can I work on during the hackathon?
+                    What kind of projects can I work on during the Frogtober?
                   </span>
                   <i className="icon fa-solid fa-plus ml-auto"></i>
                 </header>
                 <p className="accordion-content-description mr-lg-15x">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quidem nihil expedita inventore incidunt
-                  minima, modi error voluptatem molestias fugiat at iure provident ipsam totam nam eveniet tenetur. Odio
-                  autem eaque eum ea velit nam quod placeat architecto aut dolore, nemo voluptas aliquam modi atque,
-                  recusandae delectus adipisci blanditiis qui?
+                  During Frogtober, you have the flexibility to work on a wide range of projects. PRs can be made to any public repository on GitHub, allowing you to contribute to various open-source initiatives, from software development and documentation improvements to bug fixes and feature enhancements. Your options are virtually limitless, so you can choose projects that align with your interests, skills, and goals to make a meaningful impact in the open-source community.
                 </p>
               </div>
               <div className="accordion-content">
                 <header className='d-flex gap-5x'>
                   <span className="accordion-content-title">
-                    How do I participate in the hackathon?
-
+                    How do I participate in the Frogtober?
                   </span>
                   <i className="icon fa-solid fa-plus ml-auto"></i>
                 </header>
                 <p className="accordion-content-description mr-lg-15x">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptas sint, earum iure eveniet, tempore
-                  officiis voluptatem voluptates ipsum excepturi asperiores quaerat? Sed ratione necessitatibus voluptatem
-                  perspiciatis dolore facilis libero qui impedit eos atque alias suscipit explicabo in officia doloribus
-                  facere hic deserunt inventore eveniet repudiandae, eum praesentium optio. Nam, dolores quam voluptatem
-                  beatae, rerum natus enim magni quasi explicabo nesciunt possimus praesentium cum repellat. Est saepe
-                  doloribus culpa ipsa sapiente odio modi mollitia qui nam, fuga enim rem maxime nulla. Dolorem, sit
-                  laborum. Voluptates deleniti distinctio vel tempore fugit! Voluptatum aliquam reiciendis consequatur
-                  labore eius illo quia tempora nesciunt cum!
+                  In October 2023, the objective is to create 8 pull requests (PRs) on GitHub. At least 5 of these PRs should target repositories not owned by you, and they must be in public repositories. Ensure that all PRs are valid and adhere to repository guidelines, contributing positively to the open-source community.
                 </p>
               </div>
               <div className="accordion-content">
                 <header className='d-flex gap-5x'>
                   <span className="accordion-content-title">
-                    What are the judging criteria and prizes for the hackathon?
+                    What are the judging criteria for the Frogtober?
                   </span>
                   <i className="icon fa-solid fa-plus ml-auto"></i>
                 </header>
                 <p className="accordion-content-description mr-lg-15x">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores vitae vel ea quae laborum nemo
-                  laboriosam impedit, atque cupiditate nam rerum, rem repellendus totam mollitia et explicabo aut quo, error
-                  placeat maxime! Qui harum eos porro vitae quis, ipsam iste quidem dignissimos nobis voluptatibus tempora,
-                  ullam veritatis optio similique odit!
-                </p>
-              </div>
-              <div className="accordion-content">
-                <header className='d-flex gap-5x'>
-                  <span className="accordion-content-title">
-                    What are the judging criteria and prizes for the hackathon?
-                  </span>
-                  <i className="icon fa-solid fa-plus ml-auto"></i>
-                </header>
-                <p className="accordion-content-description mr-lg-15x">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia sint unde, dolores quod omnis ut,
-                  eligendi deleniti sit vero possimus optio, eveniet dolor quae rerum similique sunt repellendus quasi hic.
+                  The judging criteria for Frogtober are primarily based on active contributions to the event. Participants who meet the above-mentioned criteria, including creating 8 pull requests on GitHub between October 1 and October 31, 2023, with at least 5 targeting repositories not owned by them and ensuring that all PRs are valid, will be considered. The top 15 contributors who fulfill these requirements will become eligible to receive the coveted Frogtoberfest SWAG as a token of recognition for their valuable contributions.
                 </p>
               </div>
             </div>
@@ -501,7 +474,7 @@ const Home = () => {
                   <h3 className='mb-4x'>Subscribe to our newsletter</h3>
                   <p>Join our newsletter community to receive fresh insights, special offers, and exciting updates right
                     in
-                    your inbox. Don't miss out – subscribe now!</p>
+                    your inbox. Don&apos;t miss out – subscribe now!</p>
                 </div>
 
                 <figure className='d-none d-md-block mt-10x'>
@@ -538,7 +511,7 @@ const Home = () => {
 
       <div className="overlay"></div>
     </Fragment >
-  )
+  );
 };
 
 export default Home;
