@@ -299,7 +299,7 @@ const Home = () => {
                       <div className="col-6">
                         <div
                           className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
-                          <div className="text-xl font-antonio">40</div>
+                          <div className="text-xl font-chakra">40</div>
                           <div className="white-space-nowrap font-chakra">Participants</div>
                         </div>
                       </div>
