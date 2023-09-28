@@ -1,9 +1,37 @@
 .gitaccount{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    @include mqmax('lg'){
+        flex-direction: column;
+        align-items: center;
+    }
     @include e(profile){
-        width:252px;
+        width:auto;
+        display: block;
+    }
+    
+    @include e(content){
+        max-width: 700px;
+        max-height:652px;
+        overflow-y: scroll;
+        display: block;
+
+        @include mqmax('sm'){
+            max-width: 100%;
+            margin:0 20px;
+        }
+
+        @include mqmax('md'){
+            max-width: 100%;
+            margin:0 20px;
+        }
+
     }
 
     @include e(commit){
         background-color: getColor('grey.20');
+        
     }
 }

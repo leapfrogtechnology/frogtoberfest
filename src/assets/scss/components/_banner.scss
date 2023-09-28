@@ -1,15 +1,63 @@
 .banner {
 	padding-bottom: 85px;
+
+	&:before{
+		content: '';
+		background-image: url('../../images/blur-bg.png');
+		background-repeat: no-repeat;
+		width: 100%;
+		background-size: cover;
+		height: 100vh;
+		display: block;
+		position: absolute;	
+		z-index: -1;
+		top: 0;
+	}
+
+	@include m(img-fixed){
+		&::before{
+			content: '';
+			height:100%;
+			position: fixed;
+		}
+	}
+
+
 	@include mq('md') {
 		padding-bottom: 193px;
 	}
 	h1 {
+		font-size: 56px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 16px;
+
+		@include mqmax('xl'){
+			flex-direction: column;
+			gap:4px;
+			margin-bottom:4px;
+			align-items: flex-start;
+		}
+
+		@include mqmax('lg'){
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			gap: 16px;
+		}
+
+		@include mqmax('sm'){
+			flex-direction: column;
+			margin-top:16px;
+		}
+	
 		span {
-			font-family: 'Merriweather';
+			font-family: 'Chakra Petch';
 			text-shadow: 1px -3px 0px #bf9b0c;
-			font-size: 100px;
-			font-style: italic;
-			font-weight: 400;
+			font-size: 112px;
+			font-style: normal;
+			font-weight: 700;
 			line-height: 120%;
 			@include mq('md') {
 				font-size: rem(200);

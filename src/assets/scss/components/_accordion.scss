@@ -4,15 +4,18 @@
 	}
 	.accordion-content {
 		overflow: hidden;
+		padding: 0 getSpacing('4x');
+		border-top: 1px solid getColor('primary.base');
 		header {
 			padding-top: getSpacing('6x');
 			padding-bottom: getSpacing('4x');
-			border-top: 1px solid getColor('primary.base');
+			
 			cursor: pointer;
 		}
 
 		&.is-open {
 			padding-bottom: 10px;
+			background-color: getColor('grey.20');
 
 			.icon {
 				color: getColor('primary.base');

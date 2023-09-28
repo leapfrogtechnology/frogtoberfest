@@ -1,0 +1,16 @@
+.antenna{
+    
+    height: 4px;
+    background-color: getColor('primary.light');
+    position: relative;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+
+
+    img{
+        position: absolute;
+        height:auto;
+        bottom:-3px;
+    }
+}   
