@@ -7,11 +7,15 @@ import UsernameForm from 'components/UsernameForm';
 import SiteHeader from 'components/SiteHeader';
 
 const Checker = () => (
-  <Fragment>
-    <SiteHeader></SiteHeader>
-    <SiteTitle>Frogtoberfest Checker</SiteTitle>
-    <UsernameForm />
-    <SiteDetails />
+  <Fragment> 
+      <SiteHeader />
+      <div className='banner banner--img-fixed'>
+      <SiteTitle>Frogtoberfest Checker</SiteTitle>
+      <UsernameForm />
+      <SiteDetails />
+      </div>
+    
+
   </Fragment>
 );
 

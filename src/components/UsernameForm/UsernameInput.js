@@ -6,7 +6,7 @@ const UsernameInput = ({ value, onChange }) => (
     type="text"
     name="username"
     aria-label="GitHub username"
-    placeholder="GitHub username"
+    placeholder="Search GitHub Username"
     value={value}
     onChange={onChange}
     spellCheck="false"

@@ -247,9 +247,9 @@ class PullRequests extends Component {
 
     return (
       <Fragment>
-        <div className='flex justify-center content-center w-full mt-8 lg:flex-row md:flex-col sm:flex-col item-center mx-auto my-0'>
+        <div className='flex justify-center content-center w-full mt-8 lg:flex-row md:flex-col sm:flex-col item-center mx-auto my-0 gitaccount'>
 
-        <div className="text-center text-white">
+        <div className="text-center text-white gitaccount__profile">
           <UserInfo
             username={username}
             userImage={userDetail.items[0].avatar_url}
@@ -258,7 +258,7 @@ class PullRequests extends Component {
             />
           <ShareButtons username={username} pullRequestCount={data.items.length} />
         </div>
-        <div className="rounded  shadow overflow-hidden mb-4 ml-10 lg:ml-10 md:ml-4 md:mr-4 sm:ml-4 sm:mr-4">
+        <div className="rounded  shadow overflow-hidden mb-4 ml-10 lg:ml-10 gitaccount__content">
           {data.items.length > 0 &&
             data.items.map((pullRequest, i) => <PullRequest pullRequest={pullRequest} key={i} />)}
         </div>

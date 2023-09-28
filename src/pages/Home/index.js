@@ -1,7 +1,6 @@
 import React,{ Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-import 'assets/css/style.css';
 
 import Icon1 from 'assets/images/icon-1.svg';
 import Icon2 from 'assets/images/icon-2.svg';
@@ -19,6 +18,7 @@ import Img6 from 'assets/images/img-6.png';
 import Img7 from 'assets/images/img-7.png';
 import Img8 from 'assets/images/img-8.png';
 import Img9 from 'assets/images/img-9.png';
+import Antenna from 'assets/images/antenna.png';
 import Logo from 'assets/images/logo.svg';
 import SiteHeader from 'components/SiteHeader';
 
@@ -132,20 +132,7 @@ const Home = () => {
         <section className="banner pt-10x text-center text-lg-left">
           <div className="container">
             <div className="d-flex flex-column flex-lg-row align-items-center justify-content-between">
-              <div className="pr-lg-25x order-2 order-lg-1">
-                <h1 className='banner__title color-white--base fw-300'>CELEBRATING <span className='color-primary--base'>5</span>
-                  YEARS
-                </h1>
-                <p className='mb-12x text-base text-md-lg max-w-500 mx-auto mx-lg-0x'>Open Source Hackathon for Leapfroggers and
-                  LeapNetwork</p>
-
-                <div className="d-flex gap-6x mt-6x m-lg-0x banner__buttons">
-                  <button className='btn btn-primary'><a className='text-black' href="#participation">Participate</a></button>
-                  {/* <button className='btn btn-link'><Link className='text-white' to="/leaderboard">Leaderboard</Link></button> */}
-                </div>
-              </div>
-
-              <div className="banner__image order-1 order-lg-2">
+            <div className="banner__image order-1 order-lg-2 pr-lg-25x ">
                 <img src={Img1} alt="" />
 
                 <div className="mb-2x text-center text-sm">Remaining</div>
@@ -175,6 +162,20 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+              <div className="order-2 order-lg-1">
+                <h1 className='banner__title color-white--base fw-300 font-racing'>CELEBRATING <span className='color-primary--base font-chakra'>5</span>
+                  YEARS
+                </h1>
+                <p className='mb-12x text-base text-md-lg max-w-500 mx-auto mx-lg-0x'>Open Source Hackathon for Leapfroggers and
+                  LeapNetwork</p>
+
+                <div className="d-flex gap-6x mt-6x m-lg-0x banner__buttons">
+                  <button className='btn btn-primary'><a className='text-black' href="#participation">Participate</a></button>
+                  {/* <button className='btn btn-link'><Link className='text-white' to="/leaderboard">Leaderboard</Link></button> */}
+                </div>
+              </div>
+
+          
 
 
             </div>
@@ -183,7 +184,7 @@ const Home = () => {
 
         <section className='text-center py-16x py-md-20x bg-grey--base'>
           <div className="container">
-            <h2 className='mb-14x'>WHAT YOU NEED TO KNOW</h2>
+            <h2 className='mb-14x font-racing'>WHAT YOU NEED TO KNOW</h2>
 
             <div className="max-w-lg-985 mx-auto">
               <div className="row gutter-y-12x gutter-y-lg-0x">
@@ -191,7 +192,7 @@ const Home = () => {
                   <figure>
                     <img className='mb-4x' src={Icon1} alt="" />
                     <figcaption className='max-w-300 mx-auto max-w-lg-auto'>
-                      <h3 className='mb-2x font-figtree color-white--base'>Who</h3>
+                      <h3 className='mb-2x font-figtree color-white--base text-lg'>Who</h3>
                       <p>Open Source Hackathon for Leapfroggers and LeapNetwork</p>
                     </figcaption>
                   </figure>
@@ -201,7 +202,7 @@ const Home = () => {
                   <figure>
                     <img className='mb-4x' src={Icon2} alt="" />
                     <figcaption className='max-w-300 mx-auto max-w-lg-auto'>
-                      <h3 className='mb-2x font-figtree color-white--base'>How</h3>
+                      <h3 className='mb-2x font-figtree color-white--base text-lg'>How</h3>
                       <p>Create 8 pull requests (PR)</p>
                     </figcaption>
                   </figure>
@@ -211,7 +212,7 @@ const Home = () => {
                   <figure>
                     <img className='mb-4x' src={Icon3} alt="" />
                     <figcaption className='max-w-300 mx-auto max-w-lg-auto'>
-                      <h3 className='mb-2x font-figtree color-white--base'>When</h3>
+                      <h3 className='mb-2x font-figtree color-white--base text-lg'>When</h3>
                       <p>Any time between Oct 1 to Oct 31, 2023.</p>
                     </figcaption>
                   </figure>
@@ -223,35 +224,35 @@ const Home = () => {
 
         <section id='participation' className='py-16x py-md-34x'>
           <div className="container">
-            <h2 className='mb-8x'>Participation</h2>
+            <h2 className='mb-8x font-racing'>Participation</h2>
             <p className='mb-6x'>The challenge is quite simple:</p>
 
             <div className="row gutter-y-6x gutter-x-lg-13x">
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card">
                   <img className='mb-md-6x' src={Icon4} alt="" />
-                  <p>Create 8 pull requests (PRs) between Oct 1 to Oct 31, 2023.</p>
+                  <p className='leading-6 font-normal'>Create 8 pull requests (PRs) between Oct 1 to Oct 31, 2023.</p>
                 </div>
               </div>
 
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card">
                   <img className='mb-md-6x' src={Icon5} alt="" />
-                  <p>At least 5 PRs should be in repositories not owned by you.</p>
+                  <p className='leading-6 font-normal'>At least 5 PRs should be in repositories not owned by you.</p>
                 </div>
               </div>
 
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card">
                   <img className='mb-md-6x' src={Icon6} alt="" />
-                  <p>PRs can be made to any public repository on GitHub.</p>
+                  <p className='leading-6 font-normal'> PRs can be made to any public repository on GitHub.</p>
                 </div>
               </div>
 
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card">
                   <img className='mb-md-6x' src={Icon7} alt="" />
-                  <p>PRs should not be labeled as ‘invalid.&apos;</p>
+                  <p className='leading-6 font-normal'>PRs should not be labeled as ‘invalid.&apos;</p>
                 </div>
               </div>
             </div>
@@ -260,7 +261,7 @@ const Home = () => {
 
         <section className='py-16x py-md-20x bg-grey--base'>
           <div className="container">
-            <h2 className='mb-8x'>Past Stats</h2>
+            <h2 className='mb-8x font-racing'>Past Stats</h2>
 
             <div className="row align-items-center">
               <div className="col-lg-7 mb-6x mb-lg-0x">
@@ -268,8 +269,8 @@ const Home = () => {
                   <div className="col-12 col-md-6">
                     <div
                       className="bg-grey--light p-10x radius-base h-100 d-flex align-items-center justify-content-center flex-column">
-                      <div className="font-antonio text-huge lh-normal">200+</div>
-                      <p className='text-lg white-space-nowrap'>Participants</p>
+                      <div className="font-antonio text-huge lh-normal font-chakra">200+</div>
+                      <p className='text-lg white-space-nowrap font-chakra'>Participants</p>
                     </div>
                   </div>
                   <div className="col-12 col-md-6">
@@ -277,22 +278,29 @@ const Home = () => {
                       <div className="col-6">
                         <div
                           className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
-                          <div className="text-xl font-antonio">632</div>
-                          <div className="white-space-nowrap">Total PR</div>
+                          <div className="text-xl font-chakra">632</div>
+                          <div className="white-space-nowrap font-chakra">Total PR</div>
                         </div>
                       </div>
                       <div className="col-6">
                         <div
                           className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
-                          <div className="text-xl font-antonio">500+</div>
-                          <div className="white-space-nowrap">Merge PR</div>
+                          <div className="text-xl font-chakra">500+</div>
+                          <div className="white-space-nowrap font-chakra">Merge PR</div>
                         </div>
                       </div>
                       <div className="col-6">
                         <div
                           className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
-                          <div className="text-xl font-antonio">71</div>
-                          <div className="white-space-nowrap">Goodies</div>
+                          <div className="text-xl font-chakra">71</div>
+                          <div className="white-space-nowrap font-chakra font-chakra-peth">Goodies</div>
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div
+                          className="bg-grey--light p-10x radius-base h-145 d-flex align-items-center justify-content-center flex-column">
+                          <div className="text-xl font-antonio">40</div>
+                          <div className="white-space-nowrap font-chakra">Participants</div>
                         </div>
                       </div>
                     </div>
@@ -309,7 +317,7 @@ const Home = () => {
 
         <section className='py-16x py-md-34x'>
           <div className="container">
-            <h2 className='mb-8x'>Leaps & Bonds</h2>
+            <h2 className='mb-8x font-racing'>Leaps & Bonds</h2>
             <p className='mb-14x text-lg max-w-985 lh-120'>Whether it&apos;s your first time or the umpteenth, join the conversation
               as we
               discuss all
@@ -349,8 +357,8 @@ const Home = () => {
         <section id='swag' className='py-16x py-md-20x bg-grey--base'>
           <div className="container">
             <div className="max-w-665 mb-8x">
-              <h2 className='mb-8x'>SWAG for you</h2>
-              <p className='text-lg mb-6x'>Frogtoberfest SWAG is waiting for you! Like every Frog-tober, we&apos;re hopping back
+              <h2 className='mb-8x font-racing'>SWAG for you</h2>
+              <p className='text-lg mb-6x'>Frogtoberfest SWAG is waiting for you! Like every Frog-toberfest, we&apos;re hopping back
                 with
                 exclusive merch and
                 ribbiting perks for all your contributions</p>
@@ -397,18 +405,18 @@ const Home = () => {
               <div className="accordion-content">
                 <header className='d-flex gap-5x'>
                   <span className="accordion-content-title">
-                    What kind of projects can I work on during the Frogtober?
+                    What kind of projects can I work on during the Frogtoberfest?
                   </span>
                   <i className="icon fa-solid fa-plus ml-auto"></i>
                 </header>
-                <p className="accordion-content-description mr-lg-15x">
-                  During Frogtober, you have the flexibility to work on a wide range of projects. PRs can be made to any public repository on GitHub, allowing you to contribute to various open-source initiatives, from software development and documentation improvements to bug fixes and feature enhancements. Your options are virtually limitless, so you can choose projects that align with your interests, skills, and goals to make a meaningful impact in the open-source community.
+                <p className="accordion-content-description mr-lg-15x mb-">
+                  During Frogtoberfest, you have the flexibility to work on a wide range of projects. PRs can be made to any public repository on GitHub, allowing you to contribute to various open-source initiatives, from software development and documentation improvements to bug fixes and feature enhancements. Your options are virtually limitless, so you can choose projects that align with your interests, skills, and goals to make a meaningful impact in the open-source community.
                 </p>
               </div>
               <div className="accordion-content">
                 <header className='d-flex gap-5x'>
                   <span className="accordion-content-title">
-                    How do I participate in the Frogtober?
+                    How do I participate in the Frogtoberfest?
                   </span>
                   <i className="icon fa-solid fa-plus ml-auto"></i>
                 </header>
@@ -419,12 +427,12 @@ const Home = () => {
               <div className="accordion-content">
                 <header className='d-flex gap-5x'>
                   <span className="accordion-content-title">
-                    What are the judging criteria for the Frogtober?
+                    What are the judging criteria for the Frogtoberfest?
                   </span>
                   <i className="icon fa-solid fa-plus ml-auto"></i>
                 </header>
                 <p className="accordion-content-description mr-lg-15x">
-                  The judging criteria for Frogtober are primarily based on active contributions to the event. Participants who meet the above-mentioned criteria, including creating 8 pull requests on GitHub between October 1 and October 31, 2023, with at least 5 targeting repositories not owned by them and ensuring that all PRs are valid, will be considered. The top 15 contributors who fulfill these requirements will become eligible to receive the coveted Frogtoberfest SWAG as a token of recognition for their valuable contributions.
+                  The judging criteria for Frogtoberfest are primarily based on active contributions to the event. Participants who meet the above-mentioned criteria, including creating 8 pull requests on GitHub between October 1 and October 31, 2023, with at least 5 targeting repositories not owned by them and ensuring that all PRs are valid, will be considered. The top 15 contributors who fulfill these requirements will become eligible to receive the coveted Frogtoberfest SWAG as a token of recognition for their valuable contributions.
                 </p>
               </div>
             </div>
@@ -432,13 +440,17 @@ const Home = () => {
         </section>
       </main>
 
+      <div className='antenna'>
+        <img src={Antenna}/>
+      </div>
+
       <footer className='pt-16x pt-md-20x pb-10x bg-primary--light'>
         <div className="container">
           <div className="row gutter-x-md-11x">
             <div className="col-12 col-md-6 col-xl-7 mb-10x mb-md-0x">
               <div className="max-w-lg-665">
                 <div className="">
-                  <h3 className='mb-4x'>Subscribe to our newsletter</h3>
+                  <h3 className='mb-4x font-racing'>Subscribe to our newsletter</h3>
                   <p>Join our newsletter community to receive fresh insights, special offers, and exciting updates right
                     in
                     your inbox. Don&apos;t miss out – subscribe now!</p>

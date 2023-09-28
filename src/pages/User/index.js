@@ -48,6 +48,7 @@ export class User extends Component {
     return (
       <Fragment>
         <SiteHeader></SiteHeader>
+        <div className='banner banner--img-fixed'>
         <SiteTitle>Frogtoberfest Checker</SiteTitle>
         <UsernameForm
           username={username}
@@ -55,6 +56,7 @@ export class User extends Component {
           totalOtherPrCount={this.state.totalOtherPrCount}
         />
         <PullRequests username={username} setUserContributionCount={this.setUserContributionCount.bind(this)} />
+        </div>
       </Fragment>
     );
   }

@@ -12,10 +12,10 @@ const checklistItems = [
  */
 const SiteDetails = () => (
   <div className="md:py-4 mb-6">
-    <div className="rounded mx-auto shadow w-3/4 sm:w-1/2 card">
+    <div className="rounded mx-auto shadow w-3/4 sm:w-1/2 card card--bg-yellow">
       <div className="px-6 py-4">
         <div className="font-bold mb-4">
-          <p className="mb-4 leading-normal text-lg mb-1 card__title">
+          <p className="mb-4 leading-normal text-lg mb-1 card__title font-chakra">
             Frogtoberfest is a spin-off of Hacktoberfest; a month-long Open Source contribution challenge for open
             source enthusiast.
           </p>
