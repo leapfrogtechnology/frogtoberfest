@@ -38,7 +38,7 @@ function getMessage(pullRequestCount, otherReposCount) {
     return "This year's result.";
   }
 
-  const isShowingOff = pullRequestCount > TOTAL_PR_COUNT && otherReposCount > TOTAL_OTHER_PR_COUNT;
+  const isShowingOff = pullRequestCount >= TOTAL_PR_COUNT && otherReposCount >= TOTAL_OTHER_PR_COUNT;
 
   if (isShowingOff) {
     return messages[messages.length - 1];
