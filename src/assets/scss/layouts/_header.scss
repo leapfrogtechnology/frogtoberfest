@@ -42,3 +42,9 @@
 		transform: translateY(0);
 	}
 }
+
+@media (max-width: 576px) {
+	.sticky {
+		position: fixed !important;
+	}
+}
