@@ -109,7 +109,7 @@ const Home = () => {
                   <a className='text-black' href="https://frog.ly/frogtoberfest-2024" target='_blank' rel="noopener noreferrer">
                     <button className='btn btn-primary'>Participate</button>
                   </a>
-                  <a hidden className='text-white' href="https://frogtoberfest-leaderboard.lftechnology.com/" target='_blank' rel="noopener noreferrer">
+                  <a className='text-white' href="https://frogtoberfest-leaderboard.lftechnology.com/" target='_blank' rel="noopener noreferrer">
                     <button className='btn btn-link text-black'>Leaderboard</button>
                   </a>
                 </div>
