@@ -188,7 +188,7 @@ const Home = () => {
               <div className="col-12 col-md-6 col-lg-3">
                 <div className="card participation-card">
                   <img className='mb-md-6x' src={Icon7} alt="PRs should not be labeled as ‘invalid." />
-                  <p className='leading-6 font-normal'>PRs should not be labeled as ‘invalid.&apos;</p>
+                  <p className='leading-6 font-normal'>PRs should not be labeled as ‘invalid&apos;.</p>
                 </div>
               </div>
             </div>
