@@ -375,7 +375,7 @@ const Home = () => {
                   <i className="icon fa-solid fa-plus ml-auto"></i>
                 </header>
                 <p className="accordion-content-description mr-lg-15x">
-                  You have to fill up the registration form to be a verified participant for this challenge. In case you’ve not filled the form, you will not be included in the official leaderboard. As such, you you will not be eligible for the SWAG even if you pass the given criteria.</p>
+                  You have to fill up the registration form to be a verified participant for this challenge. In case you’ve not filled the form, you will not be included in the official leaderboard. As such, you will not be eligible for the SWAG even if you pass the given criteria.</p>
               </div>
 
               <div className="accordion-content">
