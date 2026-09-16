@@ -29,7 +29,7 @@ export default function Resources() {
             </p>
           </Faq>
           <Faq q="What do I need to register?">
-            <p>Your team, idea, and a public repo. Registration runs September 15&ndash;29.</p>
+            <p>Your team, idea, and a public repo. Registration runs September 16&ndash;29.</p>
           </Faq>
           <Faq q="I don&rsquo;t have a concrete idea right now. What do I submit?">
             <p>Frogtoberfest is all about exploring and experimenting. This is a platform for you to get started.</p>
