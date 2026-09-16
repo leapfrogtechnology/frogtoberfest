@@ -151,7 +151,15 @@ export default function Guidelines() {
           </Faq>
           <Faq q="How do I set myself apart?">
             <p>
-              Munder Difflin (github.com/chaitanyagiri/munder-difflin) is a strong reference for what &ldquo;Build
+              <a
+                href="https://github.com/chaitanyagiri/munder-difflin"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'underline' }}
+              >
+                Munder Difflin
+              </a>{' '}
+              is a strong reference for what &ldquo;Build
               with AI&rdquo; should look like &mdash; even though it&rsquo;s not itself a hackathon submission, it
               demonstrates the pattern cleanly.
             </p>
