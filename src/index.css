@@ -1,57 +1,1850 @@
-@font-face {
-  font-family: 'squealerregular';
-  src: url('./fonts/squealer-webfont.eot');
-  src: url('./fonts/squealer-webfont.eot?#iefix') format('embedded-opentype'),
-    url('./fonts/squealer-webfont.woff2') format('woff2'), url('./fonts/squealer-webfont.woff') format('woff'),
-    url('./fonts/squealer-webfont.ttf') format('truetype'),
-    url('./fonts/squealer-webfont.svg#squealerregular') format('svg');
-  font-weight: normal;
-  font-style: normal;
+/* ==========================================================================
+   FROGTOBERFEST 2026 — "Analog Autonomy"
+   Art direction: Gundam x Voltron. Brutalist editorial
+   HUD. Sharp corners only. 2px borders instead of shadows. Engineering grid.
+   ========================================================================== */
+
+:root {
+  /* ---- Design System tokens (per Figma Art Direction doc) ---- */
+  --paper: #efe8da; /* primary background */
+  --paper-dim: #e4dbc7; /* recessed / muted panels on paper */
+  --surface: #6a5257; /* navigation and surfaces — brown/mauve from Scanline.svg, darkened ~8% for AA text contrast */
+  --surface-2: #4f3d41; /* deeper shade for depth on the surface color */
+  --cyan: #2ae8d2; /* highlights + status, AI activity only */
+  --go: #0b6649; /* pressed/active button state — reads as "powered", not "off" */
+  --carbon: #2b1e1a; /* typography + borders */
+  --copper: #b96a32; /* mechanical accents (decorative / large only) */
+  --copper-dim: #8c5027; /* copper for small text — clears AA on paper */
+  --copper-light: #d1893f; /* copper background for dark text on top */
+  --green: #8ebb81; /* organic accent, sampled from the mech's armor plating */
+  --green-dim: #3e6136; /* green for small text on paper — 5.8:1 AA */
+  --green-light: #b3dda6; /* green for small text on the surface color — 4.67:1 AA */
+  --leaf: #67885a; /* new secondary green accent — 3.28:1 on paper, large text/icons/borders only, not small text */
+  --leaf-dim: #465c3d; /* darkened for small text on paper — 6.0:1 AA */
+  --leaf-light: #9eb894; /* lightened for borders/icons on the surface color — 3.3:1, clears non-text contrast */
+  --copper-pale: #daa076; /* copper lightened for large text on the surface color — 3.1:1 */
+
+  --on-dark: #f3eee1; /* text on the surface color */
+  --on-dark-dim: #a9bdb8; /* borders/dividers on the surface color only — not text */
+
+  /* ---- Type (3 typefaces) ---- */
+  --font-heading: 'Oswald', sans-serif; /* DIN Condensed sub — also stands in for display use */
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace; /* UI / HUD labels */
+
+  /* ---- Grid ---- */
+  --margin: 64px;
+  --content-max: 1792px; /* 1920 - 64*2 */
+  --unit: 8px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (max-width: 900px) {
+  :root {
+    --margin: 24px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
-  /* background-color: #412b3b; */
-  font-family: 'proxima-nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Open Sans', 'Helvetica Neue', 'Arial', sans-serif;
+  margin: 0;
+  background: var(--paper);
+  color: var(--carbon);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-h1 {
-  font-family: squealerregular;
-  font-weight: normal;
+img {
+  max-width: 100%;
+  display: block;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+dl,
+dd,
+dt {
+  margin: 0;
+}
+button {
+  font: inherit;
 }
 
-.dim {
+/* No radius, anywhere. No exceptions. */
+* {
+  border-radius: 0 !important;
+}
+
+/* ---- Accessibility utilities ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: fixed;
+  z-index: 9999;
+  top: -100%;
+  left: 16px;
+  background: var(--cyan);
+  color: var(--carbon);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border: 2px solid var(--carbon);
+  transition: top 0.15s var(--ease);
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* ---- Layout scaffolding ---- */
+.wrap {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--margin);
+}
+.screen {
+  position: relative;
+  border-bottom: 2px solid var(--carbon);
+}
+.screen-pad {
+  padding-block: 96px;
+}
+@media (max-width: 900px) {
+  .screen-pad {
+    padding-block: 56px;
+  }
+}
+
+/* ---- Engineering paper grain + scanline (2-3% opacity per spec) ---- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: repeating-linear-gradient(0deg, rgba(43, 30, 26, 0.5) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(43, 30, 26, 0.5) 0 1px, transparent 1px 3px);
+  background-size: 3px 3px;
+}
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 9001;
+  pointer-events: none;
+  opacity: 0.03;
+  background: repeating-linear-gradient(180deg, var(--carbon) 0 1px, transparent 1px 3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .grain,
+  .scanlines {
+    opacity: 0.02;
+  }
+}
+
+/* ---- Blueprint grid overlay ---- */
+.blueprint-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(90deg, rgba(43, 30, 26, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(43, 30, 26, 0.08) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+}
+.blueprint-grid.on-dark {
+  background-image: linear-gradient(90deg, rgba(243, 238, 225, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(243, 238, 225, 0.08) 1px, transparent 1px);
+}
+
+/* ---- Eyebrow / mission tag ---- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--surface);
+}
+.tag::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--copper);
+  flex: none;
+}
+.on-dark .tag {
+  color: var(--on-dark);
+}
+.on-dark .tag::before {
+  background: var(--cyan);
+}
+
+.serial {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--surface);
+  opacity: 0.8;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.h1 {
+  font-size: clamp(52px, 7vw, 124px);
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+.h2 {
+  font-size: clamp(36px, 4.2vw, 68px);
+  line-height: 0.96;
+  letter-spacing: -0.005em;
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--carbon);
+}
+.lede.lg {
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+/* ---- Buttons: sharp rectangles, 2px borders, uppercase, no shadow ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 2px solid var(--carbon);
+  padding: 16px 28px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--carbon);
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease), color 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+.btn .chip {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  flex: none;
+}
+
+/* Primary CTA gets tactile key-press physics: raised at rest, lifts on hover,
+   presses flush on click. Sharp corners stay (no radius, per the brief) --
+   the "LED" is the existing square chip with a glow ring instead of a round dot. */
+.btn-primary {
+  --depth: 6px;
+  position: relative;
+  top: 0;
+  background: var(--cyan);
+  border-color: var(--carbon);
+  color: var(--carbon);
+  box-shadow: 0 var(--depth) 0 0 var(--carbon), 0 calc(var(--depth) + 6px) 10px rgba(43, 30, 26, 0.25);
+  /* Slow release, so letting go of a real (fast, ~100ms) click is still
+     visible -- the snap-down on press uses its own fast transition below. */
+  transition: background-color 0.32s ease-out, color 0.32s ease-out, top 0.32s ease-out, box-shadow 0.32s ease-out;
+}
+.btn-primary:hover {
+  background: var(--carbon);
+  color: var(--cyan);
+  top: 2px;
+  box-shadow: 0 calc(var(--depth) - 2px) 0 0 var(--carbon), 0 6px 10px rgba(43, 30, 26, 0.22);
+}
+.btn-primary:active {
+  top: var(--depth);
+  background: var(--go);
+  color: var(--on-dark);
+  box-shadow: 0 0 0 0 var(--carbon), 0 0 16px 2px rgba(42, 232, 210, 0.55);
+  transition: background-color 0.04s ease-in, color 0.04s ease-in, top 0.04s ease-in, box-shadow 0.04s ease-in;
+}
+.btn-primary .chip {
+  box-shadow: 0 0 0 2px var(--carbon), 0 0 8px 1px currentColor;
+}
+.btn-primary:active .chip {
+  background: var(--cyan);
+  box-shadow: 0 0 0 2px var(--carbon), 0 0 10px 2px var(--cyan);
+}
+.btn-outline {
+  --depth: 6px;
+  position: relative;
+  top: 0;
+  border-color: var(--carbon);
+  color: var(--carbon);
+  box-shadow: 0 var(--depth) 0 0 var(--carbon);
+  transition: background-color 0.32s ease-out, color 0.32s ease-out, top 0.32s ease-out, box-shadow 0.32s ease-out;
+}
+.btn-outline:hover {
+  background: var(--carbon);
+  color: var(--paper);
+  top: 2px;
+  box-shadow: 0 calc(var(--depth) - 2px) 0 0 var(--carbon);
+}
+.btn-outline:active {
+  top: var(--depth);
+  background: var(--go);
+  color: var(--on-dark);
+  box-shadow: 0 0 0 0 var(--carbon);
+  transition: background-color 0.04s ease-in, color 0.04s ease-in, top 0.04s ease-in, box-shadow 0.04s ease-in;
+}
+
+/* ==========================================================================
+   NAV — engineering metadata bar
+   ========================================================================== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background-color: var(--surface);
+  background-repeat: no-repeat, no-repeat;
+  background-position: left center, right center;
+  background-size: auto 100%, auto 100%;
+  color: var(--on-dark);
+  border-bottom: 2px solid var(--carbon);
+}
+.nav .wrap {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  gap: 32px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: none;
+}
+.nav-brand img {
+  height: 36px;
+  width: auto;
+  filter: brightness(0) invert(1);
+}
+.nav-brand .div {
+  width: 2px;
+  height: 24px;
+  background: var(--on-dark-dim);
+}
+.nav-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--on-dark);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.nav-links a {
+  white-space: nowrap;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.15s var(--ease), color 0.15s;
+}
+.nav-links a:hover {
+  color: var(--on-dark);
+  border-color: var(--cyan);
+}
+
+/* Only shown once the hero's own Enter Mission button scrolls out of view
+   (toggled via IntersectionObserver in App.js) -- collapses out of the
+   layout rather than just fading, so it doesn't reserve dead space in the nav. */
+.nav-cta {
+  flex: none;
+  display: grid;
+  grid-template-columns: 0fr;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: 11px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-8px);
+  pointer-events: none;
+  white-space: nowrap;
+  /* Collapses via grid-template-columns (0fr -> 1fr) rather than max-width:
+     a layout-driving property still, but this is the width-collapse-to-zero
+     pattern browsers optimize best for -- a single track-size interpolation
+     per frame instead of repeated intrinsic-width recalculation. */
+  transition: grid-template-columns 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s var(--ease) 0.05s,
+    transform 0.3s var(--ease) 0.05s, background-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+.nav-cta.is-visible {
+  grid-template-columns: 1fr;
   opacity: 1;
-  transition: 0.3s;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.nav-cta-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.dim:hover {
-  opacity: 0.6;
+/* ---- Mobile menu toggle (hamburger -> X) ---- */
+.nav-toggle {
+  display: none;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 2px solid var(--on-dark-dim);
+  padding: 0;
+  margin-left: auto;
+  cursor: pointer;
+}
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--on-dark);
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.nav-toggle-bars {
+  position: relative;
+}
+.nav-toggle-bars::before {
+  position: absolute;
+  top: -6px;
+  left: 0;
+}
+.nav-toggle-bars::after {
+  position: absolute;
+  top: 6px;
+  left: 0;
+}
+.nav-toggle[aria-expanded='true'] .nav-toggle-bars {
+  background: transparent;
+}
+.nav-toggle[aria-expanded='true'] .nav-toggle-bars::before {
+  transform: translateY(6px) rotate(45deg);
+}
+.nav-toggle[aria-expanded='true'] .nav-toggle-bars::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle-bars,
+  .nav-toggle-bars::before,
+  .nav-toggle-bars::after {
+    transition: none;
+  }
 }
 
-.bn.br--left.br1.ph2 {
-  transition: box-shadow ease-in-out 0.2s;
+@media (max-width: 680px) {
+  .nav-toggle {
+    display: flex;
+  }
+  .nav .wrap {
+    position: relative;
+  }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-left: 0;
+    background: var(--surface);
+    border-bottom: 2px solid var(--carbon);
+  }
+  .nav-links.is-open {
+    display: flex;
+  }
+  .nav-links a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 14px 24px;
+    border-top: 2px solid var(--surface-2);
+  }
+  .nav-links a:hover {
+    border-color: var(--surface-2);
+    background: var(--surface-2);
+  }
+}
+@media (max-width: 700px) {
+  .nav-brand .div,
+  .nav-code {
+    display: none;
+  }
+  .nav .wrap {
+    gap: 8px;
+  }
+  /* Brand + revealed CTA + hamburger all compete for the same row once
+     nav-code/div are gone; give the CTA a tighter mobile footprint so
+     the row never needs more width than the viewport provides. */
+  .nav-cta {
+    padding: 12px;
+    font-size: 11px;
+  }
+}
+@media (max-width: 400px) {
+  .nav-brand img {
+    height: 28px;
+  }
 }
 
-.bn.br--left.br1.ph2:focus {
-  outline: none;
+/* ==========================================================================
+   HERO — Screen 01: Mission Launch
+   ========================================================================== */
+/* Hero art is width-driven so it scales with the viewport and always reaches
+   the true right edge via justify-content, independent of the copy column.
+   Both the copy and the artwork share the same top offset so the logo and
+   the mech's head line up on the same horizontal line. */
+.hero {
+  position: relative;
+  background: var(--paper);
+  overflow: hidden;
+  min-height: max(820px, calc(clamp(420px, 52vw, 1160px) * 1.03));
+}
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+@media (max-width: 1100px) {
+  .hero {
+    min-height: 0;
+  }
+  .hero-inner {
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
 }
 
-.bg-white.orange,
-.bg-white .text-orange,
-.bg-white.text-orange {
-  color: #a52607;
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
 }
-
-.frogtoberfest-logo {
-  width: 322px;
+/* Width matches the mission-parameters plate below it. */
+.hero-logo-crop {
+  display: block;
+  width: 700px;
+  max-width: 100%;
+  aspect-ratio: 735/343;
+  margin: 0 0 24px;
+}
+.hero-logo {
+  display: block;
+  width: 100%;
   height: auto;
 }
-
-.bg-dark-black {
-  background-color: #000000;
+.hero-copy .lede {
+  margin-bottom: 36px;
+  font-size: 19px;
+  line-height: 1.65;
+  color: var(--carbon);
+}
+.hero-cta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
 }
 
-.bg-deep-cove {
-  background: #061244;
+.hero-art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+.hero-art .blueprint-grid {
+  opacity: 0.7;
+}
+.hero-figure {
+  position: relative;
+  display: block;
+  line-height: 0;
+  padding-top: 96px;
+}
+.hero-figure img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: clamp(420px, 52vw, 1160px);
+  height: auto;
+  max-width: none;
+}
+
+/* Two clouds drift left-to-right at different speeds/scales for a
+   little parallax depth -- the back one tucks behind the mech (z-index
+   scoped inside .hero-art, so both still sit under .hero-copy's own
+   stacking context regardless), the front one passes over it. */
+.hero-cloud {
+  position: absolute;
+  pointer-events: none;
+  width: 340px;
+  height: auto;
+}
+.hero-cloud-back {
+  top: 42%;
+  left: 0;
+  z-index: 0;
+  width: 180px;
+  animation: cloud-drift-back 75s linear infinite;
+}
+.hero-cloud-front {
+  top: 68%;
+  left: 0;
+  z-index: 3;
+  width: 220px;
+  animation: cloud-drift-front 50s linear infinite;
+}
+/* Opacity ramps in/out at each end of the drift instead of a hard
+   pop-in/out at the viewport edge. */
+@keyframes cloud-drift-back {
+  0% {
+    transform: translateX(28vw);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(calc(100vw + 20%));
+    opacity: 0;
+  }
+}
+@keyframes cloud-drift-front {
+  0% {
+    transform: translateX(22vw);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.92;
+  }
+  85% {
+    opacity: 0.92;
+  }
+  100% {
+    transform: translateX(calc(100vw + 20%));
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cloud {
+    animation: none;
+    transform: translateX(10%);
+  }
+}
+@media (max-width: 1100px) {
+  .hero-cloud {
+    display: none;
+  }
+}
+
+.hero-annot {
+  position: absolute;
+  z-index: 3;
+  left: 98px;
+  top: 96px;
+  writing-mode: vertical-rl;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--surface);
+  opacity: 0.6;
+  white-space: nowrap;
+  line-height: 1;
+}
+@media (max-width: 1100px) {
+  /* Right-justified (not centered): the source art itself is pre-cropped
+     at its canvas edge, meant to bleed past the viewport edge. Centering
+     it leaves that cut edge floating in empty space instead of reading as
+     an intentional "bigger than the frame" bleed. */
+  .hero-art {
+    position: relative;
+    inset: auto;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 32px;
+  }
+  .hero-figure {
+    padding-top: 0;
+  }
+  .hero-figure img {
+    width: 100%;
+    max-width: 480px;
+  }
+  .hero-annot {
+    display: none;
+  }
+}
+
+/* ---- Mission parameters spec plate ---- */
+.meta-plate {
+  max-width: 700px;
+  border: 2px solid var(--carbon);
+  background: var(--paper);
+  text-align: left;
+}
+.meta-plate-hdr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  color: var(--on-dark);
+  padding: 11px 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.meta-plate-hdr .chip {
+  width: 8px;
+  height: 8px;
+  background: var(--cyan);
+  flex: none;
+}
+.meta-plate-ref {
+  margin-left: auto;
+  opacity: 0.75;
+  letter-spacing: 0.1em;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.meta-card {
+  padding: 18px 20px 20px;
+  border-top: 2px solid var(--carbon);
+  border-left: 2px solid var(--carbon);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.meta-card:nth-child(-n + 2) {
+  border-top: 0;
+}
+.meta-card:nth-child(odd) {
+  border-left: 0;
+}
+.meta-card dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--copper-dim);
+  text-transform: uppercase;
+}
+.meta-card dt::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--copper);
+  flex: none;
+}
+.meta-card dd {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: none;
+  line-height: 1.35;
+  color: var(--carbon);
+}
+@media (max-width: 560px) {
+  .meta-grid {
+    grid-template-columns: 1fr;
+  }
+  .meta-card,
+  .meta-card:nth-child(-n + 2) {
+    border-left: 0;
+    border-top: 2px solid var(--carbon);
+  }
+  .meta-card:first-child {
+    border-top: 0;
+  }
+}
+
+/* ==========================================================================
+   SECTION HEADER — reused across screens
+   ========================================================================== */
+.sec-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+}
+.sec-head .h2 {
+  margin-top: 14px;
+}
+.sec-head-right {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--green-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Screen 02 — BEYOND CONTRIBUTING (editorial)
+   ========================================================================== */
+.beyond {
+  background: var(--paper);
+}
+.beyond-inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 1100px) {
+  .beyond-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* No will-change:transform here: promoting this to its own compositing
+   layer is what was clipping the antennae/shoulders that intentionally
+   bleed past .beyond-figure's box -- some browsers clip a sticky
+   element's overflowing children to the promoted layer's own bounds
+   even with overflow:visible set. */
+.beyond-sticky {
+  position: sticky;
+  top: 104px;
+}
+.beyond-sticky .sec-head {
+  margin-bottom: 120px;
+}
+@media (max-width: 1100px) {
+  .beyond-sticky {
+    position: relative;
+    top: auto;
+  }
+}
+
+.beyond-figure {
+  position: relative;
+  background: var(--paper-dim);
+  overflow: visible;
+  width: 90%;
+  /* Shifted right by half the picture's 14% overflow (7% of this box's own
+     width), so the box sits centered under the artwork instead of flush
+     with the artwork's left edge -- the artwork's own left edge (the
+     shoulder) stays aligned with the heading above it either way. */
+  margin-left: 6.3%;
+  aspect-ratio: 3/2;
+}
+/* Frame sits behind the artwork, so it only shows where the figure
+   doesn't cover it -- visible around the bleed, tucked under the
+   shoulders/antennae where they break past it. */
+.beyond-figure::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border: 2px solid var(--carbon);
+  pointer-events: none;
+}
+.beyond-figure picture {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 2px;
+  transform: translateX(-50%);
+  width: 114%;
+  /* Extra headroom over the 108% this needs on paper (see the crop math in
+     object-position below) -- the antennae were a borderline-tight fit at
+     108%, close enough to get clipped by minor rendering differences.
+     120% leaves clear margin instead of a hairline fit. */
+  height: 120%;
+}
+.beyond-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 6%;
+}
+.beyond-figure .serial-tag {
+  position: absolute;
+  z-index: 4;
+  top: 16px;
+  left: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--green-dim);
+}
+
+.statement-list {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 2px solid var(--carbon);
+}
+.statement {
+  padding: 32px;
+  border-left: 2px solid var(--carbon);
+  border-top: 2px solid var(--carbon);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.statement:nth-child(-n + 2) {
+  border-top: 0;
+}
+.statement:nth-child(odd) {
+  border-left: 0;
+}
+.statement .num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--copper-dim);
+}
+.statement p {
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+@media (max-width: 700px) {
+  .statement-list {
+    grid-template-columns: 1fr;
+  }
+  .statement {
+    border-left: 0;
+  }
+  .statement:nth-child(n) {
+    border-top: 2px solid var(--carbon);
+  }
+  .statement:first-child {
+    border-top: 0;
+  }
+}
+
+.reasons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid var(--carbon);
+  margin-top: 24px;
+}
+.reason {
+  padding: 28px;
+  border-left: 2px solid var(--carbon);
+}
+.reason:first-child {
+  border-left: 0;
+}
+.reason .num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--copper-dim);
+  display: block;
+  margin-bottom: 14px;
+}
+.reason h3 {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+.reason p {
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.reason.hi {
+  background: var(--surface);
+  color: var(--on-dark);
+}
+.reason.hi .num {
+  color: var(--cyan);
+}
+@media (max-width: 700px) {
+  .reasons {
+    grid-template-columns: 1fr;
+  }
+  .reason {
+    border-left: 0;
+    border-top: 2px solid var(--carbon);
+  }
+  .reason:first-child {
+    border-top: 0;
+  }
+}
+
+/* ==========================================================================
+   Screen 04 — MISSION LOG TIMELINE
+   ========================================================================== */
+.timeline {
+  background: var(--paper);
+}
+.tl-rail {
+  position: relative;
+  padding-left: 56px;
+}
+.tl-rail::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 8px;
+  bottom: 8px;
+  width: 0;
+  border-left: 2px solid var(--carbon);
+}
+.tl-fill {
+  position: absolute;
+  left: 9px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--cyan);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.2s linear;
+}
+.tl-node {
+  position: relative;
+  padding-bottom: 48px;
+}
+.tl-node:last-child {
+  padding-bottom: 0;
+}
+.tl-node::before {
+  content: '';
+  position: absolute;
+  left: -56px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--paper);
+  border: 2px solid var(--carbon);
+}
+.tl-node.active::before {
+  background: var(--cyan);
+}
+.tl-node.hi::before {
+  background: var(--copper);
+}
+.tl-node-inner {
+  display: grid;
+  grid-template-columns: 170px 200px 1fr;
+  gap: 24px;
+  align-items: baseline;
+  border: 2px solid var(--carbon);
+  padding: 22px 24px;
+  background: var(--paper-dim);
+}
+.tl-node.hi .tl-node-inner {
+  background: var(--surface);
+  color: var(--on-dark);
+  border-color: var(--carbon);
+}
+.tl-date {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--copper-dim);
+}
+.tl-node.hi .tl-date {
+  color: var(--cyan);
+}
+.tl-phase {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--surface);
+}
+.tl-node.hi .tl-phase {
+  color: var(--cyan);
+}
+.tl-desc {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+@media (max-width: 800px) {
+  .tl-node-inner {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+/* ==========================================================================
+   Screen 05 — AI AGENT BUILD MANUAL (blueprint)
+   ========================================================================== */
+.build {
+  background: var(--paper-dim);
+}
+.build-board {
+  position: relative;
+  border: 2px solid var(--carbon);
+  background: var(--paper);
+  padding: 56px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 32px;
+  align-items: center;
+  min-height: 640px;
+}
+@media (max-width: 1100px) {
+  .build-board {
+    grid-template-columns: 1fr;
+    padding: 32px;
+  }
+}
+
+.build-figure {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+.build-figure img {
+  width: min(420px, 100%);
+  position: relative;
+  z-index: 2;
+}
+.build-line {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.build-line svg {
+  width: 100%;
+  height: 100%;
+}
+.build-line svg path {
+  fill: none;
+  stroke: var(--carbon);
+  stroke-width: 2;
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+}
+.build-board.in-view .build-line svg path {
+  animation: draw 1.4s var(--ease) forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .build-line svg path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
+
+.build-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 2px solid var(--carbon);
+}
+.build-label {
+  padding: 20px 24px;
+  border-top: 2px solid var(--carbon);
+  display: flex;
+  gap: 16px;
+}
+.build-label:first-child {
+  border-top: 0;
+}
+.build-label .idx {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--copper-dim);
+  width: 22px;
+  flex: none;
+}
+.build-label h3 {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+.build-label p {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--carbon);
+}
+
+/* ==========================================================================
+   Screen 06 — GUIDELINES (indexed doc layout)
+   ========================================================================== */
+.guidelines {
+  background: var(--paper);
+}
+.doc-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 56px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .doc-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+/* will-change hints the browser to promote this to its own compositor
+   layer, which is the standard mitigation for real-world position:sticky
+   scroll jank on some GPUs/browsers (not reproducible in automated
+   testing, but a safe, targeted fix for the known issue class). */
+.doc-index {
+  position: sticky;
+  top: 104px;
+  border: 2px solid var(--carbon);
+  will-change: transform;
+}
+@media (max-width: 900px) {
+  .doc-index {
+    position: relative;
+    top: auto;
+  }
+}
+.doc-index a {
+  display: block;
+  padding: 14px 18px 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-top: 2px solid var(--carbon);
+  border-left: 2px solid transparent;
+  transition: background-color 0.15s var(--ease), color 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+.doc-index a:first-child {
+  border-top: 0;
+}
+.doc-index a:hover {
+  background: var(--surface);
+  color: var(--on-dark);
+  border-left-color: var(--leaf-light);
+}
+.doc-index a.is-active {
+  background: var(--surface);
+  color: var(--on-dark);
+  border-left-color: var(--cyan);
+}
+
+.doc-block {
+  border: 2px solid var(--carbon);
+  margin-bottom: 2px;
+  scroll-margin-top: 104px;
+}
+.doc-block-hdr {
+  background: var(--surface);
+  color: var(--on-dark);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.doc-block-hdr .chip {
+  width: 8px;
+  height: 8px;
+  background: var(--cyan);
+}
+.submission-item {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  border-top: 2px solid var(--carbon);
+}
+.submission-item:first-child {
+  border-top: 0;
+}
+.submission-item .idx {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--copper-dim);
+  width: 28px;
+  flex: none;
+}
+.submission-item .title {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  width: 220px;
+  flex: none;
+}
+.submission-item .desc {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  line-height: 1.55;
+  flex: 1;
+}
+@media (max-width: 700px) {
+  .submission-item {
+    flex-wrap: wrap;
+  }
+  .submission-item .title {
+    width: 100%;
+  }
+}
+
+.criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.criterion {
+  padding: 24px;
+  border-top: 2px solid var(--carbon);
+  border-left: 2px solid var(--carbon);
+}
+.criterion:nth-child(-n + 3) {
+  border-top: 0;
+}
+.criterion:nth-child(3n + 1) {
+  border-left: 0;
+}
+.criterion .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--leaf-dim);
+}
+.criterion h3 {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  margin: 8px 0 6px;
+}
+.criterion p {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+@media (max-width: 700px) {
+  .criteria-grid {
+    grid-template-columns: 1fr;
+  }
+  .criterion {
+    border-left: 0;
+  }
+  .criterion:nth-child(n) {
+    border-top: 2px solid var(--carbon);
+  }
+  .criterion:first-child {
+    border-top: 0;
+  }
+}
+
+/* ==========================================================================
+   Screen 07 — RECOGNITION (mission badges)
+   ========================================================================== */
+.recognition {
+  background: var(--surface);
+  color: var(--on-dark);
+  position: relative;
+}
+.recognition .blueprint-grid {
+  opacity: 0.4;
+}
+.recognition-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 56px;
+  align-items: stretch;
+}
+@media (max-width: 1100px) {
+  .recognition-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.badge-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.badge {
+  position: relative;
+  border: 2px solid var(--on-dark-dim);
+  padding: 28px 28px 28px 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.badge::before {
+  content: attr(data-rank);
+  position: absolute;
+  left: 24px;
+  top: 28px;
+  font-family: var(--font-heading);
+  font-size: 28px;
+  color: var(--cyan);
+}
+/* Three tiers, three primary colors -- brown/cyan/green together in the
+   site's single most visible rank-ordered moment. */
+.badge[data-rank='02']::before {
+  color: var(--leaf-light);
+}
+.badge[data-rank='03']::before {
+  color: var(--copper-pale);
+}
+.badge .corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--on-dark);
+}
+.badge .corner.tl {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+}
+.badge .corner.br {
+  bottom: -2px;
+  right: -2px;
+  border-left: 0;
+  border-top: 0;
+}
+.badge h3 {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  color: var(--paper);
+}
+.badge p {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--on-dark);
+  max-width: 60ch;
+}
+.badge .prize {
+  align-self: flex-start;
+  margin-top: 6px;
+  border: 2px solid var(--cyan);
+  color: var(--on-dark);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+}
+
+/* clip-path (not overflow) does the clipping: negative top inset lets
+   the fist/head bleed past the top edge, while 0 on the other three
+   sides clips flush at the box -- so the image can never hang past
+   the bottom/sides and cross the border there. With the image capped
+   at the box edges, a normal border works again: it's part of the
+   box's own paint, so it naturally sits under the (child) image and
+   only shows through where the art doesn't cover it. */
+.recognition-art {
+  position: relative;
+  border: 2px solid var(--on-dark-dim);
+  min-height: 360px;
+  clip-path: inset(-240px 0 0 0);
+}
+/* Positioned out of flow so it doesn't contribute to .recognition-art's
+   own size (a height:100% child inside a flex/grid box that's ALSO
+   trying to auto-size off that child is circular, and falls back to the
+   image's raw pixel dimensions). Out of flow, height:100% instead
+   resolves cleanly against the grid-stretched (definite) parent height,
+   so the image's bottom always touches the box's bottom -- regardless
+   of which column is naturally taller. Sized slightly over 100% so the
+   fist/head bleed past the frame's top edge while the overall figure
+   stays the same size as before. */
+.recognition-art img {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 134%;
+  width: auto;
+  max-width: none;
+}
+
+/* ==========================================================================
+   Screen 08 — REGISTRATION (pilot enrollment)
+   ========================================================================== */
+.registration {
+  background: var(--paper-dim);
+}
+.enroll-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 2px solid var(--carbon);
+}
+.enroll-step {
+  padding: 28px 24px;
+  border-left: 2px solid var(--carbon);
+  position: relative;
+}
+.enroll-step:first-child {
+  border-left: 0;
+}
+.enroll-icon {
+  display: block;
+  color: var(--copper-dim);
+  margin-bottom: 14px;
+}
+.enroll-icon svg {
+  width: 26px;
+  height: 26px;
+}
+.enroll-step .idx {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--copper-dim);
+}
+.enroll-step h3 {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  margin: 10px 0 8px;
+}
+.enroll-step p {
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.enroll-step:not(:last-child)::after {
+  content: '→';
+  position: absolute;
+  right: -13px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--leaf-dim);
+  background: var(--paper-dim);
+  width: 26px;
+  text-align: center;
+  z-index: 2;
+}
+@media (max-width: 900px) {
+  .enroll-steps {
+    grid-template-columns: 1fr 1fr;
+  }
+  .enroll-step:nth-child(odd) {
+    border-left: 0;
+  }
+  .enroll-step:nth-child(n + 3) {
+    border-top: 2px solid var(--carbon);
+  }
+  .enroll-step:not(:last-child)::after {
+    display: none;
+  }
+}
+/* ---- Callout: header-bar + body panel, reused for inline nav prompts ---- */
+.callout {
+  border: 2px solid var(--carbon);
+  background: var(--paper);
+}
+.callout-hdr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  color: var(--on-dark);
+  padding: 11px 18px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.callout-hdr .chip {
+  width: 8px;
+  height: 8px;
+  background: var(--cyan);
+  flex: none;
+}
+.callout-body {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 28px 32px;
+}
+.callout-body .lede {
+  margin: 0;
+  flex: 1;
+}
+@media (max-width: 560px) {
+  .callout-body {
+    padding: 24px;
+  }
+}
+
+/* ==========================================================================
+   Screen 09 — RESOURCES (field manual / FAQ)
+   ========================================================================== */
+.resources {
+  background: var(--paper);
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 2px solid var(--carbon);
+}
+.faq {
+  border-top: 2px solid var(--carbon);
+}
+.faq:first-child {
+  border-top: 0;
+}
+/* Active/open state highlights the whole block (question + answer), not
+   just the clickable question row -- makes it read as one selected unit. */
+.faq[open] {
+  background: var(--paper-dim);
+}
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px 36px;
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary:hover {
+  background: var(--paper-dim);
+}
+.faq h3 {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  text-transform: none;
+}
+.faq-toggle {
+  position: relative;
+  flex: none;
+  width: 20px;
+  height: 20px;
+}
+.faq-toggle::before,
+.faq-toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: var(--copper);
+  transform: translate(-50%, -50%);
+}
+.faq-toggle::before {
+  width: 14px;
+  height: 2px;
+}
+.faq-toggle::after {
+  width: 2px;
+  height: 14px;
+  transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.faq[open] .faq-toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-toggle::after {
+    transition: none;
+  }
+}
+/* Animated reveal: browsers hide non-summary <details> children via
+   display:none the instant [open] is removed, which can't be transitioned.
+   Our own rule (any author style beats the UA stylesheet) keeps
+   .faq-answer always laid out; the actual max-height target is set inline
+   per-item on toggle (see Faq.js) to that answer's real measured height,
+   not a generic ceiling -- a fixed ceiling (e.g. 800px) forces every
+   transition to span that whole range, so short answers (most of them)
+   reach their true height almost instantly relative to it and the reveal
+   reads as broken rather than just fast. */
+.faq-answer {
+  display: block;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s var(--ease);
+}
+.faq-answer-content {
+  padding: 4px 36px 32px;
+}
+.faq-answer-content p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+.faq-answer-content p + p {
+  margin-top: 16px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-answer {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Screen 10 — DEMO DAY (closer)
+   ========================================================================== */
+.demoday {
+  background: var(--carbon);
+  color: var(--paper);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.demoday .blueprint-grid.on-dark {
+  opacity: 0.35;
+}
+.demoday-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.demoday .tag {
+  color: var(--cyan);
+  justify-content: center;
+}
+.demoday .tag::before {
+  background: var(--cyan);
+}
+.demoday .h1 {
+  color: var(--paper);
+}
+.demoday .lede {
+  color: var(--on-dark-dim);
+  max-width: 56ch;
+}
+.demoday-cta {
+  margin-top: 16px;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+  background: var(--surface);
+  color: var(--on-dark);
+}
+.footer .wrap {
+  padding: 36px var(--margin);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.footer-brand img {
+  height: 20px;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+.footer-brand span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.footer-legal {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-align: right;
+  max-width: 560px;
+  line-height: 1.6;
+}
+@media (max-width: 700px) {
+  .footer-legal {
+    text-align: left;
+  }
+}
+
+/* ---- utility: reveal-on-scroll for typewriter / draw-ins ---- */
+.type-target .type-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 0.85em;
+  background: var(--cyan);
+  vertical-align: baseline;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .type-cursor {
+    animation: none;
+  }
 }

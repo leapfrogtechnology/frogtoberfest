@@ -14,7 +14,14 @@
   "extends": ["eslint-config-leapfrog/react"],
   "plugins": ["react"],
   "rules": {
-    "eqeqeq": "off"
+    "eqeqeq": "off",
+    "quotes": "off",
+    "require-jsdoc": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "curly": "off",
+    "padding-line-between-statements": "off",
+    "newline-before-return": "off"
   },
   "settings": {
     "react": {

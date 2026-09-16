@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
-<!-- <code>
+  <!-- <code>
    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@,,&/&#/////////////###########&&&&%%%%%%%%(((%%%%%%/**///#&*/#&*/####///&&&&&&&&&&&&&&&//(#,&@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@,,,,&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&/**#&***/#&&(#%&&&#//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&,,,
 @@@,,,&&&&&%%%%%%%%%%&&%%%%%%%&&&&&%%%%%&&&&&%%%%&&&%%%%%%%%%&&&%%%%%&&%%%%%%%&&&%%%&///#&(***/&&#/**/&%%%%%&&%%%%%%%&&&&&&&&&&&&%%%%%%%%%%%%&&&&&/,,@
@@ -28,69 +28,77 @@
 @@@@@@,,,,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&,,,/@@@@
  -->
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Check how you're doing in Frogtoberfest" />
-  <meta property="og:title" content="Frogtoberfest" />
-  <meta property="og:description" content="Check how you're doing in Frogtoberfest" />
-  <link rel="canonical" href="%REACT_APP_HOSTNAME%" />
-  <meta property="og:url" content="%REACT_APP_HOSTNAME%" />
-  <meta property="og:site_name" content="Frogtoberfest" />
-  <meta property="og:image" content="/img/og.png" />
-  <meta property="og:description" content="Check how you're doing in Frogtoberfest" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:creator" content="@lftechnology" />
-  <meta name="twitter:title" content="Frogtoberfest" />
-  <meta name="twitter:description" content="Check how you're doing in Frogtoberfest" />
-  <meta name="twitter:image" content="/img/og.png" />
-  <meta name="theme-color" content="#202a6b" />
-  <link rel="icon" type="image/x-icon" href="/img/favicon.png" />
-  <title>Frogtoberfest</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Check how you're doing in Frogtoberfest" />
+    <meta property="og:title" content="Frogtoberfest" />
+    <meta property="og:description" content="Check how you're doing in Frogtoberfest" />
+    <link rel="canonical" href="%REACT_APP_HOSTNAME%" />
+    <meta property="og:url" content="%REACT_APP_HOSTNAME%" />
+    <meta property="og:site_name" content="Frogtoberfest" />
+    <meta property="og:image" content="/img/og.png" />
+    <meta property="og:description" content="Check how you're doing in Frogtoberfest" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@lftechnology" />
+    <meta name="twitter:title" content="Frogtoberfest" />
+    <meta name="twitter:description" content="Check how you're doing in Frogtoberfest" />
+    <meta name="twitter:image" content="/img/og.png" />
+    <meta name="theme-color" content="#202a6b" />
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png" />
+    <title>Frogtoberfest</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Oswald:wght@400;500;600;700&display=swap"
+    />
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
 
-</head>
+  <body class="h-screen overflow-y-auto flex flex-col">
+    <div id="root"></div>
+    <!-- Twitter -->
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = 'https://platform.twitter.com/widgets.js';
+        fjs.parentNode.insertBefore(js, fjs);
 
-<body class="h-screen overflow-y-auto flex flex-col">
-  <div id="root"></div>
-  <!-- Twitter -->
-  <script>
-    window.twttr = (function (d, s, id) {
-      var js,
-        fjs = d.getElementsByTagName(s)[0],
-        t = window.twttr || {};
-      if (d.getElementById(id)) return t;
-      js = d.createElement(s);
-      js.id = id;
-      js.src = 'https://platform.twitter.com/widgets.js';
-      fjs.parentNode.insertBefore(js, fjs);
-
-      t._e = [];
-      t.ready = function (f) {
-        t._e.push(f);
-      };
-      return t;
-    })(document, 'script', 'twitter-wjs');
-  </script>
-  <!-- Facebook -->
-  <div id="fb-root"></div>
-  <script>
-    (function (d, s, id) {
-      var js,
-        fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s);
-      js.id = id;
-      js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10'; // If this line throws error, disable adblocker.
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk');
-  </script>
-</body>
-
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+        return t;
+      })(document, 'script', 'twitter-wjs');
+    </script>
+    <!-- Facebook -->
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10'; // If this line throws error, disable adblocker.
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, 'script', 'facebook-jssdk');
+    </script>
+  </body>
 </html>
