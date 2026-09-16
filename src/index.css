@@ -1236,165 +1236,10 @@ h4 {
 }
 
 /* ==========================================================================
-   Screen 06 — GUIDELINES (indexed doc layout)
+   Screen 06 — GUIDELINES (FAQ-style accordion)
    ========================================================================== */
 .guidelines {
   background: var(--paper);
-}
-.doc-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 56px;
-  align-items: start;
-}
-@media (max-width: 900px) {
-  .doc-layout {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-}
-/* will-change hints the browser to promote this to its own compositor
-   layer, which is the standard mitigation for real-world position:sticky
-   scroll jank on some GPUs/browsers (not reproducible in automated
-   testing, but a safe, targeted fix for the known issue class). */
-.doc-index {
-  position: sticky;
-  top: 104px;
-  border: 2px solid var(--carbon);
-  will-change: transform;
-}
-@media (max-width: 900px) {
-  .doc-index {
-    position: relative;
-    top: auto;
-  }
-}
-.doc-index a {
-  display: block;
-  padding: 14px 18px 14px 16px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-top: 2px solid var(--carbon);
-  border-left: 2px solid transparent;
-  transition: background-color 0.15s var(--ease), color 0.15s var(--ease), border-color 0.15s var(--ease);
-}
-.doc-index a:first-child {
-  border-top: 0;
-}
-.doc-index a:hover {
-  background: var(--surface);
-  color: var(--on-dark);
-  border-left-color: var(--leaf-light);
-}
-.doc-index a.is-active {
-  background: var(--surface);
-  color: var(--on-dark);
-  border-left-color: var(--cyan);
-}
-
-.doc-block {
-  border: 2px solid var(--carbon);
-  margin-bottom: 2px;
-  scroll-margin-top: 104px;
-}
-.doc-block-hdr {
-  background: var(--surface);
-  color: var(--on-dark);
-  padding: 14px 24px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.doc-block-hdr .chip {
-  width: 8px;
-  height: 8px;
-  background: var(--cyan);
-}
-.submission-item {
-  display: flex;
-  gap: 24px;
-  padding: 24px;
-  border-top: 2px solid var(--carbon);
-}
-.submission-item:first-child {
-  border-top: 0;
-}
-.submission-item .idx {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--copper-dim);
-  width: 28px;
-  flex: none;
-}
-.submission-item .title {
-  font-family: var(--font-heading);
-  font-size: 17px;
-  width: 220px;
-  flex: none;
-}
-.submission-item .desc {
-  font-family: var(--font-body);
-  font-size: 14.5px;
-  line-height: 1.55;
-  flex: 1;
-}
-@media (max-width: 700px) {
-  .submission-item {
-    flex-wrap: wrap;
-  }
-  .submission-item .title {
-    width: 100%;
-  }
-}
-
-.criteria-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-.criterion {
-  padding: 24px;
-  border-top: 2px solid var(--carbon);
-  border-left: 2px solid var(--carbon);
-}
-.criterion:nth-child(-n + 3) {
-  border-top: 0;
-}
-.criterion:nth-child(3n + 1) {
-  border-left: 0;
-}
-.criterion .num {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--leaf-dim);
-}
-.criterion h3 {
-  font-family: var(--font-heading);
-  font-size: 16px;
-  margin: 8px 0 6px;
-}
-.criterion p {
-  font-size: 13.5px;
-  line-height: 1.5;
-}
-@media (max-width: 700px) {
-  .criteria-grid {
-    grid-template-columns: 1fr;
-  }
-  .criterion {
-    border-left: 0;
-  }
-  .criterion:nth-child(n) {
-    border-top: 2px solid var(--carbon);
-  }
-  .criterion:first-child {
-    border-top: 0;
-  }
 }
 
 /* ==========================================================================
@@ -1738,6 +1583,23 @@ h4 {
 }
 .faq-answer-content p + p {
   margin-top: 16px;
+}
+.faq-answer-content ul {
+  margin: 16px 0 0;
+  padding-left: 20px;
+}
+.faq-answer-content li {
+  font-size: 17px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.faq-answer-content h4 {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  margin: 20px 0 8px;
+}
+.faq-answer-content h4:first-child {
+  margin-top: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .faq-answer {

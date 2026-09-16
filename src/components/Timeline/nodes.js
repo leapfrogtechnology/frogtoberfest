@@ -1,5 +1,5 @@
 const NODES = [
-  { date: 'Week 0', phase: 'Registration', desc: 'Registration with idea submission, September 15–29' },
+  { date: 'Week 0', phase: 'Registration', desc: 'Registration with idea submission, September 16–29' },
   {
     date: 'Oct 1',
     phase: 'Kickoff',
