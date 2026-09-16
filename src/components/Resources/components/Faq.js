@@ -44,19 +44,27 @@ export default function Faq({ q, children }) {
     // viewport's too short to show it all -- scrolls just enough to fit
     // the bottom on screen, without pushing the question itself above
     // the sticky nav if the answer is taller than the viewport allows.
+    // Started right away rather than after the expand finishes: the
+    // target height is already known (content.scrollHeight), so the
+    // scroll's endpoint doesn't need to wait for the box to actually
+    // reach it. Waiting for that (a timer, or the transition's own end
+    // event) reads as a hold -- nothing moves in the viewport for the
+    // whole expand, then it jumps into a separate scroll. Running both
+    // at once reads as one motion.
     const details = detailsRef.current;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.setTimeout(() => {
-      if (!details) return;
+    if (details) {
       const rect = details.getBoundingClientRect();
-      const overflow = rect.bottom - window.innerHeight;
-      if (overflow <= 0) return;
-      const room = rect.top - NAV_HEIGHT;
-      const scrollAmount = Math.max(0, Math.min(overflow, room));
-      if (scrollAmount > 0) {
-        window.scrollBy({ top: scrollAmount, behavior: reduceMotion ? 'auto' : 'smooth' });
+      const predictedBottom = rect.bottom + content.scrollHeight;
+      const overflow = predictedBottom - window.innerHeight;
+      if (overflow > 0) {
+        const room = rect.top - NAV_HEIGHT;
+        const scrollAmount = Math.max(0, Math.min(overflow, room));
+        if (scrollAmount > 0) {
+          window.scrollBy({ top: scrollAmount, behavior: reduceMotion ? 'auto' : 'smooth' });
+        }
       }
-    }, 320);
+    }
   }
 
   return (
