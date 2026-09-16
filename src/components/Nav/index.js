@@ -10,7 +10,7 @@ const NAV_CODE = 'AI‑FORGE‑2026';
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const codeRef = useRef(null);
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
     function onKeyDown(e) {
@@ -80,10 +80,21 @@ export default function Nav() {
             if (e.target.tagName === 'A') setIsOpen(false);
           }}
         >
-          <Link to="/#beyond">Participation</Link>
-          <Link to="/#timeline">Timeline</Link>
-          <Link to="/#resources">FAQs</Link>
-          <Link to="/guidelines">Guidelines</Link>
+          <Link to="/#beyond" className={hash === '#beyond' ? 'is-active' : undefined}>
+            Participation
+          </Link>
+          <Link to="/#timeline" className={hash === '#timeline' ? 'is-active' : undefined}>
+            Timeline
+          </Link>
+          <Link to="/#resources" className={hash === '#resources' ? 'is-active' : undefined}>
+            FAQs
+          </Link>
+          <Link to="/guidelines" className={pathname === '/guidelines' ? 'is-active' : undefined}>
+            Guidelines
+          </Link>
+          <a className="nav-links-cta" href="https://frog.ly/frogtoberfest-2026">
+            Register Now
+          </a>
         </div>
         <a className="btn btn-primary nav-cta" id="navCta" href="https://frog.ly/frogtoberfest-2026">
           <span className="nav-cta-inner">

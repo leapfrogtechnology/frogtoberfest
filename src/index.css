@@ -390,7 +390,18 @@ h4 {
   border-bottom: 2px solid transparent;
   transition: border-color 0.15s var(--ease), color 0.15s;
 }
-.nav-links a:hover {
+.nav-links a:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+/* Only shown inside the mobile hamburger menu (see the 1100px block
+   below) -- the desktop row already has its own pill CTA (.nav-cta), so
+   this stays hidden there to avoid two "Register" entries side by side. */
+.nav-links-cta {
+  display: none;
+}
+.nav-links a:hover,
+.nav-links a.is-active {
   color: var(--on-dark);
   border-color: var(--cyan);
 }
@@ -481,20 +492,35 @@ h4 {
 @media (prefers-reduced-motion: reduce) {
   .nav-toggle-bars,
   .nav-toggle-bars::before,
-  .nav-toggle-bars::after {
+  .nav-toggle-bars::after,
+  .nav-links {
     transition: none;
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 1100px) {
   .nav-toggle {
     display: flex;
+  }
+  /* The CTA's flex:none width never shrinks, so once it's visible (any
+     page other than the hero) it pushes past the edge -- measured
+     overflowing past the viewport by ~54px at 960px wide, well above the
+     old 900px cutoff, since brand + all 4 links + CTA need ~1014px to
+     fit without wrapping. The hamburger menu already surfaces navigation
+     on mobile/tablet; drop the CTA here rather than fight both for the
+     same row. */
+  .nav-cta {
+    display: none;
   }
   .nav .wrap {
     position: relative;
   }
+  /* display:none/flex was a hard cut with no transition, out of step with
+     the hamburger icon's own eased morph right next to it. Stays laid out
+     always (like .faq-answer's max-height approach) so open/close can
+     animate instead of snapping. */
   .nav-links {
-    display: none;
+    display: flex;
     position: absolute;
     top: 100%;
     left: 0;
@@ -505,9 +531,18 @@ h4 {
     margin-left: 0;
     background: var(--surface);
     border-bottom: 2px solid var(--carbon);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: max-height 0.3s var(--ease), opacity 0.2s var(--ease), transform 0.3s var(--ease);
   }
   .nav-links.is-open {
-    display: flex;
+    max-height: 480px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
   .nav-links a {
     display: flex;
@@ -519,6 +554,43 @@ h4 {
   .nav-links a:hover {
     border-color: var(--surface-2);
     background: var(--surface-2);
+  }
+  /* The shared .is-active border-bottom (cyan) sits flush against the
+     Register Now bar right below it in this stacked mobile layout, so
+     the two cyan lines visually merge into one. Swap to a left-side
+     square marker here instead -- same indicator language as .tag::before
+     elsewhere on the site, without the adjacent-line clash. */
+  .nav-links a.is-active {
+    border-color: transparent;
+    background: var(--surface-2);
+    position: relative;
+    padding-left: 44px;
+  }
+  .nav-links a.is-active::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--cyan);
+  }
+  .nav-links-cta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    min-height: 44px;
+    padding: 14px 24px;
+    border-top: 2px solid var(--surface-2);
+    background: var(--cyan);
+    color: var(--carbon);
+    font-weight: 600;
+  }
+  .nav-links-cta:hover {
+    background: var(--go);
+    color: var(--on-dark);
   }
 }
 @media (max-width: 700px) {
@@ -1048,20 +1120,23 @@ h4 {
   position: relative;
   padding-left: 56px;
 }
+/* top/bottom default to the old guessed 8px until JS measures the real
+   node centers (see Timeline/index.js) and overrides these via
+   --rail-top/--rail-bottom -- keeps a sane fallback if JS hasn't run yet. */
 .tl-rail::before {
   content: '';
   position: absolute;
-  left: 9px;
-  top: 8px;
-  bottom: 8px;
-  width: 0;
-  border-left: 2px solid var(--carbon);
+  left: 17px;
+  top: var(--rail-top, 8px);
+  bottom: var(--rail-bottom, 8px);
+  width: 2px;
+  background: var(--carbon);
 }
 .tl-fill {
   position: absolute;
-  left: 9px;
-  top: 8px;
-  bottom: 8px;
+  left: 17px;
+  top: var(--rail-top, 8px);
+  bottom: var(--rail-bottom, 8px);
   width: 2px;
   background: var(--cyan);
   transform: scaleY(0);
@@ -1075,23 +1150,8 @@ h4 {
 .tl-node:last-child {
   padding-bottom: 0;
 }
-.tl-node::before {
-  content: '';
-  position: absolute;
-  left: -56px;
-  top: 2px;
-  width: 16px;
-  height: 16px;
-  background: var(--paper);
-  border: 2px solid var(--carbon);
-}
-.tl-node.active::before {
-  background: var(--cyan);
-}
-.tl-node.hi::before {
-  background: var(--copper);
-}
 .tl-node-inner {
+  position: relative;
   display: grid;
   grid-template-columns: 170px 200px 1fr;
   gap: 24px;
@@ -1099,6 +1159,27 @@ h4 {
   border: 2px solid var(--carbon);
   padding: 22px 24px;
   background: var(--paper-dim);
+}
+/* Centered on .tl-node-inner (the box) rather than .tl-node (which also
+   includes the 48px gap below it) -- otherwise the marker drifts toward
+   the middle of box+gap instead of the box itself, and drifts further
+   with every extra line the answer wraps to. */
+.tl-node-inner::before {
+  content: '';
+  position: absolute;
+  left: var(--marker-left, -54px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: var(--paper);
+  border: 2px solid var(--carbon);
+}
+.tl-node.active .tl-node-inner::before {
+  background: var(--cyan);
+}
+.tl-node.hi .tl-node-inner::before {
+  background: var(--copper);
 }
 .tl-node.hi .tl-node-inner {
   background: var(--surface);
@@ -1505,6 +1586,10 @@ h4 {
    just the clickable question row -- makes it read as one selected unit. */
 .faq[open] {
   background: var(--paper-dim);
+}
+.faq summary:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: -2px;
 }
 .faq summary {
   display: flex;
