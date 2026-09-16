@@ -213,7 +213,7 @@ export default function Guidelines() {
               <li>Has a working demonstration and a clear explanation of what the team built</li>
             </ul>
           </Faq>
-          <Faq q="Who owns my project?">
+          <Faq q="You own what you build.">
             <p>
               Participants retain ownership of the ideas and projects they submit. Leapfrog Technology may adapt,
               extend, or otherwise make use of a submitted project beyond the challenge &mdash; including for
