@@ -18,7 +18,9 @@ export default function Home() {
   useEffect(() => {
     if (!hash) return;
     const el = document.querySelector(hash);
-    if (el) el.scrollIntoView();
+    if (!el) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
   }, [hash]);
 
   return (
