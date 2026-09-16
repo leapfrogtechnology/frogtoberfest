@@ -1,124 +1,87 @@
-import React, { Fragment } from 'react';
-import SiteHeader from 'components/SiteHeader';
+import React from 'react';
+import { useEffect } from 'react';
+import Submission from './components/Submission';
+import Eligibility from './components/Eligibility';
+import Judging from './components/Judging';
 
-const Guidelines = () => (
-  <Fragment>
-    <SiteHeader />
-    <div className="container py-14x text-white bg-grey-light-dark">
-      <h2 className='text-primary'>Frogtoberfest Participation Guidelines</h2>
-      <div>
-        <div className="my-10x">
-          <p>
-            <strong>Frogtoberfest</strong> is dedicated to fostering high-quality contributions to Open Source projects.
-          </p>
-          <p className="pt-5x">
-            Our mission is to inspire the Nepali community to get involved in Open Source and work together to improve
-            projects that power our modern digital landscape.
-          </p>
-          <p className="pt-5x">
-            With that in mind, we have prepared a few guidelines to ensure meaningful participation and contributions
-            throughout <strong>Frogtoberfest</strong>.
-          </p>
+export default function Guidelines() {
+  /* ---- Sidebar index: highlight the doc-block currently in view.
+     Picks whichever section has the largest fraction of ITS OWN height
+     currently visible, not raw visible pixels -- Guidelines is short enough
+     (as its own standalone page) that Submission (by far the tallest block)
+     would otherwise always win a raw-pixel comparison purely by being
+     bigger, even three-quarters scrolled past. Ratio normalizes for that;
+     ties (multiple sections simultaneously fully visible, unavoidable once
+     remaining scrollable distance is shorter than a viewport) prefer the
+     later section, since sections are scanned in order and a tie keeps
+     overwriting the pick. ---- */
+  useEffect(() => {
+    const docLinks = document.querySelectorAll('.doc-index a');
+    if (!docLinks.length) return undefined;
+
+    const docSections = Array.prototype.map.call(docLinks, link => document.querySelector(link.getAttribute('href')));
+
+    function updateActive() {
+      const vh = window.innerHeight;
+      let activeIndex = 0;
+      let bestRatio = -1;
+      docSections.forEach((section, i) => {
+        if (!section) return;
+        const r = section.getBoundingClientRect();
+        const visible = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+        const ratio = visible / (r.height || 1);
+        if (ratio >= bestRatio - 0.001) {
+          activeIndex = i;
+          bestRatio = Math.max(bestRatio, ratio);
+        }
+      });
+      docLinks.forEach((link, i) => link.classList.toggle('is-active', i === activeIndex));
+    }
+
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateActive();
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateActive();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
+  return (
+    <section className="screen guidelines screen-pad" id="guidelines">
+      <div className="wrap">
+        <div className="sec-head">
+          <div>
+            <p className="tag">Field Documentation</p>
+            <h2 className="h2">Guidelines</h2>
+          </div>
         </div>
-        <div className="my-10x">
-          <h4>
-            <span role="img" aria-label="Wrench" className="mr-2x">
-              🔧
-            </span>
-            <span className='text-primary'>Meaningful code changes</span>
-          </h4>
-          <p className="pt-5x">
-            Contributions should focus on meaningful code changes, such as bug fixes, new features, or improvements,
-            rather than superficial alterations or cosmetic modifications.
-          </p>
-        </div>
-        <div className="my-10x">
-          <h4>
-            <span role="img" aria-label="Orange books" className="mr-2x">
-              📚
-            </span>
-            <span className='text-primary'>Documentation enhancements</span>
-          </h4>
-          <p className="pt-5x">
-            Encourage participants to contribute to project documentation, including updates, corrections, or
-            clarifications, to improve the overall quality and usability of the project.
-          </p>
-        </div>
-        <div className="my-10x">
-          <h4>
-            <span role="img" aria-label="Magnifying glass" className="mr-2x">
-              🔍
-            </span>
-            <span className='text-primary'>Issue tracking</span>
-          </h4>
-          <p className="pt-5x">
-            Participants should prioritize issues or tasks listed in the project's issue tracker. This ensures alignment
-            with project priorities and helps address existing challenges.
-          </p>
-        </div>
-        <div className="my-10x">
-          <h4>
-            <span role="img" aria-label="Light bulb" className="mr-2x">
-              💡
-            </span>
-            <span className='text-primary'>Value-added contributions</span>
-          </h4>
-          <p className="pt-5x">
-            Stress the importance of making contributions that provide clear value to the open-source project and its
-            users. Ask participants to consider how their contributions benefit the community.
-          </p>
-        </div>
-        <div className="my-10x">
-          <h4>
-            <span role="img" aria-label="Glowing star" className="mr-2x">
-              🌟
-            </span>
-            <span className='text-primary'>Quality over quantity</span>
-          </h4>
-          <p className="pt-5x">
-            The emphasis on quality has resulted in participants submitting fewer, but more substantial, PRs. This
-            approach ensures that contributions are valuable to the open-source community.
-          </p>
-        </div>
-        <div className="my-10x">
-          <h4>
-            <span role="img" aria-label="Eye in speech bubble" className="mr-2x">
-              👁️‍🗨️
-            </span>
-            <span className='text-primary'>Code review process</span>
-          </h4>
-          <p className="pt-5x">
-            The code review process will be conducted after the event's completion to maintain the quality of
-            contributions.
-          </p>
-          <p className="pt-5x">
-            Experienced reviewers will provide valuable feedback, enhancing the overall quality of PRs. The rejection of
-            low-quality PRs will reinforce the importance of quality contributions, and participants will become more
-            conscious of submitting meaningful changes.
-          </p>
-        </div>
-        <div className="my-10x">
-          <p>
-            This approach ensures that the final report for <strong>Frogtoberfest</strong> reflects the true value of
-            contributions, as only high-quality PRs that meet the established guidelines will be counted towards
-            participants' achievements.
-          </p>
-          <p>
-            Happy contributing!
-            <span role="img" aria-label="Frog" className="ml-2x">
-              🐸
-            </span>
-          </p>
-          <p className="pt-5x">
-            As <strong>Frogtoberfest</strong> continues, we remain dedicated to these principles, ensuring that
-            participants continue to make valuable contributions that benefit the open-source community. These
-            guidelines will continue to serve as a cornerstone for promoting high-quality contributions and fostering a
-            thriving open-source ecosystem.
-          </p>
+
+        <div className="doc-layout">
+          <nav className="doc-index" aria-label="Guidelines index">
+            <a href="#submission">01 &middot; Submission</a>
+            <a href="#eligibility">02 &middot; Eligibility</a>
+            <a href="#judging">03 &middot; Judging Criteria</a>
+          </nav>
+
+          <div>
+            <Submission />
+            <Eligibility />
+            <Judging />
+          </div>
         </div>
       </div>
-    </div>
-  </Fragment>
-);
-
-export default Guidelines;
+    </section>
+  );
+}

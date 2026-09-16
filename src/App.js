@@ -1,30 +1,30 @@
-import React, { Fragment } from 'react';
-import { Helmet } from 'react-helmet';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import PageWrapper from './components/PageWrapper';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Nav from './components/Nav';
+import Footer from './components/Footer';
 import Home from './pages/Home';
-import User from './pages/User';
-import Checker from './pages/Checker';
-import Me from './pages/Me';
-import NotFound from './pages/NotFound';
 import Guidelines from './pages/Guidelines';
 
-const App = () => (
-  <Fragment>
-    <Helmet titleTemplate="Hacktoberfest Checker" />
-    <PageWrapper>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/checker" component={Checker} />
-          <Route exact path="/user/:username" component={User} />
-          <Route exact path="/me" component={Me} />
-          <Route exact path="/guidelines" component={Guidelines} />
-          <Route component={NotFound} />
-        </Switch>
-      </Router>
-    </PageWrapper>
-  </Fragment>
-);
+export default function App() {
+  return (
+    <>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
 
-export default App;
+      <div className="grain" aria-hidden="true"></div>
+      <div className="scanlines" aria-hidden="true"></div>
+
+      <Nav />
+
+      <main id="main-content" tabIndex={-1}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/guidelines" element={<Guidelines />} />
+        </Routes>
+      </main>
+
+      <Footer />
+    </>
+  );
+}
