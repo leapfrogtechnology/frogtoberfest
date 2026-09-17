@@ -134,6 +134,16 @@ button {
 .screen {
   position: relative;
   border-bottom: 2px solid var(--carbon);
+  /* Sticky nav is 80px tall -- without this, an anchor jump (nav click)
+     lands the section flush under it instead of leaving room to see in. */
+  scroll-margin-top: 80px;
+}
+/* Recognition's mech art bleeds above its own box (clip-path on
+   .recognition-art) -- enough extra scroll-margin here so the anchor
+   jump stops with the raised fist right at the top of the viewport,
+   instead of the plain 80px nav clearance cropping it. */
+#recognition {
+  scroll-margin-top: 220px;
 }
 .screen-pad {
   padding-block: 96px;
@@ -190,25 +200,17 @@ button {
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--surface);
 }
-.tag::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background: var(--copper);
-  flex: none;
-}
 .on-dark .tag {
   color: var(--on-dark);
 }
-.on-dark .tag::before {
-  background: var(--cyan);
+.tag-lg {
+  font-size: 16px;
 }
 
 .serial {
@@ -236,6 +238,10 @@ h4 {
   font-size: clamp(36px, 4.2vw, 68px);
   line-height: 0.96;
   letter-spacing: -0.005em;
+  /* Oswald's uppercase glyphs carry a couple px of left side-bearing,
+     so the heading reads indented from the .tag marker above it
+     without this nudge. */
+  margin-left: -3px;
 }
 
 .lede {
@@ -364,7 +370,8 @@ h4 {
 .nav-brand .div {
   width: 2px;
   height: 24px;
-  background: var(--on-dark-dim);
+  background: var(--paper);
+  opacity: 0.5;
 }
 .nav-code {
   font-family: var(--font-mono);
@@ -864,19 +871,11 @@ h4 {
 .meta-card dt {
   display: flex;
   align-items: center;
-  gap: 8px;
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.14em;
   color: var(--copper-dim);
   text-transform: uppercase;
-}
-.meta-card dt::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--copper);
-  flex: none;
 }
 .meta-card dd {
   font-family: var(--font-heading);
@@ -943,23 +942,8 @@ h4 {
   }
 }
 
-/* No will-change:transform here: promoting this to its own compositing
-   layer is what was clipping the antennae/shoulders that intentionally
-   bleed past .beyond-figure's box -- some browsers clip a sticky
-   element's overflowing children to the promoted layer's own bounds
-   even with overflow:visible set. */
-.beyond-sticky {
-  position: sticky;
-  top: 104px;
-}
 .beyond-sticky .sec-head {
   margin-bottom: 120px;
-}
-@media (max-width: 1100px) {
-  .beyond-sticky {
-    position: relative;
-    top: auto;
-  }
 }
 
 .beyond-figure {
@@ -1349,17 +1333,20 @@ h4 {
 }
 
 .badge-list {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  border: 2px solid var(--on-dark-dim);
 }
 .badge {
   position: relative;
-  border: 2px solid var(--on-dark-dim);
   padding: 28px 28px 28px 88px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.badge + .badge {
+  border-top: 2px solid var(--on-dark-dim);
 }
 .badge::before {
   content: attr(data-rank);
@@ -1378,19 +1365,19 @@ h4 {
 .badge[data-rank='03']::before {
   color: var(--copper-pale);
 }
-.badge .corner {
+.badge-list .corner {
   position: absolute;
   width: 14px;
   height: 14px;
   border: 2px solid var(--on-dark);
 }
-.badge .corner.tl {
+.badge-list .corner.tl {
   top: -2px;
   left: -2px;
   border-right: 0;
   border-bottom: 0;
 }
-.badge .corner.br {
+.badge-list .corner.br {
   bottom: -2px;
   right: -2px;
   border-left: 0;
@@ -1428,6 +1415,7 @@ h4 {
    only shows through where the art doesn't cover it. */
 .recognition-art {
   position: relative;
+  background: var(--surface-2);
   border: 2px solid var(--on-dark-dim);
   min-height: 360px;
   clip-path: inset(-240px 0 0 0);
