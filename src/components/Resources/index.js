@@ -11,10 +11,17 @@ export default function Resources() {
             <p className="tag">Screen 04 &middot; Field Manual</p>
             <h2 className="h2">FAQs</h2>
           </div>
-          <span className="sec-head-right">FAQ &middot; 10 Entries</span>
+          <span className="sec-head-right">FAQ &middot; 11 Entries</span>
         </div>
 
         <div className="faq-grid">
+          <Faq q="Is this a virtual or in-person event?">
+            <p>The challenge will take place virtually, so you can build your project from wherever you are.</p>
+            <p>
+              However, the Demo Day will be held in-person at Leapfrog&rsquo;s Nepal office, where the top 5 teams
+              will pitch and showcase their products.
+            </p>
+          </Faq>
           <Faq q="Who&rsquo;s eligible?">
             <p>
               Open to anyone based in Nepal only, since this challenge has always been about fostering the Nepali open

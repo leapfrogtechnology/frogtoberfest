@@ -44,7 +44,7 @@ export default function Hero() {
             <img className="hero-logo" src={mainLogo} alt="Frogtoberfest 2026" />
           </h1>
           <p className="lede lg">
-            A month-long challenge to build an open-source, AI-powered product that solves something real.
+            A month-long virtual challenge to build an open-source, AI-powered product that solves something real.
           </p>
           <div className="hero-cta-row">
             <a className="btn btn-primary" href="https://frog.ly/frogtoberfest-2026" ref={ctaRef}>
