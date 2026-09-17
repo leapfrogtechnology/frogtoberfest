@@ -14,6 +14,8 @@ export default function Recognition() {
           </h2>
 
           <div className="badge-list">
+            <span className="corner tl" aria-hidden="true"></span>
+            <span className="corner br" aria-hidden="true"></span>
             <Badge rank="01" title="Best AI Project" prize="Grand Prize">
               The project that stands out for innovation, technical excellence, open-source contribution, and real-world
               impact.
