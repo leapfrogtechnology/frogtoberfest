@@ -281,30 +281,36 @@ h4 {
 /* Primary CTA gets tactile key-press physics: raised at rest, lifts on hover,
    presses flush on click. Sharp corners stay (no radius, per the brief) --
    the "LED" is the existing square chip with a glow ring instead of a round dot. */
+/* Movement is `transform`, not `top`: transform animates on the compositor,
+   while `top` forces a layout pass every frame, which is what made the lift
+   stutter. 150ms ease on hover; the slower release and faster press below
+   stay as they were. */
 .btn-primary {
   --depth: 6px;
   position: relative;
-  top: 0;
+  transform: translateY(0);
   background: var(--cyan);
   border-color: var(--carbon);
   color: var(--carbon);
   box-shadow: 0 var(--depth) 0 0 var(--carbon), 0 calc(var(--depth) + 6px) 10px rgba(43, 30, 26, 0.25);
   /* Slow release, so letting go of a real (fast, ~100ms) click is still
      visible -- the snap-down on press uses its own fast transition below. */
-  transition: background-color 0.32s ease-out, color 0.32s ease-out, top 0.32s ease-out, box-shadow 0.32s ease-out;
+  transition: background-color 0.32s ease-out, color 0.32s ease-out, transform 0.32s ease-out,
+    box-shadow 0.32s ease-out;
 }
 .btn-primary:hover {
   background: var(--carbon);
   color: var(--cyan);
-  top: 2px;
+  transform: translateY(2px);
   box-shadow: 0 calc(var(--depth) - 2px) 0 0 var(--carbon), 0 6px 10px rgba(43, 30, 26, 0.22);
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 .btn-primary:active {
-  top: var(--depth);
+  transform: translateY(var(--depth));
   background: var(--go);
   color: var(--on-dark);
   box-shadow: 0 0 0 0 var(--carbon), 0 0 16px 2px rgba(42, 232, 210, 0.55);
-  transition: background-color 0.04s ease-in, color 0.04s ease-in, top 0.04s ease-in, box-shadow 0.04s ease-in;
+  transition: background-color 0.04s ease-in, color 0.04s ease-in, transform 0.04s ease-in, box-shadow 0.04s ease-in;
 }
 .btn-primary .chip {
   box-shadow: 0 0 0 2px var(--carbon), 0 0 8px 1px currentColor;
@@ -316,24 +322,26 @@ h4 {
 .btn-outline {
   --depth: 6px;
   position: relative;
-  top: 0;
+  transform: translateY(0);
   border-color: var(--carbon);
   color: var(--carbon);
   box-shadow: 0 var(--depth) 0 0 var(--carbon);
-  transition: background-color 0.32s ease-out, color 0.32s ease-out, top 0.32s ease-out, box-shadow 0.32s ease-out;
+  transition: background-color 0.32s ease-out, color 0.32s ease-out, transform 0.32s ease-out,
+    box-shadow 0.32s ease-out;
 }
 .btn-outline:hover {
   background: var(--carbon);
   color: var(--paper);
-  top: 2px;
+  transform: translateY(2px);
   box-shadow: 0 calc(var(--depth) - 2px) 0 0 var(--carbon);
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 .btn-outline:active {
-  top: var(--depth);
+  transform: translateY(var(--depth));
   background: var(--go);
   color: var(--on-dark);
   box-shadow: 0 0 0 0 var(--carbon);
-  transition: background-color 0.04s ease-in, color 0.04s ease-in, top 0.04s ease-in, box-shadow 0.04s ease-in;
+  transition: background-color 0.04s ease-in, color 0.04s ease-in, transform 0.04s ease-in, box-shadow 0.04s ease-in;
 }
 
 /* ==========================================================================
@@ -422,7 +430,9 @@ h4 {
   grid-template-columns: 0fr;
   min-width: 0;
   min-height: 44px;
-  padding: 10px 18px;
+  /* 15px, not 18px: .nav-cta-inner adds the missing 3px back as padding so
+     the chip's 2px ring shadow isn't clipped by the collapse overflow. */
+  padding: 10px 18px 10px 15px;
   font-size: 11px;
   overflow: hidden;
   opacity: 0;
@@ -442,12 +452,19 @@ h4 {
   transform: translateX(0);
   pointer-events: auto;
 }
+/* .nav-cta drives its slide-in with transform, which now outranks
+   .btn-primary:hover's lift (also transform) -- restate the lift here so the
+   nav CTA still presses on hover like every other primary button. */
+.nav-cta.is-visible:hover {
+  transform: translateY(2px);
+}
 .nav-cta-inner {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
   overflow: hidden;
+  padding-left: 3px;
 }
 
 /* ---- Mobile menu toggle (hamburger -> X) ---- */
@@ -524,8 +541,7 @@ h4 {
   }
   /* display:none/flex was a hard cut with no transition, out of step with
      the hamburger icon's own eased morph right next to it. Stays laid out
-     always (like .faq-answer's max-height approach) so open/close can
-     animate instead of snapping. */
+     always so open/close can animate instead of snapping. */
   .nav-links {
     display: flex;
     position: absolute;
@@ -1591,7 +1607,12 @@ h4 {
 .faq summary::-webkit-details-marker {
   display: none;
 }
-.faq summary:hover {
+/* Painted on the whole item, not just the summary row: during the collapse
+   the pointer is still on the question, so a summary-only hover left the
+   heading dim while the answer collapsing underneath it stayed light --
+   two different backgrounds in the same block. Same reason [open] paints
+   the whole item. */
+.faq:has(summary:hover) {
   background: var(--paper-dim);
 }
 .faq h3 {
@@ -1632,20 +1653,28 @@ h4 {
     transition: none;
   }
 }
-/* Animated reveal: browsers hide non-summary <details> children via
-   display:none the instant [open] is removed, which can't be transitioned.
-   Our own rule (any author style beats the UA stylesheet) keeps
-   .faq-answer always laid out; the actual max-height target is set inline
-   per-item on toggle (see Faq.js) to that answer's real measured height,
-   not a generic ceiling -- a fixed ceiling (e.g. 800px) forces every
-   transition to span that whole range, so short answers (most of them)
-   reach their true height almost instantly relative to it and the reveal
-   reads as broken rather than just fast. */
-.faq-answer {
-  display: block;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s var(--ease);
+/* Animated reveal, done natively: `interpolate-size`
+   lets block-size transition to the keyword `auto`, and ::details-content
+   targets the disclosure box the UA generates around the non-summary
+   children -- so the browser animates to the answer's real height itself.
+   That replaces measuring scrollHeight and driving max-height from JS,
+   which is what made this feel stepped: a measured pixel target is stale
+   the moment the text reflows, and the open transition needed a forced
+   layout read plus a double rAF to fire at all.
+   Chrome/Edge 131+. Elsewhere the answer opens instantly, which degrades
+   gracefully. */
+@media (prefers-reduced-motion: no-preference) {
+  .faq {
+    interpolate-size: allow-keywords;
+  }
+  .faq::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition: content-visibility 250ms allow-discrete, block-size 250ms ease;
+  }
+  .faq[open]::details-content {
+    block-size: auto;
+  }
 }
 .faq-answer-content {
   padding: 4px 36px 32px;
@@ -1674,12 +1703,6 @@ h4 {
 .faq-answer-content h4:first-child {
   margin-top: 0;
 }
-@media (prefers-reduced-motion: reduce) {
-  .faq-answer {
-    transition: none;
-  }
-}
-
 /* ==========================================================================
    Screen 10 — DEMO DAY (closer)
    ========================================================================== */
