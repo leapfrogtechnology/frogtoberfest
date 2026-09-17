@@ -83,20 +83,32 @@ export default function Nav() {
           <Link to="/#beyond" className={hash === '#beyond' ? 'is-active' : undefined}>
             Participation
           </Link>
+          <Link to="/#recognition" className={hash === '#recognition' ? 'is-active' : undefined}>
+            Recognition
+          </Link>
           <Link to="/#timeline" className={hash === '#timeline' ? 'is-active' : undefined}>
             Timeline
           </Link>
           <Link to="/#resources" className={hash === '#resources' ? 'is-active' : undefined}>
             FAQs
           </Link>
-          <Link to="/guidelines" className={pathname === '/guidelines' ? 'is-active' : undefined}>
+          <Link
+            to="/guidelines"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={pathname === '/guidelines' ? 'is-active' : undefined}
+          >
             Guidelines
           </Link>
           <a className="nav-links-cta" href="https://frog.ly/frogtoberfest-2026">
             Register Now
           </a>
         </div>
-        <a className="btn btn-primary nav-cta" id="navCta" href="https://frog.ly/frogtoberfest-2026">
+        <a
+          className={`btn btn-primary nav-cta${pathname !== '/' ? ' is-visible' : ''}`}
+          id="navCta"
+          href="https://frog.ly/frogtoberfest-2026"
+        >
           <span className="nav-cta-inner">
             <span className="chip" aria-hidden="true"></span> Register Now
           </span>

@@ -78,7 +78,7 @@ export default function Resources() {
             </p>
             <p>
               For more details, check out the{' '}
-              <Link to="/guidelines" style={{ textDecoration: 'underline' }}>
+              <Link to="/guidelines" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>
                 Guidelines
               </Link>{' '}
               page.
