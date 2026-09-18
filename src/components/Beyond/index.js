@@ -55,7 +55,7 @@ export default function Beyond() {
               Commit to Something Real
             </p>
             <div className="reasons">
-              <Reason num="01" title={<>A Month<br />of Code</>}>
+              <Reason num="01" title="A Month of Code">
                 Four real weeks to actually think, build, and ship something for the Nepali community.
               </Reason>
               <Reason num="02" title="Grow as a Builder">

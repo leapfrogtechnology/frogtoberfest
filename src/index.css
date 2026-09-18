@@ -1167,7 +1167,12 @@ h4 {
 }
 .reason h3 {
   font-family: var(--font-heading);
-  font-size: var(--card-title);
+  /* Own step down from --card-title: at the shared size the longest title
+     ("Grow as a Builder") wrapped while its neighbours held one line, so the
+     row read ragged. ~20% smaller keeps all three on a single line from the
+     3-up breakpoint upward. .badge keeps the shared size -- it is stacked,
+     so nothing there wraps against a neighbour. */
+  font-size: clamp(1rem, 1.5vw, 1.45rem);
   line-height: 1;
   letter-spacing: -0.02em;
   text-wrap: balance;
