@@ -992,8 +992,12 @@ h4 {
   margin-bottom: 50px;
   flex-wrap: wrap;
 }
-.sec-head .h2 {
-  margin-top: 13px; /* eyebrow -> heading */
+/* eyebrow -> heading. Keyed to the sibling relationship, not to a .sec-head
+   ancestor: Recognition writes its head without that wrapper, so a
+   descendant selector skipped it and left its heading sitting tight against
+   the tag while every other section had the gap. */
+.tag + .h2 {
+  margin-top: 13px;
 }
 .sec-head-right {
   font-family: var(--font-mono);
