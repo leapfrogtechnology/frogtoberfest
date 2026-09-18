@@ -718,8 +718,10 @@ h4 {
   position: relative;
   z-index: 2;
   /* Top-aligned hero (not vertically centred), so the logo needs more
-     clearance under the sticky nav than the bottom needs. */
-  padding-top: clamp(48px, 4.5vw, 80px);
+     clearance under the sticky nav than the bottom needs. Only this column
+     moves: .hero-art is absolutely positioned against .hero, so the mech
+     stays put and the copy drops against it. */
+  padding-top: clamp(72px, 6vw, 112px);
   padding-bottom: 40px;
 }
 @media (max-width: 1100px) {
