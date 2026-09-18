@@ -1152,7 +1152,7 @@ h4 {
   margin-top: 24px;
 }
 .reason {
-  padding: 28px;
+  padding: 36px 32px 40px;
   border-left: 2px solid var(--carbon);
 }
 .reason:first-child {
@@ -1176,18 +1176,20 @@ h4 {
   line-height: 1;
   letter-spacing: -0.02em;
   text-wrap: balance;
-  /* A one-line title still reserves two, so body copy starts on the same
-     line in every card. 2em == 2 lines exactly, because line-height is 1.
-     .reason only -- the .badge list is stacked, so there is nothing to line
-     it up with and the reserved line just opens a gap. */
-  min-height: 2em;
+  /* No min-height reserving a second line: since the step down above, every
+     title holds one line, so the reserve was pure gap above the copy. The
+     titles line up because they are all one line now, not because a box is
+     padded out to two. */
   /* Same line-height:1 story as .badge h3 -- no leading to inherit. */
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 .reason p {
   font-size: 0.95rem;
-  line-height: 1.55;
-  text-wrap: pretty;
+  line-height: 1.6;
+  /* balance, not pretty: at three or four lines in a narrow column pretty
+     still left "community." alone on its own line. balance evens the whole
+     block instead of only protecting the last line. */
+  text-wrap: balance;
 }
 .reason.hi {
   background: var(--surface);
