@@ -34,11 +34,23 @@
 
   /* ---- Grid ---- */
   --margin: 64px;
-  --content-max: 1792px; /* 1920 - 64*2 */
+  --content-max: 1600px; /* measure cap -- wider than this and the lede runs long */
   --unit: 8px;
 
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+
+/* ---- Breakpoints ----------------------------------------------------------
+   Five tiers, each with one job. Media queries can't read custom properties,
+   so these are written literally -- this block is the reference, and adding a
+   sixth value should mean an existing tier genuinely cannot do the work.
+
+     1100px  two-column layouts stack; hero art drops below the copy
+      900px  --margin 64 -> 24; nav collapses to the hamburger
+      700px  2-up card and stat grids collapse to 1-up
+      560px  narrow-phone refinements (tighter padding, last grids collapse)
+      400px  smallest-phone escape hatch
+   -------------------------------------------------------------------------- */
 
 @media (max-width: 900px) {
   :root {
@@ -63,6 +75,7 @@ body {
   background: var(--paper);
   color: var(--carbon);
   font-family: var(--font-body);
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -125,11 +138,35 @@ button {
   top: 16px;
 }
 
+/* Dual-ring focus, because no single palette colour clears WCAG 1.4.11's
+   3:1 on both surfaces: cyan is 4.59:1 on --surface but only 1.27:1 on
+   --paper, and carbon is the reverse (13.2:1 on paper, 2.27:1 on dark).
+   A carbon band at 0-3px with a cyan band at 3-6px means whichever one
+   disappears into the background, the other still reads. */
+:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--carbon);
+}
+/* Composes the ring with the key-press depth shadow instead of replacing
+   it -- a bare box-shadow here would flatten the button while focused. */
+.btn-primary:focus-visible {
+  box-shadow: 0 0 0 3px var(--carbon), 0 var(--depth) 0 0 var(--carbon),
+    0 calc(var(--depth) + 6px) 10px color-mix(in srgb, var(--carbon) 25%, transparent);
+}
+.btn-outline:focus-visible {
+  box-shadow: 0 0 0 3px var(--carbon), 0 var(--depth) 0 0 var(--carbon);
+}
+
 /* ---- Layout scaffolding ---- */
+/* The gutter is a percentage, not a fixed px inset, so every screen shows
+   the same proportion the 1920-wide one does: 8.33% a side (160px at 1920,
+   140px at 1680, 120px at 1440). Floored at --margin so phones don't waste
+   a third of the screen, ceilinged at 160px, and capped at --content-max so
+   ultrawides stop widening the measure. */
 .wrap {
-  max-width: var(--content-max);
+  width: min(calc(100% - 2 * clamp(var(--margin), 8.33%, 160px)), var(--content-max));
   margin: 0 auto;
-  padding: 0 var(--margin);
 }
 .screen {
   position: relative;
@@ -146,12 +183,7 @@ button {
   scroll-margin-top: 220px;
 }
 .screen-pad {
-  padding-block: 96px;
-}
-@media (max-width: 900px) {
-  .screen-pad {
-    padding-block: 56px;
-  }
+  padding-block: clamp(80px, 9vw, 124px);
 }
 
 /* ---- Engineering paper grain + scanline (2-3% opacity per spec) ---- */
@@ -162,8 +194,8 @@ button {
   pointer-events: none;
   opacity: 0.05;
   mix-blend-mode: multiply;
-  background-image: repeating-linear-gradient(0deg, rgba(43, 30, 26, 0.5) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(43, 30, 26, 0.5) 0 1px, transparent 1px 3px);
+  background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--carbon) 50%, transparent) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--carbon) 50%, transparent) 0 1px, transparent 1px 3px);
   background-size: 3px 3px;
 }
 .scanlines {
@@ -186,14 +218,14 @@ button {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(90deg, rgba(43, 30, 26, 0.08) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(43, 30, 26, 0.08) 1px, transparent 1px);
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--carbon) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--carbon) 8%, transparent) 1px, transparent 1px);
   background-size: 64px 64px;
   background-position: center top;
 }
 .blueprint-grid.on-dark {
-  background-image: linear-gradient(90deg, rgba(243, 238, 225, 0.08) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(243, 238, 225, 0.08) 1px, transparent 1px);
+  background-image: linear-gradient(90deg, color-mix(in srgb, var(--on-dark) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--on-dark) 8%, transparent) 1px, transparent 1px);
 }
 
 /* ---- Eyebrow / mission tag ---- */
@@ -201,8 +233,9 @@ button {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--surface);
 }
@@ -210,13 +243,13 @@ button {
   color: var(--on-dark);
 }
 .tag-lg {
-  font-size: 16px;
+  font-size: 0.95rem;
 }
 
 .serial {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
   color: var(--surface);
   opacity: 0.8;
 }
@@ -230,29 +263,36 @@ h4 {
   text-transform: uppercase;
 }
 .h1 {
-  font-size: clamp(52px, 7vw, 124px);
+  font-size: clamp(2.5rem, 9vw, 6.2rem);
+  font-weight: 800;
   line-height: 0.92;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 .h2 {
-  font-size: clamp(36px, 4.2vw, 68px);
-  line-height: 0.96;
-  letter-spacing: -0.005em;
-  /* Oswald's uppercase glyphs carry a couple px of left side-bearing,
-     so the heading reads indented from the .tag marker above it
-     without this nudge. */
-  margin-left: -3px;
+  font-size: clamp(2.6rem, 4.8vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
+/* Measure is the real lever here, not size: capped at 62ch so the lede
+   never runs the full 1600 column. */
 .lede {
   font-family: var(--font-body);
-  font-size: 18px;
+  font-size: 1.08rem;
   line-height: 1.6;
+  max-width: 62ch;
   color: var(--carbon);
 }
 .lede.lg {
-  font-size: 22px;
-  line-height: 1.5;
+  font-size: clamp(1.06rem, 1.6vw, 1.25rem);
+  line-height: 1.56;
+  max-width: 56ch;
+}
+.sec-head .lede {
+  max-width: 48ch;
 }
 
 /* ---- Buttons: sharp rectangles, 2px borders, uppercase, no shadow ---- */
@@ -261,15 +301,26 @@ h4 {
   align-items: center;
   gap: 12px;
   border: 2px solid var(--carbon);
-  padding: 16px 28px;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-weight: 650;
+  /* .nav-cta opts out of the sizing below but has no tracking of its own,
+     so this stays on the base rule for it to inherit. */
   letter-spacing: 0.12em;
   text-transform: uppercase;
   background: transparent;
   color: var(--carbon);
   cursor: pointer;
   transition: background-color 0.15s var(--ease), color 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+/* .nav-cta is excluded -- it sets its own compact 11px/44px sizing to fit
+   the 80px nav bar. Weight above is the one thing it does take, or it reads
+   thin next to the hero button. */
+.btn:not(.nav-cta) {
+  min-height: 50px;
+  padding: 12px 22px;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
 }
 .btn .chip {
   width: 8px;
@@ -292,7 +343,7 @@ h4 {
   background: var(--cyan);
   border-color: var(--carbon);
   color: var(--carbon);
-  box-shadow: 0 var(--depth) 0 0 var(--carbon), 0 calc(var(--depth) + 6px) 10px rgba(43, 30, 26, 0.25);
+  box-shadow: 0 var(--depth) 0 0 var(--carbon), 0 calc(var(--depth) + 6px) 10px color-mix(in srgb, var(--carbon) 25%, transparent);
   /* Slow release, so letting go of a real (fast, ~100ms) click is still
      visible -- the snap-down on press uses its own fast transition below. */
   transition: background-color 0.32s ease-out, color 0.32s ease-out, transform 0.32s ease-out,
@@ -302,14 +353,14 @@ h4 {
   background: var(--carbon);
   color: var(--cyan);
   transform: translateY(2px);
-  box-shadow: 0 calc(var(--depth) - 2px) 0 0 var(--carbon), 0 6px 10px rgba(43, 30, 26, 0.22);
+  box-shadow: 0 calc(var(--depth) - 2px) 0 0 var(--carbon), 0 6px 10px color-mix(in srgb, var(--carbon) 22%, transparent);
   transition: background-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 .btn-primary:active {
   transform: translateY(var(--depth));
   background: var(--go);
   color: var(--on-dark);
-  box-shadow: 0 0 0 0 var(--carbon), 0 0 16px 2px rgba(42, 232, 210, 0.55);
+  box-shadow: 0 0 0 0 var(--carbon), 0 0 16px 2px color-mix(in srgb, var(--cyan) 55%, transparent);
   transition: background-color 0.04s ease-in, color 0.04s ease-in, transform 0.04s ease-in, box-shadow 0.04s ease-in;
 }
 .btn-primary .chip {
@@ -404,10 +455,6 @@ h4 {
   padding: 6px 2px;
   border-bottom: 2px solid transparent;
   transition: border-color 0.15s var(--ease), color 0.15s;
-}
-.nav-links a:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 2px;
 }
 /* Only shown inside the mobile hamburger menu (see the 1100px block
    below) -- the desktop row already has its own pill CTA (.nav-cta), so
@@ -559,13 +606,25 @@ h4 {
     opacity: 0;
     transform: translateY(-6px);
     pointer-events: none;
-    transition: max-height 0.3s var(--ease), opacity 0.2s var(--ease), transform 0.3s var(--ease);
+    /* max-height/opacity/pointer-events all hide this visually but leave the
+       five links in the tab order -- keyboard users would tab into a menu
+       they cannot see. visibility is what actually removes them, and it is
+       delayed so it lands after the collapse finishes rather than cutting
+       the transition. */
+    visibility: hidden;
+    transition: max-height 0.3s var(--ease), opacity 0.2s var(--ease), transform 0.3s var(--ease),
+      visibility 0s linear 0.3s;
   }
   .nav-links.is-open {
     max-height: 480px;
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+    visibility: visible;
+    /* Opening, everything starts at once; the 0.3s visibility delay above
+       applies only on the way closed. Overriding the delay alone keeps one
+       transition declaration instead of restating the whole list. */
+    transition-delay: 0s;
   }
   .nav-links a {
     display: flex;
@@ -651,12 +710,17 @@ h4 {
   overflow: hidden;
   min-height: max(820px, calc(clamp(420px, 52vw, 1160px) * 1.03));
 }
+/* No width here: this class shares its element with .wrap (the markup is
+   `wrap hero-inner`), and .wrap now sets width rather than max-width. Both
+   are single-class selectors, so a width here would simply outrank .wrap's
+   on source order and blow the gutter out to the full viewport. */
 .hero-inner {
   position: relative;
   z-index: 2;
-  width: 100%;
-  padding-top: 96px;
-  padding-bottom: 96px;
+  /* Top-aligned hero (not vertically centred), so the logo needs more
+     clearance under the sticky nav than the bottom needs. */
+  padding-top: clamp(48px, 4.5vw, 80px);
+  padding-bottom: 40px;
 }
 @media (max-width: 1100px) {
   .hero {
@@ -671,32 +735,34 @@ h4 {
 .hero-copy {
   position: relative;
   z-index: 2;
-  max-width: 640px;
+  max-width: 600px;
 }
 /* Width matches the mission-parameters plate below it. */
 .hero-logo-crop {
   display: block;
-  width: 700px;
+  width: 600px;
   max-width: 100%;
   aspect-ratio: 735/343;
-  margin: 0 0 24px;
+  /* -10px left: the SVG's artwork starts at x=12 of a 735 viewBox, so
+     without this the letterforms sit inboard of the text column below. */
+  margin: 0 0 32px -10px;
 }
 .hero-logo {
   display: block;
   width: 100%;
   height: auto;
 }
+/* Size and measure come from .lede.lg; this only sets the hero's own rhythm
+   between the lede, the CTA and the key-dates plate. */
 .hero-copy .lede {
-  margin-bottom: 36px;
-  font-size: 19px;
-  line-height: 1.65;
+  margin-bottom: 52px;
   color: var(--carbon);
 }
 .hero-cta-row {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 44px;
+  margin-bottom: 76px;
 }
 
 .hero-art {
@@ -837,7 +903,7 @@ h4 {
 
 /* ---- Mission parameters spec plate ---- */
 .meta-plate {
-  max-width: 700px;
+  max-width: 600px;
   border: 2px solid var(--carbon);
   background: var(--paper);
   text-align: left;
@@ -922,12 +988,16 @@ h4 {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 32px;
-  margin-bottom: 56px;
+  gap: 40px;
+  margin-bottom: 50px;
   flex-wrap: wrap;
 }
-.sec-head .h2 {
-  margin-top: 14px;
+/* eyebrow -> heading. Keyed to the sibling relationship, not to a .sec-head
+   ancestor: Recognition writes its head without that wrapper, so a
+   descendant selector skipped it and left its heading sitting tight against
+   the tag while every other section had the gap. */
+.tag + .h2 {
+  margin-top: 13px;
 }
 .sec-head-right {
   font-family: var(--font-mono);
@@ -993,11 +1063,15 @@ h4 {
   bottom: 2px;
   transform: translateX(-50%);
   width: 114%;
-  /* Extra headroom over the 108% this needs on paper (see the crop math in
-     object-position below) -- the antennae were a borderline-tight fit at
-     108%, close enough to get clipped by minor rendering differences.
-     120% leaves clear margin instead of a hairline fit. */
-  height: 120%;
+  /* Matched to the artwork's own 2696x1863, not a hand-tuned percentage.
+     A fixed height of 120% made this box 1.425 wide-to-tall against the
+     source's 1.4471, and object-fit: cover fills the short axis -- so a
+     container narrower than the image cropped the mech's forearms off both
+     sides. Deriving height from the asset ratio means cover has nothing
+     left to crop horizontally, and it stays correct if .beyond-figure's
+     own 3/2 ever changes. */
+  aspect-ratio: 2696 / 1863;
+  height: auto;
 }
 .beyond-figure img {
   width: 100%;
@@ -1043,8 +1117,9 @@ h4 {
 }
 .statement p {
   font-family: var(--font-body);
-  font-size: 15.5px;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 @media (max-width: 700px) {
   .statement-list {
@@ -1061,6 +1136,13 @@ h4 {
   }
 }
 
+/* Spacing ladder for the tail of this column: 24px binds the label to the
+   cards it introduces, 48px separates that group from the statements above,
+   and .screen-pad's 80-124px closes the section. Scoped to .beyond --
+   .tag-lg is a type utility, not a layout one. */
+.beyond .tag-lg {
+  margin-top: 48px;
+}
 .reasons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1083,12 +1165,22 @@ h4 {
 }
 .reason h3 {
   font-family: var(--font-heading);
-  font-size: 19px;
-  margin-bottom: 8px;
+  font-size: var(--card-title);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  /* A one-line title still reserves two, so body copy starts on the same
+     line in every card. 2em == 2 lines exactly, because line-height is 1.
+     .reason only -- the .badge list is stacked, so there is nothing to line
+     it up with and the reserved line just opens a gap. */
+  min-height: 2em;
+  /* Same line-height:1 story as .badge h3 -- no leading to inherit. */
+  margin-bottom: 12px;
 }
 .reason p {
-  font-size: 14.5px;
+  font-size: 0.95rem;
   line-height: 1.55;
+  text-wrap: pretty;
 }
 .reason.hi {
   background: var(--surface);
@@ -1155,7 +1247,10 @@ h4 {
   display: grid;
   grid-template-columns: 170px 200px 1fr;
   gap: 24px;
-  align-items: baseline;
+  /* Centred, not baseline: the copy column sets the row height, so aligning
+     first baselines pinned the date and phase to the top of a multi-line
+     row and left them looking stranded above it. */
+  align-items: center;
   border: 2px solid var(--carbon);
   padding: 22px 24px;
   background: var(--paper-dim);
@@ -1189,6 +1284,7 @@ h4 {
 .tl-date {
   font-family: var(--font-mono);
   font-size: 13px;
+  font-weight: 600;
   color: var(--copper-dim);
 }
 .tl-node.hi .tl-date {
@@ -1197,6 +1293,7 @@ h4 {
 .tl-phase {
   font-family: var(--font-mono);
   font-size: 12px;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--surface);
@@ -1209,7 +1306,7 @@ h4 {
   font-size: 15px;
   line-height: 1.5;
 }
-@media (max-width: 800px) {
+@media (max-width: 700px) {
   .tl-node-inner {
     grid-template-columns: 1fr;
     gap: 6px;
@@ -1306,13 +1403,16 @@ h4 {
 }
 .build-label h3 {
   font-family: var(--font-heading);
-  font-size: 17px;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   margin-bottom: 4px;
 }
 .build-label p {
   font-family: var(--font-body);
-  font-size: 13.5px;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  text-wrap: pretty;
   color: var(--carbon);
 }
 
@@ -1359,7 +1459,10 @@ h4 {
   padding: 28px 28px 28px 88px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* 12, not 8: the title runs line-height 1 to keep its top aligned with
+     the rank number, which strips the leading that would normally sit
+     under it -- so this gap is the whole separation, not a top-up. */
+  gap: 12px;
 }
 .badge + .badge {
   border-top: 2px solid var(--on-dark-dim);
@@ -1370,7 +1473,8 @@ h4 {
   left: 24px;
   top: 28px;
   font-family: var(--font-heading);
-  font-size: 28px;
+  font-size: var(--card-title);
+  line-height: 1;
   color: var(--cyan);
 }
 /* Three tiers, three primary colors -- brown/cyan/green together in the
@@ -1399,14 +1503,30 @@ h4 {
   border-left: 0;
   border-top: 0;
 }
+/* .badge::before is absolutely placed at top:28px to match the badge's
+   padding, so the rank only lines up with the title while the two share a
+   font size and line-height. Both read --card-title for that reason -- they
+   must move together or the tops drift apart. */
+.badge,
+.reason {
+  /* Down from clamp(1.5rem, 2.2vw, 2.1rem): against 0.95rem body copy that
+     ran a 1.74 ratio, too hard a step for a list row where the copy sits
+     directly under the title. ~1.5 reads as hierarchy instead of a jump. */
+  --card-title: clamp(1.25rem, 1.9vw, 1.8rem);
+}
 .badge h3 {
   font-family: var(--font-heading);
-  font-size: 22px;
+  font-size: var(--card-title);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
   color: var(--paper);
 }
 .badge p {
-  font-size: 14.5px;
+  font-size: 0.95rem;
   line-height: 1.55;
+  /* Stops a single word ("it.", "5.") being left alone on the last line. */
+  text-wrap: pretty;
   color: var(--on-dark);
   max-width: 60ch;
 }
@@ -1492,12 +1612,15 @@ h4 {
 }
 .enroll-step h3 {
   font-family: var(--font-heading);
-  font-size: 18px;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   margin: 10px 0 8px;
 }
 .enroll-step p {
-  font-size: 13.5px;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 .enroll-step:not(:last-child)::after {
   content: '→';
@@ -1591,9 +1714,14 @@ h4 {
 .faq[open] {
   background: var(--paper-dim);
 }
+/* Inset, unlike the global ring: accordion rows stack flush against each
+   other, so an outset ring would collide with the neighbouring row border.
+   These rows are always on --paper/--paper-dim, where carbon alone is
+   13.2:1, so the cyan band has nothing to add. */
 .faq summary:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: -2px;
+  outline: 3px solid var(--carbon);
+  outline-offset: -3px;
+  box-shadow: none;
 }
 .faq summary {
   display: flex;
@@ -1617,7 +1745,9 @@ h4 {
 }
 .faq h3 {
   font-family: var(--font-heading);
-  font-size: 22px;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   text-transform: none;
 }
 .faq-toggle {
@@ -1680,8 +1810,9 @@ h4 {
   padding: 4px 36px 32px;
 }
 .faq-answer-content p {
-  font-size: 17px;
-  line-height: 1.6;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 .faq-answer-content p + p {
   margin-top: 16px;
@@ -1734,8 +1865,12 @@ h4 {
 .demoday .h1 {
   color: var(--paper);
 }
+/* A dimmed form of the dark-surface TEXT token, not --on-dark-dim: that one
+   is documented borders-only, and borrowing it here would sanction a pairing
+   that drops to 3.6:1 the moment someone reuses it on --surface. Mixing
+   toward the background instead keeps it honest at 9.3:1 on --carbon. */
 .demoday .lede {
-  color: var(--on-dark-dim);
+  color: color-mix(in srgb, var(--on-dark) 80%, var(--carbon));
   max-width: 56ch;
 }
 .demoday-cta {
@@ -1750,7 +1885,11 @@ h4 {
   color: var(--on-dark);
 }
 .footer .wrap {
-  padding: 36px var(--margin);
+  /* Block padding only. The horizontal inset is .wrap's own gutter now that
+     it sizes with width instead of padding -- repeating var(--margin) here
+     stacks on top of it and pushes the footer 64px inboard of every other
+     section instead of replacing it, as it used to. */
+  padding-block: 36px;
   display: flex;
   align-items: center;
   justify-content: space-between;
