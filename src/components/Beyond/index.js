@@ -51,7 +51,7 @@ export default function Beyond() {
               </Statement>
             </div>
 
-            <p className="tag tag-lg" style={{ marginTop: 48 }}>
+            <p className="tag tag-lg">
               Commit to Something Real
             </p>
             <div className="reasons">

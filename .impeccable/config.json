@@ -1,0 +1,23 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-09-18T06:35:56.623Z",
+        "reason": "Committed design system: Inter is --font-body in src/index.css:33; Oswald carries the identity. Deck must match the site."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "src/index.css"
+        ],
+        "createdAt": "2026-09-18T08:14:07.239Z",
+        "reason": "Detector rule exempts blueprint/measurement surfaces; this site's committed art direction is an engineering-blueprint world (file header: 'Engineering grid'; .blueprint-grid is the brief, not decoration)"
+      }
+    ]
+  }
+}
