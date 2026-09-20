@@ -569,7 +569,7 @@ h4 {
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
   .nav-toggle {
     display: flex;
   }
@@ -600,7 +600,8 @@ h4 {
     gap: 0;
     margin-left: 0;
     background: var(--surface);
-    border-bottom: 2px solid var(--carbon);
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.35);
+    border: 2px solid var(--carbon);
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -633,15 +634,9 @@ h4 {
     padding: 14px 24px;
     border-top: 2px solid var(--surface-2);
   }
-  .nav-links a:hover {
-    border-color: var(--surface-2);
-    background: var(--surface-2);
+  .nav-links a:first-child {
+    border-top: 0;
   }
-  /* The shared .is-active border-bottom (cyan) sits flush against the
-     Register Now bar right below it in this stacked mobile layout, so
-     the two cyan lines visually merge into one. Swap to a left-side
-     square marker here instead -- same indicator language as .tag::before
-     elsewhere on the site, without the adjacent-line clash. */
   .nav-links a.is-active {
     border-color: transparent;
     background: var(--surface-2);
@@ -1145,18 +1140,26 @@ h4 {
 .beyond .tag-lg {
   margin-top: 48px;
 }
+.beyond-copy {
+  container-type: inline-size;
+}
 .reasons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--carbon);
   border: 2px solid var(--carbon);
   margin-top: 24px;
 }
 .reason {
   padding: 36px 32px 40px;
-  border-left: 2px solid var(--carbon);
+  background: var(--paper);
+  container-type: inline-size;
 }
-.reason:first-child {
-  border-left: 0;
+@container (max-width: 745px) {
+  .reasons {
+    grid-template-columns: 1fr;
+  }
 }
 .reason .num {
   font-family: var(--font-mono);
@@ -1167,28 +1170,16 @@ h4 {
 }
 .reason h3 {
   font-family: var(--font-heading);
-  /* Own step down from --card-title: at the shared size the longest title
-     ("Grow as a Builder") wrapped while its neighbours held one line, so the
-     row read ragged. ~20% smaller keeps all three on a single line from the
-     3-up breakpoint upward. .badge keeps the shared size -- it is stacked,
-     so nothing there wraps against a neighbour. */
-  font-size: clamp(1rem, 1.5vw, 1.45rem);
+  font-size: clamp(1rem, 7cqi, 1.45rem);
   line-height: 1;
   letter-spacing: -0.02em;
   text-wrap: balance;
-  /* No min-height reserving a second line: since the step down above, every
-     title holds one line, so the reserve was pure gap above the copy. The
-     titles line up because they are all one line now, not because a box is
-     padded out to two. */
   /* Same line-height:1 story as .badge h3 -- no leading to inherit. */
   margin-bottom: 16px;
 }
 .reason p {
   font-size: 0.95rem;
   line-height: 1.6;
-  /* balance, not pretty: at three or four lines in a narrow column pretty
-     still left "community." alone on its own line. balance evens the whole
-     block instead of only protecting the last line. */
   text-wrap: balance;
 }
 .reason.hi {
@@ -1197,18 +1188,6 @@ h4 {
 }
 .reason.hi .num {
   color: var(--cyan);
-}
-@media (max-width: 700px) {
-  .reasons {
-    grid-template-columns: 1fr;
-  }
-  .reason {
-    border-left: 0;
-    border-top: 2px solid var(--carbon);
-  }
-  .reason:first-child {
-    border-top: 0;
-  }
 }
 
 /* ==========================================================================
@@ -1565,15 +1544,6 @@ h4 {
   min-height: 360px;
   clip-path: inset(-240px 0 0 0);
 }
-/* Positioned out of flow so it doesn't contribute to .recognition-art's
-   own size (a height:100% child inside a flex/grid box that's ALSO
-   trying to auto-size off that child is circular, and falls back to the
-   image's raw pixel dimensions). Out of flow, height:100% instead
-   resolves cleanly against the grid-stretched (definite) parent height,
-   so the image's bottom always touches the box's bottom -- regardless
-   of which column is naturally taller. Sized slightly over 100% so the
-   fist/head bleed past the frame's top edge while the overall figure
-   stays the same size as before. */
 .recognition-art img {
   position: absolute;
   bottom: 0;
@@ -1582,6 +1552,13 @@ h4 {
   height: 134%;
   width: auto;
   max-width: none;
+}
+@media (max-width: 1280px) {
+  .recognition-art img {
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+  }
 }
 
 /* ==========================================================================

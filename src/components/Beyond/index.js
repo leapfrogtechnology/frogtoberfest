@@ -27,7 +27,7 @@ export default function Beyond() {
             </div>
           </div>
 
-          <div>
+          <div className="beyond-copy">
             <p className="lede lg">
               For years, Frogtoberfest was about making contributions. This year, it&rsquo;s about creating something of
               your own.
