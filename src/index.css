@@ -1152,11 +1152,11 @@ h4 {
   margin-top: 24px;
 }
 .reason {
-  padding: 36px 32px 40px;
+  padding: 36px clamp(24px, 4cqi, 32px) 40px;
   background: var(--paper);
   container-type: inline-size;
 }
-@container (max-width: 745px) {
+@container (max-width: 600px) {
   .reasons {
     grid-template-columns: 1fr;
   }
@@ -1170,7 +1170,7 @@ h4 {
 }
 .reason h3 {
   font-family: var(--font-heading);
-  font-size: clamp(1rem, 7cqi, 1.45rem);
+  font-size: clamp(1.05rem, 8.5cqi, 1.6rem);
   line-height: 1;
   letter-spacing: -0.02em;
   text-wrap: balance;
