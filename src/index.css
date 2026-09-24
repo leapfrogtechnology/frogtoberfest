@@ -194,8 +194,8 @@ button {
   pointer-events: none;
   opacity: 0.05;
   mix-blend-mode: multiply;
-  background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--carbon) 50%, transparent) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, color-mix(in srgb, var(--carbon) 50%, transparent) 0 1px, transparent 1px 3px);
+  background-image: linear-gradient(0deg, color-mix(in srgb, var(--carbon) 50%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--carbon) 50%, transparent) 1px, transparent 1px);
   background-size: 3px 3px;
 }
 .scanlines {
@@ -204,7 +204,7 @@ button {
   z-index: 9001;
   pointer-events: none;
   opacity: 0.03;
-  background: repeating-linear-gradient(180deg, var(--carbon) 0 1px, transparent 1px 3px);
+  background: linear-gradient(180deg, var(--carbon) 1px, transparent 1px) 0 0 / 100% 3px;
 }
 @media (prefers-reduced-motion: reduce) {
   .grain,
@@ -569,7 +569,7 @@ h4 {
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1280px) {
   .nav-toggle {
     display: flex;
   }
@@ -600,7 +600,8 @@ h4 {
     gap: 0;
     margin-left: 0;
     background: var(--surface);
-    border-bottom: 2px solid var(--carbon);
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.35);
+    border: 2px solid var(--carbon);
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -633,15 +634,9 @@ h4 {
     padding: 14px 24px;
     border-top: 2px solid var(--surface-2);
   }
-  .nav-links a:hover {
-    border-color: var(--surface-2);
-    background: var(--surface-2);
+  .nav-links a:first-child {
+    border-top: 0;
   }
-  /* The shared .is-active border-bottom (cyan) sits flush against the
-     Register Now bar right below it in this stacked mobile layout, so
-     the two cyan lines visually merge into one. Swap to a left-side
-     square marker here instead -- same indicator language as .tag::before
-     elsewhere on the site, without the adjacent-line clash. */
   .nav-links a.is-active {
     border-color: transparent;
     background: var(--surface-2);
@@ -718,8 +713,10 @@ h4 {
   position: relative;
   z-index: 2;
   /* Top-aligned hero (not vertically centred), so the logo needs more
-     clearance under the sticky nav than the bottom needs. */
-  padding-top: clamp(48px, 4.5vw, 80px);
+     clearance under the sticky nav than the bottom needs. Only this column
+     moves: .hero-art is absolutely positioned against .hero, so the mech
+     stays put and the copy drops against it. */
+  padding-top: clamp(72px, 6vw, 112px);
   padding-bottom: 40px;
 }
 @media (max-width: 1100px) {
@@ -1143,18 +1140,26 @@ h4 {
 .beyond .tag-lg {
   margin-top: 48px;
 }
+.beyond-copy {
+  container-type: inline-size;
+}
 .reasons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--carbon);
   border: 2px solid var(--carbon);
   margin-top: 24px;
 }
 .reason {
-  padding: 28px;
-  border-left: 2px solid var(--carbon);
+  padding: 36px clamp(24px, 4cqi, 32px) 40px;
+  background: var(--paper);
+  container-type: inline-size;
 }
-.reason:first-child {
-  border-left: 0;
+@container (max-width: 600px) {
+  .reasons {
+    grid-template-columns: 1fr;
+  }
 }
 .reason .num {
   font-family: var(--font-mono);
@@ -1165,22 +1170,17 @@ h4 {
 }
 .reason h3 {
   font-family: var(--font-heading);
-  font-size: var(--card-title);
+  font-size: clamp(1.05rem, 8.5cqi, 1.6rem);
   line-height: 1;
   letter-spacing: -0.02em;
   text-wrap: balance;
-  /* A one-line title still reserves two, so body copy starts on the same
-     line in every card. 2em == 2 lines exactly, because line-height is 1.
-     .reason only -- the .badge list is stacked, so there is nothing to line
-     it up with and the reserved line just opens a gap. */
-  min-height: 2em;
   /* Same line-height:1 story as .badge h3 -- no leading to inherit. */
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 .reason p {
   font-size: 0.95rem;
-  line-height: 1.55;
-  text-wrap: pretty;
+  line-height: 1.6;
+  text-wrap: balance;
 }
 .reason.hi {
   background: var(--surface);
@@ -1188,18 +1188,6 @@ h4 {
 }
 .reason.hi .num {
   color: var(--cyan);
-}
-@media (max-width: 700px) {
-  .reasons {
-    grid-template-columns: 1fr;
-  }
-  .reason {
-    border-left: 0;
-    border-top: 2px solid var(--carbon);
-  }
-  .reason:first-child {
-    border-top: 0;
-  }
 }
 
 /* ==========================================================================
@@ -1556,15 +1544,6 @@ h4 {
   min-height: 360px;
   clip-path: inset(-240px 0 0 0);
 }
-/* Positioned out of flow so it doesn't contribute to .recognition-art's
-   own size (a height:100% child inside a flex/grid box that's ALSO
-   trying to auto-size off that child is circular, and falls back to the
-   image's raw pixel dimensions). Out of flow, height:100% instead
-   resolves cleanly against the grid-stretched (definite) parent height,
-   so the image's bottom always touches the box's bottom -- regardless
-   of which column is naturally taller. Sized slightly over 100% so the
-   fist/head bleed past the frame's top edge while the overall figure
-   stays the same size as before. */
 .recognition-art img {
   position: absolute;
   bottom: 0;
@@ -1573,6 +1552,13 @@ h4 {
   height: 134%;
   width: auto;
   max-width: none;
+}
+@media (max-width: 1280px) {
+  .recognition-art img {
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+  }
 }
 
 /* ==========================================================================

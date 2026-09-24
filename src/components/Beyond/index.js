@@ -27,7 +27,7 @@ export default function Beyond() {
             </div>
           </div>
 
-          <div>
+          <div className="beyond-copy">
             <p className="lede lg">
               For years, Frogtoberfest was about making contributions. This year, it&rsquo;s about creating something of
               your own.
@@ -59,7 +59,7 @@ export default function Beyond() {
                 Four real weeks to actually think, build, and ship something for the Nepali community.
               </Reason>
               <Reason num="02" title="Grow as a Builder">
-                Learn AI by building with it, not just reading about it.
+                Build your AI capability with hands-on experimentation, not just textbook knowledge.
               </Reason>
               <Reason num="03" title="Win It" hi>
                 The standout project takes home a grand prize, with recognitions for Top 5.
