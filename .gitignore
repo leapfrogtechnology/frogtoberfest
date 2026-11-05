@@ -26,6 +26,3 @@ yarn-error.log
 .vscode
 .vercel
 
-# Impeccable detector cache (regenerated on every run; config.json is shared)
-.impeccable/hook.cache.json
-.impeccable/critique/
