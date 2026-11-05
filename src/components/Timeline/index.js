@@ -117,7 +117,7 @@ export default function Timeline() {
           <div className="callout-body">
             <p className="lede">Navigate your way through the challenge.</p>
             <Link className="btn btn-outline" to="/guidelines" target="_blank" rel="noopener noreferrer">
-              View Guidelines <span aria-hidden="true">&rarr;</span>
+              View Guidelines <span className="arrow" aria-hidden="true">&rarr;</span>
             </Link>
           </div>
         </div>

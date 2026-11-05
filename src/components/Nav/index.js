@@ -100,19 +100,10 @@ export default function Nav() {
           >
             Guidelines
           </Link>
-          <a className="nav-links-cta" href="https://frog.ly/frogtoberfest-2026">
-            Register Now
-          </a>
+          <Link to="/#finalists" className={hash === '#finalists' ? 'is-active' : undefined}>
+            Finalists
+          </Link>
         </div>
-        <a
-          className={`btn btn-primary nav-cta${pathname !== '/' ? ' is-visible' : ''}`}
-          id="navCta"
-          href="https://frog.ly/frogtoberfest-2026"
-        >
-          <span className="nav-cta-inner">
-            <span className="chip" aria-hidden="true"></span> Register Now
-          </span>
-        </a>
         <button
           className="nav-toggle"
           type="button"
