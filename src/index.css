@@ -63,6 +63,7 @@
 }
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -171,16 +172,13 @@ button {
 .screen {
   position: relative;
   border-bottom: 2px solid var(--carbon);
-  /* Sticky nav is 80px tall -- without this, an anchor jump (nav click)
-     lands the section flush under it instead of leaving room to see in. */
-  scroll-margin-top: 80px;
 }
 /* Recognition's mech art bleeds above its own box (clip-path on
    .recognition-art) -- enough extra scroll-margin here so the anchor
    jump stops with the raised fist right at the top of the viewport,
    instead of the plain 80px nav clearance cropping it. */
 #recognition {
-  scroll-margin-top: 220px;
+  scroll-margin-top: 140px;
 }
 .screen-pad {
   padding-block: clamp(80px, 9vw, 124px);
@@ -784,11 +782,10 @@ h4 {
   top: 96px;
   writing-mode: vertical-rl;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--surface);
-  opacity: 0.6;
   white-space: nowrap;
   line-height: 1;
 }
@@ -1010,7 +1007,7 @@ h4 {
   font-family: var(--font-heading);
   font-size: clamp(1.05rem, 8.5cqi, 1.6rem);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
   text-wrap: balance;
   /* Same line-height:1 story as .badge h3 -- no leading to inherit. */
   margin-bottom: 16px;
@@ -1132,9 +1129,28 @@ h4 {
   font-size: 15px;
   line-height: 1.5;
 }
+@media (max-width: 1100px) {
+  .tl-node-inner {
+    grid-template-columns: 150px 1fr;
+    grid-template-areas: 'date desc' 'phase desc';
+    gap: 4px 24px;
+  }
+  .tl-date {
+    grid-area: date;
+    align-self: end;
+  }
+  .tl-phase {
+    grid-area: phase;
+    align-self: start;
+  }
+  .tl-desc {
+    grid-area: desc;
+  }
+}
 @media (max-width: 700px) {
   .tl-node-inner {
     grid-template-columns: 1fr;
+    grid-template-areas: 'date' 'phase' 'desc';
     gap: 6px;
   }
 }
@@ -1344,7 +1360,7 @@ h4 {
   font-family: var(--font-heading);
   font-size: var(--card-title);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
   text-wrap: balance;
   color: var(--paper);
 }
@@ -1362,7 +1378,7 @@ h4 {
   border: 2px solid var(--cyan);
   color: var(--on-dark);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 6px 14px;
@@ -1488,7 +1504,7 @@ h4 {
   color: var(--on-dark);
   padding: 11px 18px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1743,8 +1759,9 @@ h4 {
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.winner-team {
-  margin-left: auto;
+.winner-award-text {
+  flex: 1 1 0;
+  min-width: 0;
 }
 .winner-award .chip {
   width: 8px;
@@ -1768,7 +1785,7 @@ h4 {
   margin-left: -0.04em;
   font-size: clamp(72px, 15vw, 240px);
   line-height: 0.8;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   color: var(--paper);
 }
 .winner .btn {
@@ -1881,12 +1898,33 @@ h4 {
     background: none;
   }
 }
+@media (max-width: 560px) {
+  .winner-award {
+    align-items: flex-start;
+  }
+  .winner-award .chip {
+    margin-top: 4px;
+  }
+  .winner-team {
+    flex-basis: 100%;
+    padding-left: 20px;
+  }
+}
 @media (max-width: 400px) {
   .finalist h3 {
     font-size: 30px;
   }
   .winner-award {
     letter-spacing: 0.08em;
+  }
+  .winner-actions {
+    width: 100%;
+    gap: 12px;
+  }
+  .winner .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1927,13 +1965,13 @@ h4 {
 }
 .footer-brand span {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .footer-legal {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   text-align: right;
   max-width: 560px;
   line-height: 1.6;

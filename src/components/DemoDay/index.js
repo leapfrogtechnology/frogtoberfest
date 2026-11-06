@@ -51,7 +51,8 @@ export default function DemoDay() {
           <span className="corner tl" aria-hidden="true"></span>
           <span className="corner br" aria-hidden="true"></span>
           <p className="winner-award">
-            <span className="chip" aria-hidden="true"></span> Grand Prize &middot; Best AI Project
+            <span className="chip" aria-hidden="true"></span>
+            <span className="winner-award-text">Winner &middot; Best AI Project</span>
             <span className="winner-team">{WINNER.team}</span>
           </p>
           <div className="winner-body">
