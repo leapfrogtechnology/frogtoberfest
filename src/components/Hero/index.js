@@ -1,5 +1,4 @@
 import React from 'react';
-import MetaPlate from './components/MetaPlate';
 import HeroArt from './components/HeroArt';
 import mainLogo from '../../assets/images/main-logo-v2.svg';
 
@@ -14,13 +13,17 @@ export default function Hero() {
           <p className="lede lg">
             A month-long virtual challenge to build an open-source, AI‑powered product that solves something real.
           </p>
-          <MetaPlate />
+          <div className="hero-cta-row">
+            <a className="btn btn-primary" href="#finalists">
+              View Finalists <span className="arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
         </div>
       </div>
 
       {/* Placed after .hero-inner so mobile (where this switches from an
           absolute full-bleed layer to a normal-flow block) shows the headline
-          before the mech, not after. Desktop is unaffected: it's
+          and CTA before the mech, not after. Desktop is unaffected: it's
           position:absolute there, so document order doesn't drive its
           visual placement. */}
       <HeroArt />

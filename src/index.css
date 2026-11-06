@@ -630,12 +630,13 @@ h4 {
 .hero-inner {
   position: relative;
   z-index: 2;
-  /* Top-aligned hero (not vertically centred), so the logo needs more
-     clearance under the sticky nav than the bottom needs. Only this column
-     moves: .hero-art is absolutely positioned against .hero, so the mech
-     stays put and the copy drops against it. */
-  padding-top: clamp(72px, 6vw, 112px);
-  padding-bottom: 40px;
+  padding-bottom: 96px;
+}
+@media (min-width: 1101px) {
+  .hero {
+    display: flex;
+    align-items: center;
+  }
 }
 @media (max-width: 1100px) {
   .hero {
@@ -668,10 +669,15 @@ h4 {
   height: auto;
 }
 /* Size and measure come from .lede.lg; this only sets the hero's own rhythm
-   between the lede and the key-dates plate. */
+   between the lede and the CTA. */
 .hero-copy .lede {
   margin-bottom: 52px;
   color: var(--carbon);
+}
+.hero-cta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .hero-art {
@@ -807,86 +813,6 @@ h4 {
   }
   .hero-annot {
     display: none;
-  }
-}
-
-/* ---- Mission parameters spec plate ---- */
-.meta-plate {
-  max-width: 600px;
-  border: 2px solid var(--carbon);
-  background: var(--paper);
-  text-align: left;
-}
-.meta-plate-hdr {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--surface);
-  color: var(--on-dark);
-  padding: 11px 18px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.meta-plate-hdr .chip {
-  width: 8px;
-  height: 8px;
-  background: var(--cyan);
-  flex: none;
-}
-.meta-plate-ref {
-  margin-left: auto;
-  opacity: 0.75;
-  letter-spacing: 0.1em;
-}
-
-.meta-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.meta-card {
-  padding: 18px 20px 20px;
-  border-top: 2px solid var(--carbon);
-  border-left: 2px solid var(--carbon);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.meta-card:nth-child(-n + 2) {
-  border-top: 0;
-}
-.meta-card:nth-child(odd) {
-  border-left: 0;
-}
-.meta-card dt {
-  display: flex;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--copper-dim);
-  text-transform: uppercase;
-}
-.meta-card dd {
-  font-family: var(--font-heading);
-  font-size: 17px;
-  font-weight: 500;
-  text-transform: none;
-  line-height: 1.35;
-  color: var(--carbon);
-}
-@media (max-width: 560px) {
-  .meta-grid {
-    grid-template-columns: 1fr;
-  }
-  .meta-card,
-  .meta-card:nth-child(-n + 2) {
-    border-left: 0;
-    border-top: 2px solid var(--carbon);
-  }
-  .meta-card:first-child {
-    border-top: 0;
   }
 }
 

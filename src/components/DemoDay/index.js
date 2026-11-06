@@ -42,7 +42,7 @@ export default function DemoDay() {
         <header className="results-head">
           <p className="tag">Screen 05 &middot; Final Transmission</p>
           <div className="results-title">
-            <h2 className="h2">Mission Complete</h2>
+            <h2 className="h2">Finalists</h2>
             <p className="results-event">Five finalists. One grand prize.</p>
           </div>
         </header>
