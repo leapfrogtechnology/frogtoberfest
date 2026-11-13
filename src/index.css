@@ -63,6 +63,7 @@
 }
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -171,16 +172,13 @@ button {
 .screen {
   position: relative;
   border-bottom: 2px solid var(--carbon);
-  /* Sticky nav is 80px tall -- without this, an anchor jump (nav click)
-     lands the section flush under it instead of leaving room to see in. */
-  scroll-margin-top: 80px;
 }
 /* Recognition's mech art bleeds above its own box (clip-path on
    .recognition-art) -- enough extra scroll-margin here so the anchor
    jump stops with the raised fist right at the top of the viewport,
    instead of the plain 80px nav clearance cropping it. */
 #recognition {
-  scroll-margin-top: 220px;
+  scroll-margin-top: 140px;
 }
 .screen-pad {
   padding-block: clamp(80px, 9vw, 124px);
@@ -273,7 +271,7 @@ h4 {
   font-size: clamp(2.6rem, 4.8vw, 4.5rem);
   font-weight: 800;
   line-height: 0.94;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.01em;
   text-wrap: balance;
 }
 
@@ -303,8 +301,6 @@ h4 {
   border: 2px solid var(--carbon);
   font-family: var(--font-mono);
   font-weight: 650;
-  /* .nav-cta opts out of the sizing below but has no tracking of its own,
-     so this stays on the base rule for it to inherit. */
   letter-spacing: 0.12em;
   text-transform: uppercase;
   background: transparent;
@@ -312,13 +308,10 @@ h4 {
   cursor: pointer;
   transition: background-color 0.15s var(--ease), color 0.15s var(--ease), border-color 0.15s var(--ease);
 }
-/* .nav-cta is excluded -- it sets its own compact 11px/44px sizing to fit
-   the 80px nav bar. Weight above is the one thing it does take, or it reads
-   thin next to the hero button. */
-.btn:not(.nav-cta) {
+.btn {
   min-height: 50px;
   padding: 12px 22px;
-  font-size: 0.85rem;
+  font-size: 14px;
   letter-spacing: 0.02em;
   line-height: 1.1;
 }
@@ -327,6 +320,14 @@ h4 {
   height: 8px;
   background: currentColor;
   flex: none;
+}
+.btn .arrow {
+  font-size: 1.35em;
+  line-height: 1;
+  transition: transform 0.2s var(--ease);
+}
+.btn:hover .arrow {
+  transform: translateX(3px);
 }
 
 /* Primary CTA gets tactile key-press physics: raised at rest, lifts on hover,
@@ -343,17 +344,18 @@ h4 {
   background: var(--cyan);
   border-color: var(--carbon);
   color: var(--carbon);
-  box-shadow: 0 var(--depth) 0 0 var(--carbon), 0 calc(var(--depth) + 6px) 10px color-mix(in srgb, var(--carbon) 25%, transparent);
+  box-shadow: 0 var(--depth) 0 0 var(--carbon),
+    0 calc(var(--depth) + 6px) 10px color-mix(in srgb, var(--carbon) 25%, transparent);
   /* Slow release, so letting go of a real (fast, ~100ms) click is still
      visible -- the snap-down on press uses its own fast transition below. */
-  transition: background-color 0.32s ease-out, color 0.32s ease-out, transform 0.32s ease-out,
-    box-shadow 0.32s ease-out;
+  transition: background-color 0.32s ease-out, color 0.32s ease-out, transform 0.32s ease-out, box-shadow 0.32s ease-out;
 }
 .btn-primary:hover {
   background: var(--carbon);
   color: var(--cyan);
   transform: translateY(2px);
-  box-shadow: 0 calc(var(--depth) - 2px) 0 0 var(--carbon), 0 6px 10px color-mix(in srgb, var(--carbon) 22%, transparent);
+  box-shadow: 0 calc(var(--depth) - 2px) 0 0 var(--carbon),
+    0 6px 10px color-mix(in srgb, var(--carbon) 22%, transparent);
   transition: background-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 .btn-primary:active {
@@ -377,8 +379,7 @@ h4 {
   border-color: var(--carbon);
   color: var(--carbon);
   box-shadow: 0 var(--depth) 0 0 var(--carbon);
-  transition: background-color 0.32s ease-out, color 0.32s ease-out, transform 0.32s ease-out,
-    box-shadow 0.32s ease-out;
+  transition: background-color 0.32s ease-out, color 0.32s ease-out, transform 0.32s ease-out, box-shadow 0.32s ease-out;
 }
 .btn-outline:hover {
   background: var(--carbon);
@@ -456,62 +457,10 @@ h4 {
   border-bottom: 2px solid transparent;
   transition: border-color 0.15s var(--ease), color 0.15s;
 }
-/* Only shown inside the mobile hamburger menu (see the 1100px block
-   below) -- the desktop row already has its own pill CTA (.nav-cta), so
-   this stays hidden there to avoid two "Register" entries side by side. */
-.nav-links-cta {
-  display: none;
-}
 .nav-links a:hover,
 .nav-links a.is-active {
   color: var(--on-dark);
   border-color: var(--cyan);
-}
-
-/* Only shown once the hero's own Enter Mission button scrolls out of view
-   (toggled via IntersectionObserver in App.js) -- collapses out of the
-   layout rather than just fading, so it doesn't reserve dead space in the nav. */
-.nav-cta {
-  flex: none;
-  display: grid;
-  grid-template-columns: 0fr;
-  min-width: 0;
-  min-height: 44px;
-  /* 15px, not 18px: .nav-cta-inner adds the missing 3px back as padding so
-     the chip's 2px ring shadow isn't clipped by the collapse overflow. */
-  padding: 10px 18px 10px 15px;
-  font-size: 11px;
-  overflow: hidden;
-  opacity: 0;
-  transform: translateX(-8px);
-  pointer-events: none;
-  white-space: nowrap;
-  /* Collapses via grid-template-columns (0fr -> 1fr) rather than max-width:
-     a layout-driving property still, but this is the width-collapse-to-zero
-     pattern browsers optimize best for -- a single track-size interpolation
-     per frame instead of repeated intrinsic-width recalculation. */
-  transition: grid-template-columns 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s var(--ease) 0.05s,
-    transform 0.3s var(--ease) 0.05s, background-color 0.15s var(--ease), color 0.15s var(--ease);
-}
-.nav-cta.is-visible {
-  grid-template-columns: 1fr;
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
-}
-/* .nav-cta drives its slide-in with transform, which now outranks
-   .btn-primary:hover's lift (also transform) -- restate the lift here so the
-   nav CTA still presses on hover like every other primary button. */
-.nav-cta.is-visible:hover {
-  transform: translateY(2px);
-}
-.nav-cta-inner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  overflow: hidden;
-  padding-left: 3px;
 }
 
 /* ---- Mobile menu toggle (hamburger -> X) ---- */
@@ -569,19 +518,9 @@ h4 {
   }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1439px) {
   .nav-toggle {
     display: flex;
-  }
-  /* The CTA's flex:none width never shrinks, so once it's visible (any
-     page other than the hero) it pushes past the edge -- measured
-     overflowing past the viewport by ~54px at 960px wide, well above the
-     old 900px cutoff, since brand + all 4 links + CTA need ~1014px to
-     fit without wrapping. The hamburger menu already surfaces navigation
-     on mobile/tablet; drop the CTA here rather than fight both for the
-     same row. */
-  .nav-cta {
-    display: none;
   }
   .nav .wrap {
     position: relative;
@@ -653,22 +592,6 @@ h4 {
     height: 8px;
     background: var(--cyan);
   }
-  .nav-links-cta {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    min-height: 44px;
-    padding: 14px 24px;
-    border-top: 2px solid var(--surface-2);
-    background: var(--cyan);
-    color: var(--carbon);
-    font-weight: 600;
-  }
-  .nav-links-cta:hover {
-    background: var(--go);
-    color: var(--on-dark);
-  }
 }
 @media (max-width: 700px) {
   .nav-brand .div,
@@ -677,13 +600,6 @@ h4 {
   }
   .nav .wrap {
     gap: 8px;
-  }
-  /* Brand + revealed CTA + hamburger all compete for the same row once
-     nav-code/div are gone; give the CTA a tighter mobile footprint so
-     the row never needs more width than the viewport provides. */
-  .nav-cta {
-    padding: 12px;
-    font-size: 11px;
   }
 }
 @media (max-width: 400px) {
@@ -712,12 +628,13 @@ h4 {
 .hero-inner {
   position: relative;
   z-index: 2;
-  /* Top-aligned hero (not vertically centred), so the logo needs more
-     clearance under the sticky nav than the bottom needs. Only this column
-     moves: .hero-art is absolutely positioned against .hero, so the mech
-     stays put and the copy drops against it. */
-  padding-top: clamp(72px, 6vw, 112px);
-  padding-bottom: 40px;
+  padding-bottom: 96px;
+}
+@media (min-width: 1101px) {
+  .hero {
+    display: flex;
+    align-items: center;
+  }
 }
 @media (max-width: 1100px) {
   .hero {
@@ -750,7 +667,7 @@ h4 {
   height: auto;
 }
 /* Size and measure come from .lede.lg; this only sets the hero's own rhythm
-   between the lede, the CTA and the key-dates plate. */
+   between the lede and the CTA. */
 .hero-copy .lede {
   margin-bottom: 52px;
   color: var(--carbon);
@@ -759,7 +676,6 @@ h4 {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 76px;
 }
 
 .hero-art {
@@ -866,11 +782,10 @@ h4 {
   top: 96px;
   writing-mode: vertical-rl;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--surface);
-  opacity: 0.6;
   white-space: nowrap;
   line-height: 1;
 }
@@ -895,86 +810,6 @@ h4 {
   }
   .hero-annot {
     display: none;
-  }
-}
-
-/* ---- Mission parameters spec plate ---- */
-.meta-plate {
-  max-width: 600px;
-  border: 2px solid var(--carbon);
-  background: var(--paper);
-  text-align: left;
-}
-.meta-plate-hdr {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--surface);
-  color: var(--on-dark);
-  padding: 11px 18px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.meta-plate-hdr .chip {
-  width: 8px;
-  height: 8px;
-  background: var(--cyan);
-  flex: none;
-}
-.meta-plate-ref {
-  margin-left: auto;
-  opacity: 0.75;
-  letter-spacing: 0.1em;
-}
-
-.meta-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-.meta-card {
-  padding: 18px 20px 20px;
-  border-top: 2px solid var(--carbon);
-  border-left: 2px solid var(--carbon);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.meta-card:nth-child(-n + 2) {
-  border-top: 0;
-}
-.meta-card:nth-child(odd) {
-  border-left: 0;
-}
-.meta-card dt {
-  display: flex;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--copper-dim);
-  text-transform: uppercase;
-}
-.meta-card dd {
-  font-family: var(--font-heading);
-  font-size: 17px;
-  font-weight: 500;
-  text-transform: none;
-  line-height: 1.35;
-  color: var(--carbon);
-}
-@media (max-width: 560px) {
-  .meta-grid {
-    grid-template-columns: 1fr;
-  }
-  .meta-card,
-  .meta-card:nth-child(-n + 2) {
-    border-left: 0;
-    border-top: 2px solid var(--carbon);
-  }
-  .meta-card:first-child {
-    border-top: 0;
   }
 }
 
@@ -1172,7 +1007,7 @@ h4 {
   font-family: var(--font-heading);
   font-size: clamp(1.05rem, 8.5cqi, 1.6rem);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
   text-wrap: balance;
   /* Same line-height:1 story as .badge h3 -- no leading to inherit. */
   margin-bottom: 16px;
@@ -1294,9 +1129,28 @@ h4 {
   font-size: 15px;
   line-height: 1.5;
 }
+@media (max-width: 1100px) {
+  .tl-node-inner {
+    grid-template-columns: 150px 1fr;
+    grid-template-areas: 'date desc' 'phase desc';
+    gap: 4px 24px;
+  }
+  .tl-date {
+    grid-area: date;
+    align-self: end;
+  }
+  .tl-phase {
+    grid-area: phase;
+    align-self: start;
+  }
+  .tl-desc {
+    grid-area: desc;
+  }
+}
 @media (max-width: 700px) {
   .tl-node-inner {
     grid-template-columns: 1fr;
+    grid-template-areas: 'date' 'phase' 'desc';
     gap: 6px;
   }
 }
@@ -1506,7 +1360,7 @@ h4 {
   font-family: var(--font-heading);
   font-size: var(--card-title);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
   text-wrap: balance;
   color: var(--paper);
 }
@@ -1524,7 +1378,7 @@ h4 {
   border: 2px solid var(--cyan);
   color: var(--on-dark);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 6px 14px;
@@ -1650,7 +1504,7 @@ h4 {
   color: var(--on-dark);
   padding: 11px 18px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1824,50 +1678,267 @@ h4 {
    Screen 10 — DEMO DAY (closer)
    ========================================================================== */
 .demoday {
-  background: var(--carbon);
+  background: var(--surface);
   color: var(--paper);
-  text-align: center;
   position: relative;
   overflow: hidden;
 }
 .demoday .blueprint-grid.on-dark {
-  opacity: 0.35;
+  opacity: 0.4;
 }
 .demoday-inner {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 24px;
 }
 .demoday .tag {
-  color: var(--cyan);
-  justify-content: center;
+  color: var(--on-dark);
 }
 .demoday .tag::before {
   background: var(--cyan);
 }
-.demoday .h1 {
+
+/* ---- Masthead ---- */
+.results-head {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-bottom: clamp(48px, 5vw, 72px);
+}
+.demoday .h2 {
   color: var(--paper);
 }
-/* A dimmed form of the dark-surface TEXT token, not --on-dark-dim: that one
-   is documented borders-only, and borrowing it here would sanction a pairing
-   that drops to 3.6:1 the moment someone reuses it on --surface. Mixing
-   toward the background instead keeps it honest at 9.3:1 on --carbon. */
-.demoday .lede {
-  color: color-mix(in srgb, var(--on-dark) 80%, var(--carbon));
-  max-width: 56ch;
-}
-.demoday-cta {
+.results-event {
   margin-top: 16px;
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.5;
+  color: var(--on-dark);
+}
+
+/* ---- Grand prize plate ---- */
+.winner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-2);
+  border: 2px solid var(--on-dark-dim);
+}
+.winner .corner {
+  position: absolute;
+  z-index: 4;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--cyan);
+}
+.winner .corner.tl {
+  top: -2px;
+  left: -2px;
+  border-right: 0;
+  border-bottom: 0;
+}
+.winner .corner.br {
+  bottom: -2px;
+  right: -2px;
+  border-left: 0;
+  border-top: 0;
+}
+.winner-award {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--cyan);
+  color: var(--carbon);
+  padding: 18px clamp(24px, 3vw, 40px);
+  font-family: var(--font-mono);
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.winner-award-text {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.winner-award .chip {
+  width: 8px;
+  height: 8px;
+  background: var(--carbon);
+  flex: none;
+}
+.winner-body {
+  position: relative;
+  z-index: 3;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-content: flex-end;
+  gap: clamp(24px, 2.4vw, 36px);
+  padding: clamp(40px, 5vw, 72px) clamp(24px, 3vw, 40px) clamp(32px, 3vw, 48px);
+}
+.winner h3 {
+  margin-left: -0.04em;
+  font-size: clamp(72px, 15vw, 240px);
+  line-height: 0.8;
+  letter-spacing: 0;
+  color: var(--paper);
+}
+.winner .btn {
+  --depth: 8px;
+  min-height: 64px;
+  padding: 0 32px;
+  font-size: 16px;
+  gap: 16px;
+}
+.winner-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.demoday .btn-outline {
+  border-color: var(--paper);
+  color: var(--paper);
+}
+.demoday .btn-outline:hover {
+  background: var(--paper);
+  color: var(--carbon);
+}
+.demoday .btn {
+  text-decoration: none;
+  transition-duration: 0.12s;
+}
+.demoday .btn:active {
+  transition-duration: 0.04s;
+}
+
+/* ---- Finalist roster: ruled rows, the same device as the Timeline ---- */
+.finalists {
+  list-style: none;
+  margin: clamp(48px, 5vw, 72px) 0 0;
+  padding: 0;
+  border: 2px solid var(--on-dark-dim);
+  border-bottom: 0;
+}
+.finalist {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'label links' 'name links';
+  align-items: center;
+  gap: 8px 32px;
+  padding: 24px clamp(24px, 3vw, 40px);
+  border-bottom: 2px solid var(--on-dark-dim);
+  transition: background-color 0.2s var(--ease);
+}
+.finalist:hover {
+  background: var(--surface-2);
+}
+.finalist h3 {
+  grid-area: name;
+  font-size: clamp(32px, 3.4vw, 52px);
+  line-height: 1;
+  color: var(--paper);
+}
+.finalist-label {
+  grid-area: label;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-dark);
+  white-space: nowrap;
+}
+/* Accent lives in the chip only -- the pale accents miss AA as small text on surface */
+.finalist-label .chip {
+  width: 8px;
+  height: 8px;
+  background: var(--copper-pale);
+  flex: none;
+}
+.finalist:nth-child(2) .chip {
+  background: var(--leaf-light);
+}
+.finalist:nth-child(3) .chip {
+  background: var(--green-light);
+}
+.finalist:nth-child(4) .chip {
+  background: var(--paper-dim);
+}
+.finalist-links {
+  grid-area: links;
+  display: flex;
+  gap: 16px;
+}
+.demoday a:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .winner h3 {
+    font-size: 28vw;
+  }
+  .winner .btn {
+    min-height: 56px;
+    padding: 0 24px;
+    font-size: 15px;
+  }
+  .finalist {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'label' 'name' 'links';
+  }
+  .finalist:hover {
+    background: none;
+  }
+}
+@media (max-width: 560px) {
+  .winner-award {
+    align-items: flex-start;
+  }
+  .winner-award .chip {
+    margin-top: 4px;
+  }
+  .winner-team {
+    flex-basis: 100%;
+    padding-left: 20px;
+  }
+}
+@media (max-width: 400px) {
+  .finalist h3 {
+    font-size: 30px;
+  }
+  .winner-award {
+    letter-spacing: 0.08em;
+  }
+  .winner-actions {
+    width: 100%;
+    gap: 12px;
+  }
+  .winner .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .finalist,
+  .btn .arrow {
+    transition: none;
+  }
 }
 
 /* ==========================================================================
    FOOTER
    ========================================================================== */
 .footer {
-  background: var(--surface);
+  background: var(--carbon);
   color: var(--on-dark);
 }
 .footer .wrap {
@@ -1894,13 +1965,13 @@ h4 {
 }
 .footer-brand span {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .footer-legal {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   text-align: right;
   max-width: 560px;
   line-height: 1.6;
